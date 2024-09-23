@@ -103,9 +103,6 @@ def get_weather_image_urls(event):
     # 打開目標網頁
     driver.get("https://www.cwa.gov.tw/V8/C/P/Rainfall/Rainfall_QZJ.html")
     
-    line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text="2."))
 
     # 等待網頁完全加載
     time.sleep(5)
