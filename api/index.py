@@ -90,9 +90,6 @@ def handle_message(event):
 
 # 天氣圖片抓取函式（不存圖片，只回傳圖片 URL）
 def get_weather_image_urls():
-    line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text="找尋天氣圖片中"))
     # 使用 ChromeDriverManager 自動管理 ChromeDriver
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service)
