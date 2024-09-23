@@ -75,7 +75,6 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text="尋找天氣中"))
 
-        image_urls = get_weather_image_urls()  # 取得天氣圖片 URL
         
         return
         
