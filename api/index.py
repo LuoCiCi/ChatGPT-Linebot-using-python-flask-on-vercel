@@ -47,6 +47,10 @@ def handle_message(event):
 
         image_url = "https://www.cwa.gov.tw/Data/rainfall/2024-09-24_0030.QZJ8.jpg"
 
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="123"))
+
         # 發送圖片至 LINE (使用 URL 發送)
         ImageSendMessage(
             original_content_url=image_url,
