@@ -53,7 +53,9 @@ def handle_message(event):
             preview_image_url=image_url
         )
 
-        TextSendMessage(text="找到天氣"))
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="找到天氣"))
 
         return
         
