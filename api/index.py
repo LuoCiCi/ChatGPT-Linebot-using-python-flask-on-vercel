@@ -1,7 +1,3 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.common.by import By
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
@@ -41,15 +37,13 @@ def callback():
 def handle_message(event):
     global working_status
     if event.message.type != "text":
-        return
-
-    
-
+        return  
+        
     if event.message.text == "說話":
         working_status = True
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text="我可以說話囉1，歡迎來跟我互動 ^_^ "))
+            TextSendMessage(text="我可以說話囉，歡迎來跟我互動 ^_^ "))
         return
 
     if event.message.text == "閉嘴":
@@ -66,9 +60,6 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=reply_msg))
-
-
-
 
 if __name__ == "__main__":
     app.run()
