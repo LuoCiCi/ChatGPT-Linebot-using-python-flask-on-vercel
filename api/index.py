@@ -102,7 +102,7 @@ def handle_message(event):
             TextSendMessage(text=reply_msg))
         
 # 讀取圖片並轉換為 base64
-with open("path_to_your_image.jpg", "rb") as img_file:
+with open("api/LINE_ALBUM_錢錢多多-股市篇1_240710_4.jpg", "rb") as img_file:
     encoded_string = base64.b64encode(img_file.read()).decode('utf-8')
 
 # 打印或返回這個編碼後的字符串
