@@ -45,11 +45,8 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text="尋找天氣中"))
         
-# 讀取圖片並轉換為 base64
-with open("api/LINE_ALBUM_錢錢多多-股市篇1_240710_4.jpg", "rb") as img_file:
-    encoded_string = base64.b64encode(img_file.read()).decode('utf-8')
 
-image_url = "api/LINE_ALBUM_錢錢多多-股市篇1_240710_4.jpg"
+image_url = "https://www.cwa.gov.tw/V8/C/P/Rainfall/Rainfall_QZJ.html/Data/rainfall/2024-09-24_0030.QZJ8.jpg"
 
 # 發送圖片至 LINE (使用 URL 發送)
 image_message = ImageSendMessage(
