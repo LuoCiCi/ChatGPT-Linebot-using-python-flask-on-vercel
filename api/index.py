@@ -102,18 +102,22 @@ def get_weather_image_urls(event):
             TextSendMessage(text="1."))
     # 打開目標網頁
     driver.get("https://www.cwa.gov.tw/V8/C/P/Rainfall/Rainfall_QZJ.html")
-line_bot_api.reply_message(
+    
+    line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="2."))
+
     # 等待網頁完全加載
     time.sleep(5)
 
     # 查找所有圖片元素
     images = driver.find_elements(By.TAG_NAME, 'img')
     image_urls = []
-line_bot_api.reply_message(
+
+    line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="3."))
+
     # 遍歷所有找到的圖片，並篩選來自 Data/rainfall 目錄的圖片
     for img in images:
         img_url = img.get_attribute('src')
@@ -122,9 +126,10 @@ line_bot_api.reply_message(
         if "Data/rainfall" in img_url:
             image_urls.append(img_url)
 
-line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text="4."))
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text="4."))
+
     # 關閉瀏覽器
     driver.quit()
 
