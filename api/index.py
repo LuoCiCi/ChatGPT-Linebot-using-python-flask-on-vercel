@@ -49,8 +49,16 @@ def handle_message(event):
 with open("api/LINE_ALBUM_錢錢多多-股市篇1_240710_4.jpg", "rb") as img_file:
     encoded_string = base64.b64encode(img_file.read()).decode('utf-8')
 
+image_url = "api/LINE_ALBUM_錢錢多多-股市篇1_240710_4.jpg"
+
+# 發送圖片至 LINE (使用 URL 發送)
+image_message = ImageSendMessage(
+    original_content_url=image_url,
+    preview_image_url=image_url  # 預覽圖可與原圖相同
+)
+
 # 打印或返回這個編碼後的字符串
-print(encoded_string)
+line_bot_api.push_message(user_id, encoded_string)
 
         
         return
