@@ -46,7 +46,13 @@ def handle_message(event):
             TextSendMessage(text="尋找天氣中"))
 
         image_url = "https://www.cwa.gov.tw/Data/rainfall/2024-09-24_0030.QZJ8.jpg"
-     
+
+        # 發送圖片至 LINE (使用 URL 發送)
+        ImageSendMessage(
+            original_content_url=image_url,
+            preview_image_url=image_url
+        )
+
         return
         
     if event.message.text == "說話":
