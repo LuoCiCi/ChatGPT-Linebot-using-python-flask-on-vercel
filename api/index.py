@@ -1,10 +1,10 @@
-from flask import Flask, request, abort, send_file
+from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 from api.chatgpt import ChatGPT
-from PIL import Image
-import io
+
+import base64
 import os
 
 line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
@@ -101,16 +101,12 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text=reply_msg))
         
-@app.route("/get_image")
-def get_image():
-    image_path = "api/LINE_ALBUM_錢錢多多-股市篇1_240710_4.jpg"
-    img = Image.open(image_path)
-    
-    img_io = io.BytesIO()
-    img.save(img_io, 'JPEG')
-    img_io.seek(0)
+# 讀取圖片並轉換為 base64
+with open("path_to_your_image.jpg", "rb") as img_file:
+    encoded_string = base64.b64encode(img_file.read()).decode('utf-8')
 
-    return send_file(img_io, mimetype='image/jpeg')
+# 打印或返回這個編碼後的字符串
+print(encoded_string)
 
 if __name__ == "__main__":
     app.run()
