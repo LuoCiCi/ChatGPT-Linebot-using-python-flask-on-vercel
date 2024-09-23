@@ -1,3 +1,6 @@
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.by import By
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
@@ -35,6 +38,7 @@ def callback():
 
 # 天氣圖片抓取函式（不存圖片，只回傳圖片 URL）
 def get_weather_image_urls():
+    TextSendMessage(text="找尋天氣圖片中。")
     # 使用 ChromeDriverManager 自動管理 ChromeDriver
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service)
