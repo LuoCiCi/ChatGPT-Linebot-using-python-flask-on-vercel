@@ -97,9 +97,7 @@ def get_weather_image_urls(event):
     # 使用 ChromeDriverManager 自動管理 ChromeDriver
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service)
-    line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text="1."))
+
     # 打開目標網頁
     driver.get("https://www.cwa.gov.tw/V8/C/P/Rainfall/Rainfall_QZJ.html")
     
@@ -111,10 +109,6 @@ def get_weather_image_urls(event):
     images = driver.find_elements(By.TAG_NAME, 'img')
     image_urls = []
 
-    line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text="3."))
-
     # 遍歷所有找到的圖片，並篩選來自 Data/rainfall 目錄的圖片
     for img in images:
         img_url = img.get_attribute('src')
@@ -123,9 +117,6 @@ def get_weather_image_urls(event):
         if "Data/rainfall" in img_url:
             image_urls.append(img_url)
 
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text="4."))
 
     # 關閉瀏覽器
     driver.quit()
