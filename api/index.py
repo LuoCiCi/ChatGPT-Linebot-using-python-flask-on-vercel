@@ -13,7 +13,7 @@ import os
 
 line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
 line_handler = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
-working_status = os.getenv("DEFALUT_TALKING", default = "true").lower() == "true"
+working_status = os.getenv("DEFAULT_TALKING", default = "true").lower() == "true"
 
 app = Flask(__name__)
 chatgpt = ChatGPT()
@@ -40,7 +40,9 @@ def callback():
 
 # 天氣圖片抓取函式（不存圖片，只回傳圖片 URL）
 def get_weather_image_urls():
-    TextSendMessage(text="找尋天氣圖片中。")
+    ine_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="找尋天氣圖片中"))
     # 使用 ChromeDriverManager 自動管理 ChromeDriver
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service)
@@ -78,7 +80,9 @@ def handle_message(event):
         working_status = True
         image_urls = get_weather_image_urls()  # 取得天氣圖片 URL
         if image_urls:
-            TextSendMessage(text="找到天氣圖片囉。")
+            ine_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="找到天氣圖片囉"))
             # 發送圖片
             for img_url in image_urls:
                 line_bot_api.reply_message(
