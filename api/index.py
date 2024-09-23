@@ -44,7 +44,8 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="尋找天氣中"))
-        
+
+        image_url = "https://www.cwa.gov.tw/Data/rainfall/2024-09-24_0030.QZJ8.jpg"
      
         return
         
