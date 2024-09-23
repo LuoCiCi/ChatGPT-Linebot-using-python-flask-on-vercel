@@ -90,7 +90,7 @@ def handle_message(event):
         working_status = True
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text="我可以說話囉，歡迎來跟我互動 ^_^ "))
+            TextSendMessage(text="我可以說話囉1，歡迎來跟我互動 ^_^ "))
         return
 
     if event.message.text == "閉嘴":
