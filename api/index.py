@@ -93,7 +93,7 @@ def handle_message(event):
 
 
 # 天氣圖片抓取函式（不存圖片，只回傳圖片 URL）
-def get_weather_image_urls(event):
+def get_weather_image_urls():
     # 使用 ChromeDriverManager 自動管理 ChromeDriver
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service)
