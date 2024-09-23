@@ -36,7 +36,7 @@ def callback():
 
 # 天氣圖片抓取函式（不存圖片，只回傳圖片 URL）
 def get_weather_image_urls():
-    ine_bot_api.reply_message(
+    line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="找尋天氣圖片中"))
     # 使用 ChromeDriverManager 自動管理 ChromeDriver
