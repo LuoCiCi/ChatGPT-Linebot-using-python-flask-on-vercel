@@ -1,7 +1,7 @@
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent, TextMessage, TextSendMessage
+from linebot.models import MessageEvent, TextMessage, TextSendMessage, ImageSendMessage
 from api.chatgpt import ChatGPT
 
 import base64
@@ -57,8 +57,6 @@ image_message = ImageSendMessage(
     preview_image_url=image_url  # 預覽圖可與原圖相同
 )
 
-# 打印或返回這個編碼後的字符串
-line_bot_api.push_message(user_id, encoded_string)
 
         
         return
