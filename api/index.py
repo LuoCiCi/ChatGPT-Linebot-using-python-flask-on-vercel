@@ -3,7 +3,8 @@ from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 from api.chatgpt import ChatGPT
-
+from PIL import Image
+import io
 import os
 
 line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
@@ -100,6 +101,15 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text=reply_msg))
 
+def get_image():
+    image_path = "path_to_your_image.jpg"
+    img = Image.open(image_path)
+    
+    img_io = io.BytesIO()
+    img.save(img_io, 'JPEG')
+    img_io.seek(0)
+
+    return send_file(img_io, mimetype='image/jpeg')
 
 if __name__ == "__main__":
     app.run()
