@@ -100,7 +100,7 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=reply_msg))
-
+@app.route("/get_image")
 def get_image():
     image_path = "api/LINE_ALBUM_錢錢多多-股市篇1_240710_4.jpg"
     img = Image.open(image_path)
