@@ -53,6 +53,8 @@ def handle_message(event):
             preview_image_url=image_url
         )
 
+        TextSendMessage(text="找到天氣"))
+
         return
         
     if event.message.text == "說話":
