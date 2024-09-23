@@ -50,6 +50,12 @@ def handle_message(event):
                 TextSendMessage(text="要取得天氣圖片。")
             )
         image_urls = get_weather_image_urls()  # 取得天氣圖片 URL
+
+        line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="img"&image_urls)
+            )
+        
         if image_urls:
             line_bot_api.reply_message(
             event.reply_token,
