@@ -48,7 +48,7 @@ def handle_message(event):
             )
         image_urls = get_weather_image_urls()  # 取得天氣圖片 URL
         if image_urls:
-            ine_bot_api.reply_message(
+            line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="找到天氣圖片囉"))
             # 發送圖片
