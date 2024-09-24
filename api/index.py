@@ -124,9 +124,25 @@ def handle_message(event):
         prev_prev_url = "https://www.cwa.gov.tw/Data/rainfall/" + prev_prev_date_str + "_" + prev_prev_time_str + ".QZJ8.jpg"
 
         if (check_image_url_exists(prev_url)):
-            url = prev_url
+            # url = prev_url
+            # 回傳訊息
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    TextSendMessage(text="這是綺綺的降雨量圖片：{prev_url}"),
+                    ImageSendMessage(original_content_url=prev_url, preview_image_url=prev_url)
+                ]
+            )
         else:
-            url = prev_prev_url
+            # url = prev_prev_url
+            # 回傳訊息
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    TextSendMessage(text="這是綺綺的降雨量圖片：{prev_prev_url}"),
+                    ImageSendMessage(original_content_url=prev_prev_url, preview_image_url=prev_prev_url)
+                ]
+            )
 
         
         # 回傳訊息
