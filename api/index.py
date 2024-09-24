@@ -48,7 +48,7 @@ def handle_message(event):
                 TextSendMessage(text="測試節點1"),
                 ImageSendMessage(original_content_url=image_url, preview_image_url=image_url),
                 TextSendMessage(text="可以說第二句話")
-            ]
+            ])
         return
         
     if event.message.text == "說話":
