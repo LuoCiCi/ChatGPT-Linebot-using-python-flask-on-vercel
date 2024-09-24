@@ -13,7 +13,7 @@ import os
 
 line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
 line_handler = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
-working_status = os.getenv("DEFALUT_TALKING", default = "true").lower() == "true"
+working_status = os.getenv("DEFAULT_TALKING", default = "true").lower() == "true"
 
 app = Flask(__name__)
 chatgpt = ChatGPT()
@@ -85,7 +85,7 @@ def handle_message(event):
                 event.reply_token,
                 [
                     TextSendMessage(text="這是綺綺的降雨量圖片："),
-                    ImageSendMessage(original_content_url=image_urls[0], preview_image_url=image_url[0])
+                    ImageSendMessage(original_content_url=image_urls[0], preview_image_url=image_urls[0])
                 ]
             )
         else:
