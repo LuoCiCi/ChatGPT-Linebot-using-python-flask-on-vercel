@@ -10,6 +10,7 @@ from selenium.webdriver.common.by import By
 import time
 import os
 from datetime import datetime, timedelta
+import requests
 
 line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
 line_handler = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
