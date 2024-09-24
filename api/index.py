@@ -133,7 +133,7 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             [
-                TextSendMessage(text="這是綺綺的降雨量圖片："),
+                TextSendMessage(text="這是綺綺的降雨量圖片：{url}"),
                 ImageSendMessage(original_content_url=url, preview_image_url=url)
             ]
         )
