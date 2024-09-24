@@ -8,7 +8,7 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 import time
-import base64
+from selenium.webdriver.chrome.options import Options
 import os
 
 line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
@@ -18,12 +18,18 @@ working_status = os.getenv("DEFAULT_TALKING", default = "true").lower() == "true
 app = Flask(__name__)
 chatgpt = ChatGPT()
 
-
+# 設置 Chrome 無頭模式
+chrome_options = Options()
+chrome_options.add_argument("--headless")  # 啟用無頭模式
+chrome_options.add_argument("--no-sandbox")
+chrome_options.add_argument("--disable-dev-shm-usage")
 
 # 使用 Selenium 抓取最新的圖片 URL
 def get_latest_rainfall_image_url():
+    # 使用 Selenium 抓取最新的圖片 URL
     service = Service(ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=service)
+    driver = webdriver.Chrome(service=service, options=chrome_options)
+    # driver = webdriver.Chrome(service=service)
     image_urls = []
     
     try:
