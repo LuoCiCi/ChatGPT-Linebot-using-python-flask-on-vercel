@@ -3,7 +3,11 @@ from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage, ImageSendMessage
 from api.chatgpt import ChatGPT
-
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.by import By
+import time
 import base64
 import os
 
@@ -14,6 +18,35 @@ working_status = os.getenv("DEFALUT_TALKING", default = "true").lower() == "true
 app = Flask(__name__)
 chatgpt = ChatGPT()
 
+
+
+# 使用 Selenium 抓取最新的圖片 URL
+def get_latest_rainfall_image_url():
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service)
+
+    try:
+        # 打開目標網頁
+        driver.get("https://www.cwa.gov.tw/V8/C/P/Rainfall/Rainfall_QZJ.html")
+
+        # 等待網頁完全加載
+        time.sleep(2)
+
+        # 查找所有圖片元素
+        images = driver.find_elements(By.TAG_NAME, 'img')
+        image_urls = []
+
+        # 遍歷所有找到的圖片，並篩選來自 Data/rainfall 目錄的圖片
+        for img in images:
+            img_url = img.get_attribute('src')
+
+            # 只回傳來自 Data/rainfall 的圖片 URL
+            if "Data/rainfall" in img_url:
+                image_urls.append(img_url)
+    finally:
+        driver.quit()
+        
+        
 # domain root
 @app.route('/')
 def home():
@@ -41,14 +74,27 @@ def handle_message(event):
 
     if event.message.text == "天氣":
         working_status = True
-        image_url = "https://www.cwa.gov.tw/Data/rainfall/2024-09-24_0030.QZJ8.jpg"
-        line_bot_api.reply_message(
-            event.reply_token,
-            [
-                TextSendMessage(text="測試節點1"),
-                ImageSendMessage(original_content_url=image_url, preview_image_url=image_url),
-                TextSendMessage(text="可以說第二句話")
-            ])
+        
+        image_url = get_latest_rainfall_image_url()
+        
+        if image_url:
+            # 回傳訊息
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="我可以說話囉12，歡迎來跟我互動 ^_^ "))
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    TextSendMessage(text="這是綺綺的降雨量圖片："),
+                    ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
+                ]
+            )
+        else:
+            # 如果找不到圖片
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="抱歉我雷，目前無法取得最新的圖片。")
+            )
         return
         
     if event.message.text == "說話":
