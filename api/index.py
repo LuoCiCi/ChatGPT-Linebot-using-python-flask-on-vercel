@@ -25,27 +25,26 @@ def get_latest_rainfall_image_url():
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service)
 
-    try:
-        # 打開目標網頁
-        driver.get("https://www.cwa.gov.tw/V8/C/P/Rainfall/Rainfall_QZJ.html")
+    # 打開目標網頁
+    driver.get("https://www.cwa.gov.tw/V8/C/P/Rainfall/Rainfall_QZJ.html")
 
-        # 等待網頁完全加載
-        time.sleep(2)
+    # 等待網頁完全加載
+    time.sleep(2)
 
-        # 查找所有圖片元素
-        images = driver.find_elements(By.TAG_NAME, 'img')
-        image_urls = []
+    # 查找所有圖片元素
+    images = driver.find_elements(By.TAG_NAME, 'img')
+    image_urls = []
 
-        # 遍歷所有找到的圖片，並篩選來自 Data/rainfall 目錄的圖片
-        for img in images:
-            img_url = img.get_attribute('src')
-        
-            # 只回傳來自 Data/rainfall 的圖片 URL
-            if img_url.startswith("https://www.cwa.gov.tw/Data/rainfall"):
-                image_urls.append(img_url)
-    finally:
-        driver.quit()
-        return image_urls
+    # 遍歷所有找到的圖片，並篩選來自 Data/rainfall 目錄的圖片
+    for img in images:
+        img_url = img.get_attribute('src')
+    
+        # 只回傳來自 Data/rainfall 的圖片 URL
+        if img_url.startswith("https://www.cwa.gov.tw/Data/rainfall"):
+            image_urls.append(img_url)
+
+    driver.quit()
+    return image_urls
         
         
 # domain root
