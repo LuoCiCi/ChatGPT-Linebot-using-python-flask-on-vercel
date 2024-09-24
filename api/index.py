@@ -41,30 +41,14 @@ def handle_message(event):
 
     if event.message.text == "天氣":
         working_status = True
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text="測試節點123"))
-        
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text="我可以說第二句話"))
-
         image_url = "https://www.cwa.gov.tw/Data/rainfall/2024-09-24_0030.QZJ8.jpg"
-
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text="測試節點2"))
-
-        # 發送圖片至 LINE (使用 URL 發送)
-        ImageSendMessage(
-            original_content_url=image_url,
-            preview_image_url=image_url
-        )
-
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text="測試節點3"))
-
+            [
+                TextSendMessage(text="測試節點1"),
+                ImageSendMessage(original_content_url=image_url, preview_image_url=image_url),
+                TextSendMessage(text="可以說第二句話")
+            ]
         return
         
     if event.message.text == "說話":
