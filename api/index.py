@@ -44,6 +44,10 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="測試節點1"))
+        
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="我可以說第二句話"))
 
         image_url = "https://www.cwa.gov.tw/Data/rainfall/2024-09-24_0030.QZJ8.jpg"
 
