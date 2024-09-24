@@ -4,3 +4,4 @@ line-bot-sdk
 openai
 webdriver-manager>=3.8.5
 selenium
+playwright
