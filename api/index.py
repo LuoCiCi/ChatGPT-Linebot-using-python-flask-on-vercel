@@ -11,6 +11,7 @@ import time
 import os
 from datetime import datetime, timedelta
 import requests
+import pytz
 
 line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
 line_handler = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
@@ -21,8 +22,10 @@ chatgpt = ChatGPT()
 
 # 計算出前一個整點或半點的時間以及下一個整點或半點的時間
 def get_image_name():
+    # 設定台灣時間
+    tz = pytz.timezone('Asia/Taipei')
     # 取得當前系統日期和時間
-    now = datetime.now()
+    now = datetime.now(tz)
 
     # 計算前一個整點或半點時間
     minutes = now.minute
