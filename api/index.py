@@ -27,17 +27,13 @@ def get_image_name():
     minutes = now.minute
     if minutes >= 30:
         prev_time = now.replace(minute=30, second=0, microsecond=0)
+        prev_prev_time = now.replace(minute=0, second=0, microsecond=0)
     else:
         prev_time = now.replace(minute=0, second=0, microsecond=0)
-
-    # 計算下一個整點或半點時間
-    if minutes < 30:
-        next_time = now.replace(minute=30, second=0, microsecond=0)
-    else:
-        next_time = (now + timedelta(hours=1)).replace(minute=0, second=0, microsecond=0)
+        prev_prev_time = (now - timedelta(hours=1)).replace(minute=30, second=0, microsecond=0)
 
     # 回傳結果
-    return prev_time, next_time
+    return prev_time, prev_prev_time
 
 # 使用 Selenium 抓取最新的圖片 URL
 def get_latest_rainfall_image_url():
@@ -89,6 +85,22 @@ def callback():
         abort(400)
     return 'OK'
 
+# 確認 URL 是否有效
+def check_image_url_exists(url):
+    try:
+        # 發送 HEAD 請求以確認 URL 是否有效
+        response = requests.head(url)
+        
+        # 檢查 HTTP 狀態碼
+        if response.status_code == 200:
+            return True  # URL 存在
+        else:
+            return False  # URL 不存在或無法存取
+    except requests.RequestException as e:
+        # 捕捉各種異常情況（例如網絡錯誤，無法連線等）
+        print(f"Error: {e}")
+        return False
+        
 @line_handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     global working_status
@@ -98,16 +110,24 @@ def handle_message(event):
     if event.message.text == "天氣":
         working_status = True
         
-        prev, next_ = get_image_name()
+        prev, prev_ = get_image_name()
 
         # 將 prev_time 轉換成日期字串
         prev_date_str = prev.strftime('%Y-%m-%d')
         prev_time_str = prev.strftime('%H%M')
 
-        next_date_str = next_.strftime('%Y-%m-%d')
-        next_time_str = next_.strftime('%H%M')
+        prev_prev_date_str = prev_.strftime('%Y-%m-%d')
+        prev_prev_time_str = prev_.strftime('%H%M')
 
-        url = "https://www.cwa.gov.tw/Data/rainfall/" + prev_date_str + "_" + prev_time_str + ".QZJ8.jpg"
+        prev_url = "https://www.cwa.gov.tw/Data/rainfall/" + prev_date_str + "_" + prev_time_str + ".QZJ8.jpg"
+        prev_prev_url = "https://www.cwa.gov.tw/Data/rainfall/" + prev_prev_date_str + "_" + prev_prev_time_str + ".QZJ8.jpg"
+
+        if (check_image_url_exists(prev_url)):
+            url = prev_url
+        else:
+            url = prev_prev_url
+
+        
         # 回傳訊息
         line_bot_api.reply_message(
             event.reply_token,
