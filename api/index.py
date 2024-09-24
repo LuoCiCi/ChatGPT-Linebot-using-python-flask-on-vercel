@@ -45,6 +45,7 @@ def get_latest_rainfall_image_url():
                 image_urls.append(img_url)
     finally:
         driver.quit()
+        return image_urls
         
         
 # domain root
