@@ -8,7 +8,6 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 import time
-from selenium.webdriver.chrome.options import Options
 import os
 
 line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
@@ -18,11 +17,26 @@ working_status = os.getenv("DEFAULT_TALKING", default = "true").lower() == "true
 app = Flask(__name__)
 chatgpt = ChatGPT()
 
-# 設置 Chrome 無頭模式
-chrome_options = Options()
-chrome_options.add_argument("--headless")  # 啟用無頭模式
-chrome_options.add_argument("--no-sandbox")
-chrome_options.add_argument("--disable-dev-shm-usage")
+# 計算出前一個整點或半點的時間以及下一個整點或半點的時間
+def get_image_name():
+    # 取得當前系統日期和時間
+    now = datetime.now()
+
+    # 計算前一個整點或半點時間
+    minutes = now.minute
+    if minutes >= 30:
+        prev_time = now.replace(minute=30, second=0, microsecond=0)
+    else:
+        prev_time = now.replace(minute=0, second=0, microsecond=0)
+
+    # 計算下一個整點或半點時間
+    if minutes < 30:
+        next_time = now.replace(minute=30, second=0, microsecond=0)
+    else:
+        next_time = (now + timedelta(hours=1)).replace(minute=0, second=0, microsecond=0)
+
+    # 回傳結果
+    return prev_time, next_time
 
 # 使用 Selenium 抓取最新的圖片 URL
 def get_latest_rainfall_image_url():
@@ -83,23 +97,40 @@ def handle_message(event):
     if event.message.text == "天氣":
         working_status = True
         
-        image_urls = get_latest_rainfall_image_url()
+        prev, next_ = get_image_name()
+
+        # 將 prev_time 轉換成日期字串
+        prev_date_str = prev.strftime('%Y-%m-%d')
+        prev_time_str = prev.strftime('%H%M')
+
+        next_date_str = next_.strftime('%Y-%m-%d')
+        next_time_str = next_.strftime('%H%M')
+
+        url = "https://www.cwa.gov.tw/Data/rainfall/" + prev_date_str + "_" + prev_time_str + ".QZJ8.jpg"
+        # 回傳訊息
+        line_bot_api.reply_message(
+            event.reply_token,
+            [
+                TextSendMessage(text="這是綺綺的降雨量圖片："),
+                ImageSendMessage(original_content_url=url, preview_image_url=url)
+            ]
+        )
         
-        if image_urls:
-            # 回傳訊息
-            line_bot_api.reply_message(
-                event.reply_token,
-                [
-                    TextSendMessage(text="這是綺綺的降雨量圖片："),
-                    ImageSendMessage(original_content_url=image_urls[0], preview_image_url=image_urls[0])
-                ]
-            )
-        else:
-            # 如果找不到圖片
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text="抱歉我雷，目前無法取得最新的圖片。")
-            )
+        # if image_urls:
+        #     # 回傳訊息
+        #     line_bot_api.reply_message(
+        #         event.reply_token,
+        #         [
+        #             TextSendMessage(text="這是綺綺的降雨量圖片："),
+        #             ImageSendMessage(original_content_url=image_urls[0], preview_image_url=image_urls[0])
+        #         ]
+        #     )
+        # else:
+        #     # 如果找不到圖片
+        #     line_bot_api.reply_message(
+        #         event.reply_token,
+        #         TextSendMessage(text="抱歉我雷，目前無法取得最新的圖片。")
+        #     )
         return
         
     if event.message.text == "說話":
