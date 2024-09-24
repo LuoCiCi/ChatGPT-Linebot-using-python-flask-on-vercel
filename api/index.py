@@ -39,9 +39,9 @@ def get_latest_rainfall_image_url():
         # 遍歷所有找到的圖片，並篩選來自 Data/rainfall 目錄的圖片
         for img in images:
             img_url = img.get_attribute('src')
-
+        
             # 只回傳來自 Data/rainfall 的圖片 URL
-            if "Data/rainfall" in img_url:
+            if img_url.startswith("https://www.cwa.gov.tw/Data/rainfall"):
                 image_urls.append(img_url)
     finally:
         driver.quit()
