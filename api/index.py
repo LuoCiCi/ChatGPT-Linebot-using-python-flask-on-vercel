@@ -81,9 +81,6 @@ def handle_message(event):
             # 回傳訊息
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text="我可以說話囉12，歡迎來跟我互動 ^_^ "))
-            line_bot_api.reply_message(
-                event.reply_token,
                 [
                     TextSendMessage(text="這是綺綺的降雨量圖片："),
                     ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
