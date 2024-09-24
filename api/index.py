@@ -43,7 +43,7 @@ def handle_message(event):
         working_status = True
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text="測試節點1"))
+            TextSendMessage(text="測試節點123"))
         
         line_bot_api.reply_message(
             event.reply_token,
