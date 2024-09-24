@@ -3,11 +3,6 @@ from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage, ImageSendMessage
 from api.chatgpt import ChatGPT
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.common.by import By
-import time
 import os
 from datetime import datetime, timedelta
 import requests
@@ -38,37 +33,6 @@ def get_image_name():
 
     # 回傳結果
     return prev_time, prev_prev_time
-
-# 使用 Selenium 抓取最新的圖片 URL
-def get_latest_rainfall_image_url():
-    # 使用 Selenium 抓取最新的圖片 URL
-    service = Service(ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=service, options=chrome_options)
-    # driver = webdriver.Chrome(service=service)
-    image_urls = []
-    
-    try:
-        # 打開目標網頁
-        driver.get("https://www.cwa.gov.tw/V8/C/P/Rainfall/Rainfall_QZJ.html")
-
-        # 等待網頁完全加載
-        time.sleep(2)
-    
-        # 查找所有圖片元素
-        images = driver.find_elements(By.TAG_NAME, 'img')
-
-        # 遍歷所有找到的圖片，並篩選來自 Data/rainfall 目錄的圖片
-        for img in images:
-            img_url = img.get_attribute('src')
-        
-            # 只回傳來自 Data/rainfall 的圖片 URL
-            if img_url.startswith("https://www.cwa.gov.tw/Data/rainfall"):
-                image_urls.append(img_url)
-    except Exception as e:
-        app.logger.error(f"Error while fetching images: {e}")
-    finally:
-        driver.quit()
-    return image_urls
         
 # domain root
 @app.route('/')
@@ -132,7 +96,6 @@ def handle_message(event):
             line_bot_api.reply_message(
                 event.reply_token,
                 [
-                    TextSendMessage(text="這是綺綺的降雨量圖片：{prev_url}"),
                     ImageSendMessage(original_content_url=prev_url, preview_image_url=prev_url)
                 ]
             )
@@ -142,36 +105,9 @@ def handle_message(event):
             line_bot_api.reply_message(
                 event.reply_token,
                 [
-                    TextSendMessage(text="這是綺綺的降雨量圖片：{prev_prev_url}"),
                     ImageSendMessage(original_content_url=prev_prev_url, preview_image_url=prev_prev_url)
                 ]
             )
-
-        
-        # 回傳訊息
-        line_bot_api.reply_message(
-            event.reply_token,
-            [
-                TextSendMessage(text="這是綺綺的降雨量圖片：{url}"),
-                ImageSendMessage(original_content_url=url, preview_image_url=url)
-            ]
-        )
-        
-        # if image_urls:
-        #     # 回傳訊息
-        #     line_bot_api.reply_message(
-        #         event.reply_token,
-        #         [
-        #             TextSendMessage(text="這是綺綺的降雨量圖片："),
-        #             ImageSendMessage(original_content_url=image_urls[0], preview_image_url=image_urls[0])
-        #         ]
-        #     )
-        # else:
-        #     # 如果找不到圖片
-        #     line_bot_api.reply_message(
-        #         event.reply_token,
-        #         TextSendMessage(text="抱歉我雷，目前無法取得最新的圖片。")
-        #     )
         return
         
     if event.message.text == "說話":
