@@ -213,6 +213,23 @@ def handle_message(event):
         )
         return
     
+    if event.message.text == "有洞":
+        working_status = False
+        random_number = random.randint(1, 4)
+        image_urls = [
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/hole"+random_number+".jpg"
+        ]
+
+        # 回傳訊息
+        line_bot_api.reply_message(
+            event.reply_token,
+            [
+                ImageSendMessage(original_content_url=random_number, preview_image_url=random_number)
+            ]
+        )
+        return
+    
+
     if working_status:
         chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
         reply_msg = chatgpt.get_response().replace("AI:", "", 1)
