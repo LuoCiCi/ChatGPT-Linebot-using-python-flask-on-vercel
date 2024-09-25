@@ -118,7 +118,7 @@ def handle_message(event):
             TextSendMessage(text="我可以說話囉，歡迎來跟我互動 ^_^ "))
         return
 
-    if event.message.text == "扯" || event.message.text == "好扯" || event.message.text == "超扯":
+    if event.message.text == "扯" or event.message.text == "好扯" or event.message.text == "超扯":
         working_status = True
         line_bot_api.reply_message(
             event.reply_token,
