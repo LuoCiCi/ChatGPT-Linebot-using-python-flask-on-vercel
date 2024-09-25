@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 import requests
 import random
 import pytz
+import yfinance as yf
 
 line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
 line_handler = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
@@ -233,6 +234,33 @@ def handle_message(event):
                 ImageSendMessage(original_content_url=image_urls, preview_image_url=image_urls)
             ]
         )
+        return
+    
+    
+    if event.message.text.startswith("!"):
+        working_status = False#喵喵我可愛
+        stock_symbol = event.message.text[1:]  # 移除第一個字元「!」
+        stock = yf.Ticker(stock_symbol)
+        stock_info = stock.info
+        
+        #可愛的回應訊息
+        response_message = (
+            f"股票名稱: {stock_info.get('longName', '無法獲取')}\n"
+            f"當日開盤價: {stock_info.get('regularMarketOpen', '無法獲取')}\n"
+            f"當天的最高價: {stock_info.get('regularMarketDayHigh', '無法獲取')}\n"
+            f"當天的最低價: {stock_info.get('regularMarketDayLow', '無法獲取')}\n"
+            f"當前價格: {stock_info.get('regularMarketPrice', '無法獲取')}\n"
+            f"市場價值: {stock_info.get('marketCap', '無法獲取')}"
+        )
+        
+        # 回傳股票資訊給用戶
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=response_message)
+        )
+        return
+    
+    else:#喵喵不回應
         return
     
 
