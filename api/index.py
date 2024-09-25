@@ -397,7 +397,6 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             [
-                TextSendMessage(text=f"random_number_str={random_number_str}"),
                 ImageSendMessage(original_content_url=image_urls, preview_image_url=image_urls)
             ]
         )
