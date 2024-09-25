@@ -8,6 +8,8 @@ from datetime import datetime, timedelta
 import requests
 import pytz
 
+from image import reply_with_random_image
+
 line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
 line_handler = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
 working_status = os.getenv("DEFAULT_TALKING", default = "true").lower() == "true"
@@ -124,6 +126,11 @@ def handle_message(event):
             TextSendMessage(text="好的，我乖乖閉嘴 > <，如果想要我繼續說話，請跟我說 「說話」 > <"))
         return
 
+    if event.message.text == "喵喵":
+        working_status = False
+        reply_with_random_image();
+        return
+    
     if working_status:
         chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
         reply_msg = chatgpt.get_response().replace("AI:", "", 1)
