@@ -208,15 +208,12 @@ def handle_message(event):
         )
         return
 
-    if event.message.text == "錢吶":
+    if event.message.text == "錢吶":       
         working_status = False
         # 取隨機數
         random_number = random.randint(1, 200)
         random_number_str = str(random_number)
         image_urls ="https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/LINE_ALBUM_money_ ("+random_number_str+").jpg"
-        
-        # 隨機選擇一個圖片 URL
-        random_image_url = random.choice(image_urls)
 
         # 回傳訊息
         line_bot_api.reply_message(
