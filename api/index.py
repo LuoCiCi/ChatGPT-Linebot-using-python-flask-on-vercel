@@ -349,6 +349,27 @@ def handle_message(event):
             TextSendMessage(text="你才閉嘴，就你最吵"))
         return
 
+    if event.message.text == "早安" or event.message.text == "早":
+        working_status = False
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="大家早安，今天又是美好的一天~"))
+        return
+
+    if event.message.text == "晚安":
+        working_status = False
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="各位晚安，夢裡見囉~"))
+        return
+
+    if event.message.text == "下班":
+        working_status = False
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="我也可以下班了嗎？"))
+        return
+
     if event.message.text == "抽女友" or event.message.text == "抽老婆":
         working_status = False
         ts = [
