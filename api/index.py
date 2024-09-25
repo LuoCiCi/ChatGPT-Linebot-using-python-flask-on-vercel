@@ -287,7 +287,7 @@ def handle_message(event):
                     ImageSendMessage(original_content_url=prev_url, preview_image_url=prev_url)
                 ]
             )
-        else if (check_image_url_exists(prev_prev_url))::
+        else if (check_image_url_exists(prev_prev_url)):
             # url = prev_prev_url
             # 回傳訊息
             line_bot_api.reply_message(
@@ -296,7 +296,7 @@ def handle_message(event):
                     ImageSendMessage(original_content_url=prev_prev_url, preview_image_url=prev_prev_url)
                 ]
             )
-        else if (check_image_url_exists(prev_3_url))::
+        else if (check_image_url_exists(prev_3_url)):
             # url = prev_3_url
             # 回傳訊息
             line_bot_api.reply_message(
@@ -305,7 +305,7 @@ def handle_message(event):
                     ImageSendMessage(original_content_url=prev_3_url, preview_image_url=prev_3_url)
                 ]
             )
-        else if (check_image_url_exists(prev_4_url))::
+        else if (check_image_url_exists(prev_4_url)):
             # url = prev_4_url
             # 回傳訊息
             line_bot_api.reply_message(
