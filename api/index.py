@@ -155,7 +155,7 @@ def handle_message(event):
             )
         return
 
-    if event.message.text == "溫度":
+    if event.message.text == "溫度" or event.message.text == "氣溫":
         working_status = True
         
         prev, prev_ = get_prev00_prevprev00()
@@ -267,7 +267,7 @@ def handle_message(event):
         )
         return
 
-    if event.message.text == "錢吶":       
+    if event.message.text == "錢吶" or event.message.text == "錢啊" or event.message.text == "錢錢":       
         working_status = False
         # 取隨機數
         random_number = random.randint(1, 400)
@@ -283,7 +283,7 @@ def handle_message(event):
         )
         return
 
-    if event.message.text == "多啊":       
+    if event.message.text == "多吶" or event.message.text == "多啊" or event.message.text == "多多":       
         working_status = False
         # 取隨機數
         random_number = random.randint(1, 200)
