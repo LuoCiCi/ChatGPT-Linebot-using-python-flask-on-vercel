@@ -125,6 +125,23 @@ def handle_message(event):
             TextSendMessage(text="好的，我乖乖閉嘴 > <，如果想要我繼續說話，請跟我說 「說話」 > <"))
         return
 
+    if event.message.text == "急了":
+        working_status = False
+        image_urls = [
+            "https://memeprod.sgp1.digitaloceanspaces.com/user-wtf/1693521527021.jpg"
+        ]
+            # 隨機選擇一個圖片 URL
+        random_image_url = random.choice(image_urls)
+
+        # 回傳訊息
+        line_bot_api.reply_message(
+            event.reply_token,
+            [
+                ImageSendMessage(original_content_url=random_image_url, preview_image_url=random_image_url)
+            ]
+        )
+        return
+
     if event.message.text == "喵喵":
         working_status = False
         image_urls = [
