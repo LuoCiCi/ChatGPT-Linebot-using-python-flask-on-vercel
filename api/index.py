@@ -24,6 +24,9 @@ def get_prev10_prevprev10():
     # 取得當前系統日期和時間
     now = datetime.now(tz)
 
+    # 取出當前時間的分鐘數
+    minute = now.minute
+
     # 計算前一個10分倍數的時間
     prev_minute = (minute // 10) * 10  # 取最接近的 10 分倍數
     prev_time = now.replace(minute=prev_minute, second=0, microsecond=0)
