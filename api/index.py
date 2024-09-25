@@ -322,10 +322,10 @@ def handle_message(event):
 
     if event.message.text == "選單" or event.message.text == "功能" or event.message.text == "menu":
         working_status = True
-        menu = "目前功能如下：/n[1]雨量=天氣=濕度/n[2]溫度=氣溫/n[3]衛星=衛星雲圖/n[4]紫外線/n[5]急了/n[6]錢錢=錢吶=錢啊/n[7]多多=多吶=多啊/n[8]錢錢多多=錢多"
+        menu = "目前功能如下：\n[1]雨量=天氣=濕度\n[2]溫度=氣溫\n[3]衛星=衛星雲圖\n[4]紫外線\n[5]急了\n[6]錢錢=錢吶=錢啊\n[7]多多=多吶=多啊\n[8]錢錢多多=錢多"
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text="{menu}"))
+            TextSendMessage(text=f"{menu}"))
         return
         
     if event.message.text == "說話":
