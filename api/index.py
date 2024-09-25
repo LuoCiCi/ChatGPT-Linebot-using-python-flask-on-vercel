@@ -110,6 +110,41 @@ def handle_message(event):
                 ]
             )
         return
+
+    if event.message.text == "溫度":
+        working_status = True
+        
+        prev, prev_ = get_image_name()
+
+        # 將 prev_time 轉換成日期字串
+        prev_date_str = prev.strftime('%Y-%m-%d')
+        prev_time_str = prev.strftime('%H%M')
+
+        prev_prev_date_str = prev_.strftime('%Y-%m-%d')
+        prev_prev_time_str = prev_.strftime('%H%M')
+
+        prev_url = "https://www.cwa.gov.tw/Data/temperature/" + prev_date_str + "_" + prev_time_str + ".GTP8.jpg"
+        prev_prev_url = "https://www.cwa.gov.tw/Data/temperature/" + prev_prev_date_str + "_" + prev_prev_time_str + ".GTP8.jpg"
+
+        if (check_image_url_exists(prev_url)):
+            # url = prev_url
+            # 回傳訊息
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    ImageSendMessage(original_content_url=prev_url, preview_image_url=prev_url)
+                ]
+            )
+        else:
+            # url = prev_prev_url
+            # 回傳訊息
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    ImageSendMessage(original_content_url=prev_prev_url, preview_image_url=prev_prev_url)
+                ]
+            )
+        return
         
     if event.message.text == "說話":
         working_status = True
@@ -125,12 +160,12 @@ def handle_message(event):
             TextSendMessage(text="你最扯~"))
         return
 
-    # if event.message.text == "閉嘴":
-    #     working_status = False
-    #     line_bot_api.reply_message(
-    #         event.reply_token,
-    #         TextSendMessage(text="好的，我乖乖閉嘴 > <，如果想要我繼續說話，請跟我說 「說話」 > <"))
-    #     return
+    if event.message.text == "閉嘴":
+        working_status = False
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="你才閉嘴，就你最吵"))
+        return
 
     if event.message.text == "急了":
         working_status = False
