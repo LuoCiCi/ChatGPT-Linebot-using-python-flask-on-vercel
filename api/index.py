@@ -322,7 +322,7 @@ def handle_message(event):
 
     if event.message.text == "選單" or event.message.text == "功能" or event.message.text == "menu":
         working_status = True
-        menu = "目前功能如下：\n[1]雨量=天氣=濕度\n[2]溫度=氣溫\n[3]衛星=衛星雲圖\n[4]紫外線\n[5]急了\n[6]錢錢=錢吶=錢啊\n[7]多多=多吶=多啊\n[8]錢錢多多=錢多"
+        menu = "目前功能如下：\n[1] 雨量=天氣=濕度\n[2] 溫度=氣溫\n[3] 衛星=衛星雲圖\n[4] 紫外線\n[5] 急了\n[6] 錢錢=錢吶=錢啊\n[7] 多多=多吶=多啊\n[8] 錢錢多多=錢多\n[9] 抽\n[10] 抽奶=抽大奶"
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=f"{menu}"))
@@ -347,6 +347,22 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="你才閉嘴，就你最吵"))
+        return
+
+    if event.message.text == "抽女友" or event.message.text == "抽老婆":
+        working_status = False
+        ts = [
+            "你沒有!!",
+            "你作夢!",
+            "離你太遙遠了，別想了",
+            "總是想太多~"
+        ]
+        # 隨機選擇一個文字
+        random_ts_url = random.choice(ts)
+        
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=f"{random_ts_url}"))
         return
 
     if event.message.text == "急了":
@@ -476,7 +492,7 @@ def handle_message(event):
         )
         return
 
-    if event.message.text == "抽大奶" or event.message.text == "抽大奶":
+    if event.message.text == "抽奶" or event.message.text == "抽大奶":
         working_status = False
         image_urls = [
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZksY8fVOYn57iAGHhJxokGgdtGc3mugmk4-QmLe_vLyS-7Jgna_sya8PYzFW5QUCW70Q&usqp=CAU",
