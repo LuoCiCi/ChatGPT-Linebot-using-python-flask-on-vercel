@@ -128,7 +128,11 @@ def handle_message(event):
     if event.message.text == "急了":
         working_status = False
         image_urls = [
-            "https://memeprod.sgp1.digitaloceanspaces.com/user-wtf/1693521527021.jpg"
+            "https://memeprod.sgp1.digitaloceanspaces.com/user-wtf/1693521527021.jpg",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx9BFj90LO-rK98keHK6wAkEiah_McWWdVeQ&s",
+            "https://stickershop.line-scdn.net/stickershop/v1/product/25440282/LINEStorePC/main.png?v=1",
+            "https://p3-pc-sign.douyinpic.com/tos-cn-i-0813/bafe6270a73a4d28bd793abc57c11ec4~tplv-dy-aweme-images:q75.webp?biz_tag=aweme_images&from=327834062&s=PackSourceEnum_SEARCH&sc=image&se=false&x-expires=1729706400&x-signature=vZwXDWxIV2bYqm1TelPGbIxWLqQ%3D",
+            "https://stickershop.line-scdn.net/stickershop/v1/product/25428386/LINEStorePC/main.png?v=1"
         ]
             # 隨機選擇一個圖片 URL
         random_image_url = random.choice(image_urls)
