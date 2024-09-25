@@ -271,7 +271,7 @@ def handle_message(event):
         )
         return
     
-    
+     
     if event.message.text.startswith("!"):
         working_status = False#喵喵我可愛
         stock_symbol = event.message.text[1:]  # 移除第一個字元「!」
@@ -294,10 +294,7 @@ def handle_message(event):
             TextSendMessage(text=response_message)
         )
         return
-    
-    else:#喵喵不回應
-        return
-    
+  
 
     if working_status:
         chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
