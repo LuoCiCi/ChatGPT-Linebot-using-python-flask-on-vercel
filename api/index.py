@@ -216,15 +216,14 @@ def handle_message(event):
     if event.message.text == "有洞":
         working_status = False
         random_number = random.randint(1, 4)
-        image_urls = [
-            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/hole"+random_number+".jpg"
-        ]
+        image_urls ="https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/hole"+random_number+".jpg"
+
 
         # 回傳訊息
         line_bot_api.reply_message(
             event.reply_token,
             [
-                ImageSendMessage(original_content_url=random_number, preview_image_url=random_number)
+                ImageSendMessage(original_content_url=image_urls, preview_image_url=image_urls)
             ]
         )
         return
