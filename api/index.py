@@ -16,6 +16,27 @@ working_status = os.getenv("DEFAULT_TALKING", default = "true").lower() == "true
 
 app = Flask(__name__)
 chatgpt = ChatGPT()
+
+# 計算出前一個10分倍數的時間以及前前一個10分倍數的時間
+def get_prev10_prevprev10():
+    # 設定台灣時間
+    tz = pytz.timezone('Asia/Taipei')
+    # 取得當前系統日期和時間
+    now = datetime.now(tz)
+
+    # 計算前一個10分倍數的時間
+    prev_minute = (minute // 10) * 10  # 取最接近的 10 分倍數
+    prev_time = now.replace(minute=prev_minute, second=0, microsecond=0)
+
+    # 如果當前時間已經是整10分倍數，則需要再往前推一個10分倍數
+    if minute % 10 == 0:
+        prev_time = prev_time - timedelta(minutes=10)
+
+    # 計算前前一個10分倍數的時間
+    prev_prev_time = prev_time - timedelta(minutes=10)
+
+    # 回傳結果
+    return prev_time, prev_prev_time
     
 # 計算出前一個整點或半點的時間以及前前一個整點或半點的時間
 def get_prev30_prevprev30():
@@ -145,6 +166,41 @@ def handle_message(event):
 
         prev_url = "https://www.cwa.gov.tw/Data/temperature/" + prev_date_str + "_" + prev_time_str + ".GTP8.jpg"
         prev_prev_url = "https://www.cwa.gov.tw/Data/temperature/" + prev_prev_date_str + "_" + prev_prev_time_str + ".GTP8.jpg"
+
+        if (check_image_url_exists(prev_url)):
+            # url = prev_url
+            # 回傳訊息
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    ImageSendMessage(original_content_url=prev_url, preview_image_url=prev_url)
+                ]
+            )
+        else:
+            # url = prev_prev_url
+            # 回傳訊息
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    ImageSendMessage(original_content_url=prev_prev_url, preview_image_url=prev_prev_url)
+                ]
+            )
+        return
+
+    if event.message.text == "紫外線":
+        working_status = True
+        
+        prev, prev_ = get_prev10_prevprev10()
+
+        # 將 prev_time 轉換成日期字串
+        prev_datetime_str = prev.strftime('%Y%m%d%H%M')
+        prev_minute_str = prev.strftime('%M')
+
+        prev_prev_datetime_str = prev_.strftime('%Y%m%d%H%M')
+        prev_prev_minute_str = prev_.strftime('%M')        
+
+        prev_url = "https://www.cwa.gov.tw/Data/UVI/UVI_CWB.png?t=" + prev_datetime_str + "-" + prev_minute_str[0] + ".GTP8.jpg"
+        prev_prev_url = "https://www.cwa.gov.tw/Data/UVI/UVI_CWB.png?t=" + prev_prev_datetime_str + "-" + prev_prev_minute_str[0] + ".GTP8.jpg"
 
         if (check_image_url_exists(prev_url)):
             # url = prev_url
