@@ -17,8 +17,8 @@ working_status = os.getenv("DEFAULT_TALKING", default = "true").lower() == "true
 app = Flask(__name__)
 chatgpt = ChatGPT()
     
-# 計算出前一個整點或半點的時間以及下一個整點或半點的時間
-def get_image_name():
+# 計算出前一個整點或半點的時間以及前前一個整點或半點的時間
+def get_prev30_prevprev30():
     # 設定台灣時間
     tz = pytz.timezone('Asia/Taipei')
     # 取得當前系統日期和時間
@@ -35,7 +35,26 @@ def get_image_name():
 
     # 回傳結果
     return prev_time, prev_prev_time
-        
+
+# 計算出前一個整點的時間以及前前一個整點的時間
+def get_prev00_prevprev00():
+    # 設定台灣時間
+    tz = pytz.timezone('Asia/Taipei')
+    # 取得當前系統日期和時間
+    now = datetime.now(tz)
+
+    # 計算前一個整點的00分時間
+    if now.minute >= 30:
+        prev_time = now.replace(minute=0, second=0, microsecond=0)
+    else:
+        prev_time = (now - timedelta(hours=1)).replace(minute=0, second=0, microsecond=0)
+
+    # 計算前前一個整點的00分時間
+    prev_prev_time = prev_time - timedelta(hours=1)
+
+    # 回傳結果
+    return prev_time, prev_prev_time
+    
 # domain root
 @app.route('/')
 def home():
@@ -80,7 +99,7 @@ def handle_message(event):
     if event.message.text == "天氣":
         working_status = True
         
-        prev, prev_ = get_image_name()
+        prev, prev_ = get_prev30_prevprev30()
 
         # 將 prev_time 轉換成日期字串
         prev_date_str = prev.strftime('%Y-%m-%d')
@@ -115,7 +134,7 @@ def handle_message(event):
     if event.message.text == "溫度":
         working_status = True
         
-        prev, prev_ = get_image_name()
+        prev, prev_ = get_prev00_prevprev00()
 
         # 將 prev_time 轉換成日期字串
         prev_date_str = prev.strftime('%Y-%m-%d')
@@ -192,7 +211,7 @@ def handle_message(event):
     if event.message.text == "錢吶":
         working_status = False
         # 取隨機數
-        random_number = random.randint(1, 100)
+        random_number = random.randint(1, 200)
         random_number_str = str(random_number)
         image_urls ="https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/LINE_ALBUM_money_ ("+random_number_str+").jpg"
         
