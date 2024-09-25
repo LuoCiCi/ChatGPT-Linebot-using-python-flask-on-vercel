@@ -120,7 +120,7 @@ def handle_message(event):
     if event.message.type != "text":
         return
 
-    if event.message.text == "天氣":
+    if event.message.text == "天氣" or event.message.text == "雨量" or event.message.text == "濕度":
         working_status = True
         
         prev, prev_ = get_prev30_prevprev30()
