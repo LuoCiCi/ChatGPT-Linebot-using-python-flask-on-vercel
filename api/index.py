@@ -216,7 +216,8 @@ def handle_message(event):
     if event.message.text == "有洞":
         working_status = False
         random_number = random.randint(1, 4)
-        image_urls ="https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/hole"+random_number+".jpg"
+        random_number_str = str(random_number)
+        image_urls ="https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/hole"+random_number_str+".jpg"
 
 
         # 回傳訊息
