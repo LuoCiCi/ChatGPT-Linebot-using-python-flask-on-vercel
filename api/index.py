@@ -270,9 +270,25 @@ def handle_message(event):
     if event.message.text == "錢吶":       
         working_status = False
         # 取隨機數
-        random_number = random.randint(1, 200)
+        random_number = random.randint(1, 400)
         random_number_str = str(random_number)
         image_urls ="https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/LINE_ALBUM_money_%20("+random_number_str+").jpg"
+
+        # 回傳訊息
+        line_bot_api.reply_message(
+            event.reply_token,
+            [
+                ImageSendMessage(original_content_url=image_urls, preview_image_url=image_urls)
+            ]
+        )
+        return
+
+    if event.message.text == "多啊":       
+        working_status = False
+        # 取隨機數
+        random_number = random.randint(1, 200)
+        random_number_str = str(random_number)
+        image_urls ="https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/LINE_ALBUM_many_%20("+random_number_str+").jpg"
 
         # 回傳訊息
         line_bot_api.reply_message(
