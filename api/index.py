@@ -287,7 +287,7 @@ def handle_message(event):
                     ImageSendMessage(original_content_url=prev_url, preview_image_url=prev_url)
                 ]
             )
-        else if (check_image_url_exists(prev_prev_url)):
+        elif (check_image_url_exists(prev_prev_url)):
             # url = prev_prev_url
             # 回傳訊息
             line_bot_api.reply_message(
@@ -296,7 +296,7 @@ def handle_message(event):
                     ImageSendMessage(original_content_url=prev_prev_url, preview_image_url=prev_prev_url)
                 ]
             )
-        else if (check_image_url_exists(prev_3_url)):
+        elif (check_image_url_exists(prev_3_url)):
             # url = prev_3_url
             # 回傳訊息
             line_bot_api.reply_message(
@@ -305,7 +305,7 @@ def handle_message(event):
                     ImageSendMessage(original_content_url=prev_3_url, preview_image_url=prev_3_url)
                 ]
             )
-        else if (check_image_url_exists(prev_4_url)):
+        elif (check_image_url_exists(prev_4_url)):
             # url = prev_4_url
             # 回傳訊息
             line_bot_api.reply_message(
@@ -365,7 +365,7 @@ def handle_message(event):
     if event.message.text == "錢吶" or event.message.text == "錢啊" or event.message.text == "錢錢":       
         working_status = False
         # 取隨機數
-        random_number = random.randint(1, 400)
+        random_number = random.randint(1, 50)
         random_number_str = str(random_number)
         image_urls ="https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/LINE_ALBUM_money_%20("+random_number_str+").jpg"
 
@@ -381,7 +381,7 @@ def handle_message(event):
     if event.message.text == "多吶" or event.message.text == "多啊" or event.message.text == "多多":       
         working_status = False
         # 取隨機數
-        random_number = random.randint(1, 200)
+        random_number = random.randint(1, 50)
         random_number_str = str(random_number)
         image_urls ="https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/LINE_ALBUM_many_%20("+random_number_str+").jpg"
 
@@ -397,7 +397,7 @@ def handle_message(event):
     if event.message.text == "錢多" or event.message.text == "錢錢多多":
         working_status = False
         # 取隨機數
-        random_number = random.randint(1, 100)
+        random_number = random.randint(1, 50)
         random_number_str = str(random_number)
         image_urls ="https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/LINE_ALBUM_moneymany_%20("+random_number_str+").jpg"
 
