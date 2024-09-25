@@ -219,7 +219,7 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             [
-                ImageSendMessage(original_content_url=random_image_url, preview_image_url=random_image_url)
+                ImageSendMessage(original_content_url=image_urls, preview_image_url=image_urls)
             ]
         )
         return
