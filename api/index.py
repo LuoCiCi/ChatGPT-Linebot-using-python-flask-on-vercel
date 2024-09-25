@@ -17,6 +17,36 @@ working_status = os.getenv("DEFAULT_TALKING", default = "true").lower() == "true
 app = Flask(__name__)
 chatgpt = ChatGPT()
 
+# 計算出前一個10分倍數的時間以及前前一個10分倍數的時間以及前前前一個10分倍數的時間
+def get_prev10_4():
+    # 設定台灣時間
+    tz = pytz.timezone('Asia/Taipei')
+    # 取得當前系統日期和時間
+    now = datetime.now(tz)
+
+    # 取出當前時間的分鐘數
+    minute = now.minute
+
+    # 計算前一個10分倍數的時間
+    prev_minute = (minute // 10) * 10  # 取最接近的 10 分倍數
+    prev_time = now.replace(minute=prev_minute, second=0, microsecond=0)
+
+    # 如果當前時間已經是整10分倍數，則需要再往前推一個10分倍數
+    if minute % 10 == 0:
+        prev_time = prev_time - timedelta(minutes=10)
+
+    # 計算前前一個10分倍數的時間
+    prev_prev_time = prev_time - timedelta(minutes=10)
+
+    # 計算前前前一個10分倍數的時間
+    prev_prev_prev_time = prev_prev_time - timedelta(minutes=10)
+
+    # 計算前前前一個10分倍數的時間
+    prev_prev_prev_prev_time = prev_prev_prev_time - timedelta(minutes=10)
+
+    # 回傳結果
+    return prev_time, prev_prev_time, prev_prev_prev_time, prev_prev_prev_prev_time
+
 # 計算出前一個10分倍數的時間以及前前一個10分倍數的時間
 def get_prev10_prevprev10():
     # 設定台灣時間
@@ -223,6 +253,71 @@ def handle_message(event):
                     ImageSendMessage(original_content_url=prev_prev_url, preview_image_url=prev_prev_url)
                 ]
             )
+        return
+
+    if event.message.text == "衛星" or event.message.text == "衛星雲圖":
+        working_status = True
+        
+        prev, prev_, prev_3, prev_4 = get_prev10_4()
+
+        # 將 prev_time 轉換成日期字串
+        prev_date_str = prev.strftime('%Y-%m-%d')
+        prev_time_str = prev.strftime('%H-%M')
+
+        prev_prev_date_str = prev_.strftime('%Y-%m-%d')
+        prev_prev_time_str = prev_.strftime('%H-%M')
+
+        prev_3_date_str = prev_3.strftime('%Y-%m-%d')
+        prev_3_time_str = prev_3.strftime('%H-%M')
+
+        prev_4_date_str = prev_4.strftime('%Y-%m-%d')
+        prev_4_time_str = prev_4.strftime('%H-%M')
+
+        prev_url = "https://www.cwa.gov.tw/Data/satellite/LCC_IR1_CR_2750/LCC_IR1_CR_2750-" + prev_date_str + "-" + prev_time_str + ".jpg"
+        prev_prev_url = "https://www.cwa.gov.tw/Data/satellite/LCC_IR1_CR_2750/LCC_IR1_CR_2750-" + prev_prev_date_str + "-" + prev_prev_time_str + ".jpg"
+        prev_3_url = "https://www.cwa.gov.tw/Data/satellite/LCC_IR1_CR_2750/LCC_IR1_CR_2750-" + prev_3_date_str + "-" + prev_3_time_str + ".jpg"
+        prev_4_url = "https://www.cwa.gov.tw/Data/satellite/LCC_IR1_CR_2750/LCC_IR1_CR_2750-" + prev_4_date_str + "-" + prev_4_time_str + ".jpg"
+
+        if (check_image_url_exists(prev_url)):
+            # url = prev_url
+            # 回傳訊息
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    ImageSendMessage(original_content_url=prev_url, preview_image_url=prev_url)
+                ]
+            )
+        else if (check_image_url_exists(prev_prev_url))::
+            # url = prev_prev_url
+            # 回傳訊息
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    ImageSendMessage(original_content_url=prev_prev_url, preview_image_url=prev_prev_url)
+                ]
+            )
+        else if (check_image_url_exists(prev_3_url))::
+            # url = prev_3_url
+            # 回傳訊息
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    ImageSendMessage(original_content_url=prev_3_url, preview_image_url=prev_3_url)
+                ]
+            )
+        else if (check_image_url_exists(prev_4_url))::
+            # url = prev_4_url
+            # 回傳訊息
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    ImageSendMessage(original_content_url=prev_4_url, preview_image_url=prev_4_url)
+                ]
+            )
+        else:
+            line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="無法取得衛星雲圖"))
         return
         
     if event.message.text == "說話":
