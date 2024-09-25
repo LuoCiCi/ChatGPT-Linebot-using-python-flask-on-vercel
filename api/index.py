@@ -115,15 +115,22 @@ def handle_message(event):
         working_status = True
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text="我可以說話囉12，歡迎來跟我互動 ^_^ "))
+            TextSendMessage(text="我可以說話囉，歡迎來跟我互動 ^_^ "))
         return
 
-    if event.message.text == "閉嘴":
-        working_status = False
+    if event.message.text == "扯" || event.message.text == "好扯" || event.message.text == "超扯":
+        working_status = True
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text="好的，我乖乖閉嘴 > <，如果想要我繼續說話，請跟我說 「說話」 > <"))
+            TextSendMessage(text="你最扯~"))
         return
+
+    # if event.message.text == "閉嘴":
+    #     working_status = False
+    #     line_bot_api.reply_message(
+    #         event.reply_token,
+    #         TextSendMessage(text="好的，我乖乖閉嘴 > <，如果想要我繼續說話，請跟我說 「說話」 > <"))
+    #     return
 
     if event.message.text == "急了":
         working_status = False
@@ -218,7 +225,6 @@ def handle_message(event):
         random_number = random.randint(1, 4)
         random_number_str = str(random_number)
         image_urls ="https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/hole"+random_number_str+".jpg"
-
 
         # 回傳訊息
         line_bot_api.reply_message(
