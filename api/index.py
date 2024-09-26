@@ -424,19 +424,20 @@ def handle_message(event):
             )
         return
 
-            
-
-        # 回傳訊息
-        line_bot_api.reply_message(
-            event.reply_token,
-            [
-                ImageSendMessage(original_content_url=random_image_url, preview_image_url=random_image_url)
-            ]
-        )
-        return
+        # # 回傳訊息
+        # line_bot_api.reply_message(
+        #     event.reply_token,
+        #     [
+        #         ImageSendMessage(original_content_url=random_image_url, preview_image_url=random_image_url)
+        #     ]
+        # )
+        # return
 
     if event.message.text == "抽":
         working_status = False
+        max_attempts = 5  # 設定最多嘗試的次數
+        attempts = 0
+        
         image_urls = [
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBOlQL3xJsiB0rdZ07j0tUmJUdrLgZdC29HQ&s",
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZksY8fVOYn57iAGHhJxokGgdtGc3mugmk4-QmLe_vLyS-7Jgna_sya8PYzFW5QUCW70Q&usqp=CAU",
@@ -543,6 +544,9 @@ def handle_message(event):
 
     if event.message.text == "抽奶" or event.message.text == "抽大奶":
         working_status = False
+        max_attempts = 5  # 設定最多嘗試的次數
+        attempts = 0
+        
         image_urls = [
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZksY8fVOYn57iAGHhJxokGgdtGc3mugmk4-QmLe_vLyS-7Jgna_sya8PYzFW5QUCW70Q&usqp=CAU",
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBOlQL3xJsiB0rdZ07j0tUmJUdrLgZdC29HQ&s",
