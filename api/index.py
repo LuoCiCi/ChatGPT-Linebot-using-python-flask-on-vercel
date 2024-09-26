@@ -389,6 +389,9 @@ def handle_message(event):
 
     if event.message.text == "急了":
         working_status = False
+        max_attempts = 5  # 設定最多嘗試的次數
+        attempts = 0
+        
         image_urls = [
             "https://memeprod.sgp1.digitaloceanspaces.com/user-wtf/1693521527021.jpg",
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx9BFj90LO-rK98keHK6wAkEiah_McWWdVeQ&s",
@@ -396,8 +399,32 @@ def handle_message(event):
             "https://p3-pc-sign.douyinpic.com/tos-cn-i-0813/bafe6270a73a4d28bd793abc57c11ec4~tplv-dy-aweme-images:q75.webp?biz_tag=aweme_images&from=327834062&s=PackSourceEnum_SEARCH&sc=image&se=false&x-expires=1729706400&x-signature=vZwXDWxIV2bYqm1TelPGbIxWLqQ%3D",
             "https://stickershop.line-scdn.net/stickershop/v1/product/25428386/LINEStorePC/main.png?v=1"
         ]
+
+        # 進行圖片URL檢查
+        while attempts < max_attempts:
             # 隨機選擇一個圖片 URL
-        random_image_url = random.choice(image_urls)
+            random_image_url = random.choice(image_urls)
+            
+            # 檢查圖片是否存在
+            if check_image_url_exists(random_image_url):
+                # 如果圖片存在，回傳訊息
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    [
+                        ImageSendMessage(original_content_url=random_image_url, preview_image_url=random_image_url)
+                    ]
+                )
+                break  # 找到圖片後退出迴圈
+            attempts += 1
+        else:
+            # 如果在max_attempts次內未找到有效圖片
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="無法找到對應的圖片，請稍後再試。")
+            )
+        return
+
+            
 
         # 回傳訊息
         line_bot_api.reply_message(
