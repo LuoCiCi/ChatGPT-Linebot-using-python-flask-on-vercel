@@ -594,7 +594,7 @@ def handle_message(event):
             image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/LINE_ALBUM_moneymany_%20({random_number}).jpg"
             
             # 檢查圖片是否存在
-            if check_image_exists(image_url):
+            if check_image_url_exists(image_url):
                 # 如果圖片存在，回傳訊息
                 line_bot_api.reply_message(
                     event.reply_token,
