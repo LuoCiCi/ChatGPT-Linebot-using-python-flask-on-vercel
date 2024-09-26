@@ -174,8 +174,7 @@ def handle_message(event):
                     ImageSendMessage(original_content_url=prev_url, preview_image_url=prev_url)
                 ]
             )
-        else:
-            # url = prev_prev_url
+        elif (check_image_url_exists(prev_prev_url)):
             # 回傳訊息
             line_bot_api.reply_message(
                 event.reply_token,
@@ -183,6 +182,10 @@ def handle_message(event):
                     ImageSendMessage(original_content_url=prev_prev_url, preview_image_url=prev_prev_url)
                 ]
             )
+        else:
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="無法取得雨量圖"))
         return
 
     if event.message.text == "溫度" or event.message.text == "氣溫":
@@ -209,8 +212,7 @@ def handle_message(event):
                     ImageSendMessage(original_content_url=prev_url, preview_image_url=prev_url)
                 ]
             )
-        else:
-            # url = prev_prev_url
+        elif (check_image_url_exists(prev_prev_url)):
             # 回傳訊息
             line_bot_api.reply_message(
                 event.reply_token,
@@ -218,6 +220,10 @@ def handle_message(event):
                     ImageSendMessage(original_content_url=prev_prev_url, preview_image_url=prev_prev_url)
                 ]
             )
+        else:
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="無法取得溫度圖"))
         return
 
     if event.message.text == "紫外線":
@@ -244,8 +250,7 @@ def handle_message(event):
                     ImageSendMessage(original_content_url=prev_url, preview_image_url=prev_url)
                 ]
             )
-        else:
-            # url = prev_prev_url
+        elif (check_image_url_exists(prev_prev_url)):
             # 回傳訊息
             line_bot_api.reply_message(
                 event.reply_token,
@@ -253,6 +258,10 @@ def handle_message(event):
                     ImageSendMessage(original_content_url=prev_prev_url, preview_image_url=prev_prev_url)
                 ]
             )
+        else:
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="無法取得紫外線圖"))
         return
 
     if event.message.text == "衛星" or event.message.text == "衛星雲圖":
@@ -316,8 +325,73 @@ def handle_message(event):
             )
         else:
             line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text="無法取得衛星雲圖"))
+                event.reply_token,
+                TextSendMessage(text="無法取得衛星雲圖"))
+        return
+
+    if event.message.text == "雷達":
+        working_status = True
+        
+        prev, prev_, prev_3, prev_4 = get_prev10_4()
+
+        # 將 prev_time 轉換成日期字串
+        prev_date_str = prev.strftime('%Y%m%d')
+        prev_time_str = prev.strftime('%H%M')
+
+        prev_prev_date_str = prev_.strftime('%Y%m%d')
+        prev_prev_time_str = prev_.strftime('%H%M')
+
+        prev_3_date_str = prev_3.strftime('%Y%m%d')
+        prev_3_time_str = prev_3.strftime('%H%M')
+
+        prev_4_date_str = prev_4.strftime('%Y%m%d')
+        prev_4_time_str = prev_4.strftime('%H%M')
+
+        prev_url = "https://www.cwa.gov.tw/Data/radar/CV1_3600_" + prev_date_str + prev_time_str + ".jpg"
+        prev_prev_url = "https://www.cwa.gov.tw/Data/radar/CV1_3600_" + prev_prev_date_str + prev_prev_time_str + ".jpg"
+        prev_3_url = "https://www.cwa.gov.tw/Data/radar/CV1_3600_" + prev_3_date_str + prev_3_time_str + ".jpg"
+        prev_4_url = "https://www.cwa.gov.tw/Data/radar/CV1_3600_" + prev_4_date_str + prev_4_time_str + ".jpg"
+
+        if (check_image_url_exists(prev_url)):
+            # url = prev_url
+            # 回傳訊息
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    ImageSendMessage(original_content_url=prev_url, preview_image_url=prev_url)
+                ]
+            )
+        elif (check_image_url_exists(prev_prev_url)):
+            # url = prev_prev_url
+            # 回傳訊息
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    ImageSendMessage(original_content_url=prev_prev_url, preview_image_url=prev_prev_url)
+                ]
+            )
+        elif (check_image_url_exists(prev_3_url)):
+            # url = prev_3_url
+            # 回傳訊息
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    ImageSendMessage(original_content_url=prev_3_url, preview_image_url=prev_3_url)
+                ]
+            )
+        elif (check_image_url_exists(prev_4_url)):
+            # url = prev_4_url
+            # 回傳訊息
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    ImageSendMessage(original_content_url=prev_4_url, preview_image_url=prev_4_url)
+                ]
+            )
+        else:
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="無法取得雷達圖"))
         return
 
     # 暫時使用line設定功能，將此隱藏
