@@ -608,7 +608,7 @@ def handle_message(event):
             random_number_image_urls_2 = random.randint(1,60)
             image_urls_2 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/Drawing%20({random_number_image_urls_2}).jpg"
             random_value = random.random()        
-            if random_value < 0.05:  # 10% 機率
+            if random_value < 0.08:  # 8% 機率
                 
                 random_image_url = image_urls_2
                 
