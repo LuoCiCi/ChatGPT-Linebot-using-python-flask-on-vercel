@@ -489,6 +489,8 @@ def handle_message(event):
         return
 
     if event.message.text == "氣象" or event.message.text == "所有天氣圖":
+        messages = []  # 存放所有訊息的列表
+
         # 取雨量圖
         rain_err = None
         rain_prev_url, rain_prev_prev_url = get_rain_pic()
@@ -549,70 +551,32 @@ def handle_message(event):
 
         # 錯誤訊息
         if rain_err is not None:
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text="{rain_err}"))
+            messages.append(TextSendMessage(text=f"{rain_err}"))
         else:
-            # 回傳訊息
-            line_bot_api.reply_message(
-                event.reply_token,
-                [
-                    ImageSendMessage(original_content_url=rain_url, preview_image_url=rain_url)
-                ]
-            )
-            
+            messages.append(ImageSendMessage(original_content_url=rain_url, preview_image_url=rain_url))
         
         if temp_err:
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text="{temp_err}"))
+            messages.append(TextSendMessage(text=f"{temp_err}"))
         else:
-            # 回傳訊息
-            line_bot_api.reply_message(
-                event.reply_token,
-                [
-                    ImageSendMessage(original_content_url=temp_url, preview_image_url=temp_url)
-                ]
-            )
+            messages.append(ImageSendMessage(original_content_url=temp_url, preview_image_url=temp_url))
 
         if uvrays_err:
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text="{uvrays_err}"))
+            messages.append(TextSendMessage(text=f"{uvrays_err}"))
         else:
-            # 回傳訊息
-            line_bot_api.reply_message(
-                event.reply_token,
-                [
-                    ImageSendMessage(original_content_url=uvrays_url, preview_image_url=uvrays_url)
-                ]
-            )
+            messages.append(ImageSendMessage(original_content_url=uvrays_url, preview_image_url=uvrays_url))
 
         if sat_err:
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text="{sat_err}"))
+            messages.append(TextSendMessage(text=f"{sat_err}"))
         else:
-            # 回傳訊息
-            line_bot_api.reply_message(
-                event.reply_token,
-                [
-                    ImageSendMessage(original_content_url=sat_url, preview_image_url=sat_url)
-                ]
-            )
+            messages.append(ImageSendMessage(original_content_url=sat_url, preview_image_url=sat_url))
 
         if radar_err:
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text="{radar_err}"))
+            messages.append(TextSendMessage(text=f"{radar_err}"))
         else:
-            # 回傳訊息
-            line_bot_api.reply_message(
-                event.reply_token,
-                [
-                    ImageSendMessage(original_content_url=radar_url, preview_image_url=radar_url)
-                ]
-            )
+            messages.append(ImageSendMessage(original_content_url=radar_url, preview_image_url=radar_url))
+
+        # 最後一次性回傳所有訊息
+        line_bot_api.reply_message(event.reply_token, messages)
         return
             
 
