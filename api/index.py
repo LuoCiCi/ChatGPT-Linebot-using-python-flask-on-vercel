@@ -540,7 +540,6 @@ def handle_message(event):
             "https://media.nownews.com/nn_media/thumbnail/2023/05/1683468042856-67eec361d1d74dda99f998189eb5096e-800x450.jpg?unShow=false",
             "https://hips.hearstapps.com/hmg-prod/images/254548076-625165548500065-8965182106882304688-n-1636619991.jpg?crop=1xw:1xh;center,top&resize=980:*",
             "https://i.pinimg.com/736x/66/c6/df/66c6df8128d654db74ffd1496d4fb3bf.jpg",
-            "https://media.nownews.com/nn_media/thumbnail/2024/06/1718084783206-e6bf7bf559a24fbbb46beaf075927b51-800x532.webp?unShow=false&waterMark=false",
             "https://today-obs.line-scdn.net/0hmUYOwfdbMnpkNiXWpihNLVxgPgtXUChzRlR0SBVka0JLGnQvUAdhGURjZVZADnZ4RFl1H0Jkbx0dACEvWg/w644",
             "https://media.nownews.com/nn_media/thumbnail/2022/04/1649131065438-58adaef36d3d455096b168c087908bf5-800x534.jpg?unShow=false",
             "https://s.yimg.com/zp/MerchandiseImages/28DA6596E9-SP-7775353.jpg",
@@ -610,11 +609,11 @@ def handle_message(event):
             random_number_image_urls_2 = random.randint(1,27)
             image_urls_2 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/Drawing%20({random_number_image_urls_2}).jpg"
             random_value = random.random()        
-            if random_value < 0.5:  # 10% 機率
+            if random_value < 0.1:  # 10% 機率
                 
                 random_image_url = image_urls_2
                 
-                if check_image_url_exists(random_image_url):
+                if check_image_url_exists(image_urls_2):
                 # 如果圖片存在，回傳訊息
                     line_bot_api.reply_message(
                         event.reply_token,
