@@ -875,6 +875,21 @@ def handle_message(event):
         )
         return
     
+    if event.message.text == "珮綺" or event.message.text == "綺綺":
+        working_status = False
+        messages = [
+        TextSendMessage(text="好正"),
+        TextSendMessage(text="好可愛"),
+        TextSendMessage(text="好漂亮")
+        ]
+        # 回傳訊息
+        line_bot_api.reply_message(
+            event.reply_token,
+            [
+                random.choice(messages)
+            ]
+        )
+        return
      
     # if event.message.text.startswith("!"):
     #     working_status = False#喵喵我可愛
