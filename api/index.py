@@ -524,7 +524,6 @@ def handle_message(event):
             "https://images.pexels.com/photos/3866556/pexels-photo-3866556.png?cs=srgb&dl=pexels-clarango-3866556.jpg&fm=jpg",
             "https://i.pinimg.com/originals/d8/49/fe/d849feca8b1e452f840cd45e1e31b163.jpg",
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_ZbEiVdlzz-LVsiudO626mKI3iN9o2Lu37A&s",
-            "https://imgs.699pic.com/images/600/323/258.jpg!list1x.v2",
             "https://watermark.lovepik.com/photo/20211207/large/lovepik-charming-red-lips-beauty-makeup-hands-covering-picture_501537693.jpg",
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSubMrEbDSW4mN4Ss-ofFFCmbRig1hegbsMkA&s",
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-YRmizhoGV2jW1m0DJePQo5Kw6f8qYyCJbA&s",
@@ -601,7 +600,6 @@ def handle_message(event):
             "https://today-obs.line-scdn.net/0h3UaKDcKSbHpcMn6ceAcTLWRkYAtvVHZzflNxS3xiNkxzHiN-aAc_GXAyMVZ5ViMkfARzFXgwYUolV3x8Zw/w644",
             "https://media.vogue.com.tw/photos/5f71b27cd34b04d5b4a7f1da/master/w_1600%2Cc_limit/FA20_CKU_APAC_AD_W_PF%2520FLEX%2520PUSH%2520UP_1_FINAL.jpg",
             "https://down-tw.img.susercontent.com/file/tw-11134201-7qukw-lhxazm4cul72f5_tn.webp",
-            "https://4gtvimg2.4gtv.tv/4gtv-Image/Production/Article/2022052611000006/202205261149480304.jpg",
             "https://photo.518.com.tw/selfmedia/articles/1954/167048254259173.jpeg"
         ]
         
@@ -611,30 +609,41 @@ def handle_message(event):
             
             random_number_image_urls_2 = random.randint(1,27)
             image_urls_2 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/Drawing%20({random_number_image_urls_2}).jpg"
-            #random_value = random.random()        
-            #if random_value < 0.9:  # 10% 機率
-            random_image_url = image_urls_2
-            #else:
-                #random_image_url = random.choice(image_urls_1)        
-            
-            # 檢查圖片是否存在
-            if check_image_url_exists(random_image_url):
+            random_value = random.random()        
+            if random_value < 0.5:  # 10% 機率
+                
+                random_image_url = image_urls_2
+                
+                if check_image_url_exists(random_image_url):
                 # 如果圖片存在，回傳訊息
-                line_bot_api.reply_message(
-                    event.reply_token,
-                    [
-                        TextSendMessage(f"圖片編號: {random_number_image_urls_2}"),
-                        ImageSendMessage(original_content_url=random_image_url, preview_image_url=random_image_url)
-                    ]
-                )
-            break  # 找到圖片後退出迴圈
-            #attempts += 1
-        #else:
+                    line_bot_api.reply_message(
+                        event.reply_token,
+                        [
+                            TextSendMessage(f"恭喜抽中彩蛋編號: {random_number_image_urls_2}"),
+                            ImageSendMessage(original_content_url=random_image_url, preview_image_url=random_image_url)
+                        ]
+                    )
+                    break  # 找到圖片後退出迴圈
+            else:
+                
+                random_image_url = random.choice(image_urls_1)
+                
+                if check_image_url_exists(random_image_url):
+                # 如果圖片存在，回傳訊息
+                    line_bot_api.reply_message(
+                        event.reply_token,
+                        [
+                            ImageSendMessage(original_content_url=random_image_url, preview_image_url=random_image_url)
+                        ]
+                    )
+                    break  # 找到圖片後退出迴圈        
+            attempts += 1
+        else:
             # 如果在max_attempts次內未找到有效圖片
-            # line_bot_api.reply_message(
-            #     event.reply_token,
-            #     TextSendMessage(text="無法找到對應的圖片，請稍後再試。")
-            # )
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="無法找到對應的圖片，請稍後再試。")
+            )
         return
 
         # # 回傳訊息
