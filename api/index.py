@@ -739,7 +739,7 @@ def handle_message(event):
         # 進行圖片URL檢查
         while attempts < max_attempts:
             random_number = random.randint(1, 500)
-            image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/LINE_ALBUM_money_%20({random_number}).jpg"
+            image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/MoneyMoney/LINE_ALBUM_money_%20({random_number}).jpg"
             
             # 檢查圖片是否存在
             if check_image_url_exists(image_url):
@@ -782,7 +782,7 @@ def handle_message(event):
         # 進行圖片URL檢查
         while attempts < max_attempts:
             random_number = random.randint(1, 500)
-            image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/LINE_ALBUM_many_%20({random_number}).jpg"
+            image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/ManyMany/LINE_ALBUM_many_%20({random_number}).jpg"
             
             # 檢查圖片是否存在
             if check_image_url_exists(image_url):
@@ -825,7 +825,7 @@ def handle_message(event):
         # 進行圖片URL檢查
         while attempts < max_attempts:
             random_number = random.randint(1, 500)
-            image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/LINE_ALBUM_moneymany_%20({random_number}).jpg"
+            image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/MoneyMany/LINE_ALBUM_moneymany_%20({random_number}).jpg"
             
             # 檢查圖片是否存在
             if check_image_url_exists(image_url):
