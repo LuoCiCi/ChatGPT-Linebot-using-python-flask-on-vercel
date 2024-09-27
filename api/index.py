@@ -159,6 +159,86 @@ def get_rain_pic():
     prev_prev_url = "https://www.cwa.gov.tw/Data/rainfall/" + prev_prev_date_str + "_" + prev_prev_time_str + ".QZJ8.jpg"
     
     return prev_url, prev_prev_url
+
+# 溫度圖
+def get_temperature_pic():
+    prev, prev_ = get_prev00_prevprev00()
+
+    # 將 prev_time 轉換成日期字串
+    prev_date_str = prev.strftime('%Y-%m-%d')
+    prev_time_str = prev.strftime('%H%M')
+
+    prev_prev_date_str = prev_.strftime('%Y-%m-%d')
+    prev_prev_time_str = prev_.strftime('%H%M')
+
+    prev_url = "https://www.cwa.gov.tw/Data/temperature/" + prev_date_str + "_" + prev_time_str + ".GTP8.jpg"
+    prev_prev_url = "https://www.cwa.gov.tw/Data/temperature/" + prev_prev_date_str + "_" + prev_prev_time_str + ".GTP8.jpg"
+    
+    return prev_url, prev_prev_url
+
+# 紫外線圖
+def get_uvrays_pic():
+    prev, prev_ = get_prev10_prevprev10()
+
+    # 將 prev_time 轉換成日期字串
+    prev_datetime_str = prev.strftime('%Y%m%d%H%M')
+    prev_minute_str = prev.strftime('%M')
+
+    prev_prev_datetime_str = prev_.strftime('%Y%m%d%H%M')
+    prev_prev_minute_str = prev_.strftime('%M')        
+
+    prev_url = "https://www.cwa.gov.tw/Data/UVI/UVI_CWB.png?t=" + prev_datetime_str + "-" + prev_minute_str[0] + ".GTP8.jpg"
+    prev_prev_url = "https://www.cwa.gov.tw/Data/UVI/UVI_CWB.png?t=" + prev_prev_datetime_str + "-" + prev_prev_minute_str[0] + ".GTP8.jpg"
+    
+    return prev_url, prev_prev_url
+
+# 衛星圖
+def get_satellite_pic():
+    prev, prev_, prev_3, prev_4 = get_prev10_4()
+
+    # 將 prev_time 轉換成日期字串
+    prev_date_str = prev.strftime('%Y-%m-%d')
+    prev_time_str = prev.strftime('%H-%M')
+
+    prev_prev_date_str = prev_.strftime('%Y-%m-%d')
+    prev_prev_time_str = prev_.strftime('%H-%M')
+
+    prev_3_date_str = prev_3.strftime('%Y-%m-%d')
+    prev_3_time_str = prev_3.strftime('%H-%M')
+
+    prev_4_date_str = prev_4.strftime('%Y-%m-%d')
+    prev_4_time_str = prev_4.strftime('%H-%M')
+
+    prev_url = "https://www.cwa.gov.tw/Data/satellite/LCC_IR1_CR_2750/LCC_IR1_CR_2750-" + prev_date_str + "-" + prev_time_str + ".jpg"
+    prev_prev_url = "https://www.cwa.gov.tw/Data/satellite/LCC_IR1_CR_2750/LCC_IR1_CR_2750-" + prev_prev_date_str + "-" + prev_prev_time_str + ".jpg"
+    prev_3_url = "https://www.cwa.gov.tw/Data/satellite/LCC_IR1_CR_2750/LCC_IR1_CR_2750-" + prev_3_date_str + "-" + prev_3_time_str + ".jpg"
+    prev_4_url = "https://www.cwa.gov.tw/Data/satellite/LCC_IR1_CR_2750/LCC_IR1_CR_2750-" + prev_4_date_str + "-" + prev_4_time_str + ".jpg"
+    
+    return prev_url, prev_prev_url, prev_3_url, prev_4_url
+
+# 雷達圖
+def get_radar_pic():
+    prev, prev_, prev_3, prev_4 = get_prev10_4()
+
+    # 將 prev_time 轉換成日期字串
+    prev_date_str = prev.strftime('%Y%m%d')
+    prev_time_str = prev.strftime('%H%M')
+
+    prev_prev_date_str = prev_.strftime('%Y%m%d')
+    prev_prev_time_str = prev_.strftime('%H%M')
+
+    prev_3_date_str = prev_3.strftime('%Y%m%d')
+    prev_3_time_str = prev_3.strftime('%H%M')
+
+    prev_4_date_str = prev_4.strftime('%Y%m%d')
+    prev_4_time_str = prev_4.strftime('%H%M')
+
+    prev_url = "https://www.cwa.gov.tw/Data/radar/CV1_3600_" + prev_date_str + prev_time_str + ".png"
+    prev_prev_url = "https://www.cwa.gov.tw/Data/radar/CV1_3600_" + prev_prev_date_str + prev_prev_time_str + ".png"
+    prev_3_url = "https://www.cwa.gov.tw/Data/radar/CV1_3600_" + prev_3_date_str + prev_3_time_str + ".png"
+    prev_4_url = "https://www.cwa.gov.tw/Data/radar/CV1_3600_" + prev_4_date_str + prev_4_time_str + ".png"
+    
+    return prev_url, prev_prev_url, prev_3_url, prev_4_url
         
 @line_handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -168,18 +248,6 @@ def handle_message(event):
 
     if event.message.text == "天氣" or event.message.text == "雨量" or event.message.text == "濕度":
         working_status = True
-        
-        # prev, prev_ = get_prev30_prevprev30()
-
-        # # 將 prev_time 轉換成日期字串
-        # prev_date_str = prev.strftime('%Y-%m-%d')
-        # prev_time_str = prev.strftime('%H%M')
-
-        # prev_prev_date_str = prev_.strftime('%Y-%m-%d')
-        # prev_prev_time_str = prev_.strftime('%H%M')
-
-        # prev_url = "https://www.cwa.gov.tw/Data/rainfall/" + prev_date_str + "_" + prev_time_str + ".QZJ8.jpg"
-        # prev_prev_url = "https://www.cwa.gov.tw/Data/rainfall/" + prev_prev_date_str + "_" + prev_prev_time_str + ".QZJ8.jpg"
 
         prev_url, prev_prev_url = get_rain_pic()
 
@@ -209,17 +277,19 @@ def handle_message(event):
     if event.message.text == "溫度" or event.message.text == "氣溫":
         working_status = True
         
-        prev, prev_ = get_prev00_prevprev00()
+        # prev, prev_ = get_prev00_prevprev00()
 
-        # 將 prev_time 轉換成日期字串
-        prev_date_str = prev.strftime('%Y-%m-%d')
-        prev_time_str = prev.strftime('%H%M')
+        # # 將 prev_time 轉換成日期字串
+        # prev_date_str = prev.strftime('%Y-%m-%d')
+        # prev_time_str = prev.strftime('%H%M')
 
-        prev_prev_date_str = prev_.strftime('%Y-%m-%d')
-        prev_prev_time_str = prev_.strftime('%H%M')
+        # prev_prev_date_str = prev_.strftime('%Y-%m-%d')
+        # prev_prev_time_str = prev_.strftime('%H%M')
 
-        prev_url = "https://www.cwa.gov.tw/Data/temperature/" + prev_date_str + "_" + prev_time_str + ".GTP8.jpg"
-        prev_prev_url = "https://www.cwa.gov.tw/Data/temperature/" + prev_prev_date_str + "_" + prev_prev_time_str + ".GTP8.jpg"
+        # prev_url = "https://www.cwa.gov.tw/Data/temperature/" + prev_date_str + "_" + prev_time_str + ".GTP8.jpg"
+        # prev_prev_url = "https://www.cwa.gov.tw/Data/temperature/" + prev_prev_date_str + "_" + prev_prev_time_str + ".GTP8.jpg"
+
+        prev_url, prev_prev_url = get_temperature_pic()
 
         if (check_image_url_exists(prev_url)):
             # url = prev_url
@@ -247,17 +317,19 @@ def handle_message(event):
     if event.message.text == "紫外線":
         working_status = True
         
-        prev, prev_ = get_prev10_prevprev10()
+        # prev, prev_ = get_prev10_prevprev10()
 
-        # 將 prev_time 轉換成日期字串
-        prev_datetime_str = prev.strftime('%Y%m%d%H%M')
-        prev_minute_str = prev.strftime('%M')
+        # # 將 prev_time 轉換成日期字串
+        # prev_datetime_str = prev.strftime('%Y%m%d%H%M')
+        # prev_minute_str = prev.strftime('%M')
 
-        prev_prev_datetime_str = prev_.strftime('%Y%m%d%H%M')
-        prev_prev_minute_str = prev_.strftime('%M')        
+        # prev_prev_datetime_str = prev_.strftime('%Y%m%d%H%M')
+        # prev_prev_minute_str = prev_.strftime('%M')        
 
-        prev_url = "https://www.cwa.gov.tw/Data/UVI/UVI_CWB.png?t=" + prev_datetime_str + "-" + prev_minute_str[0] + ".GTP8.jpg"
-        prev_prev_url = "https://www.cwa.gov.tw/Data/UVI/UVI_CWB.png?t=" + prev_prev_datetime_str + "-" + prev_prev_minute_str[0] + ".GTP8.jpg"
+        # prev_url = "https://www.cwa.gov.tw/Data/UVI/UVI_CWB.png?t=" + prev_datetime_str + "-" + prev_minute_str[0] + ".GTP8.jpg"
+        # prev_prev_url = "https://www.cwa.gov.tw/Data/UVI/UVI_CWB.png?t=" + prev_prev_datetime_str + "-" + prev_prev_minute_str[0] + ".GTP8.jpg"
+
+        prev_url, prev_prev_url = get_uvrays_pic()
 
         if (check_image_url_exists(prev_url)):
             # url = prev_url
@@ -285,25 +357,27 @@ def handle_message(event):
     if event.message.text == "衛星" or event.message.text == "衛星雲圖":
         working_status = True
         
-        prev, prev_, prev_3, prev_4 = get_prev10_4()
+        # prev, prev_, prev_3, prev_4 = get_prev10_4()
 
-        # 將 prev_time 轉換成日期字串
-        prev_date_str = prev.strftime('%Y-%m-%d')
-        prev_time_str = prev.strftime('%H-%M')
+        # # 將 prev_time 轉換成日期字串
+        # prev_date_str = prev.strftime('%Y-%m-%d')
+        # prev_time_str = prev.strftime('%H-%M')
 
-        prev_prev_date_str = prev_.strftime('%Y-%m-%d')
-        prev_prev_time_str = prev_.strftime('%H-%M')
+        # prev_prev_date_str = prev_.strftime('%Y-%m-%d')
+        # prev_prev_time_str = prev_.strftime('%H-%M')
 
-        prev_3_date_str = prev_3.strftime('%Y-%m-%d')
-        prev_3_time_str = prev_3.strftime('%H-%M')
+        # prev_3_date_str = prev_3.strftime('%Y-%m-%d')
+        # prev_3_time_str = prev_3.strftime('%H-%M')
 
-        prev_4_date_str = prev_4.strftime('%Y-%m-%d')
-        prev_4_time_str = prev_4.strftime('%H-%M')
+        # prev_4_date_str = prev_4.strftime('%Y-%m-%d')
+        # prev_4_time_str = prev_4.strftime('%H-%M')
 
-        prev_url = "https://www.cwa.gov.tw/Data/satellite/LCC_IR1_CR_2750/LCC_IR1_CR_2750-" + prev_date_str + "-" + prev_time_str + ".jpg"
-        prev_prev_url = "https://www.cwa.gov.tw/Data/satellite/LCC_IR1_CR_2750/LCC_IR1_CR_2750-" + prev_prev_date_str + "-" + prev_prev_time_str + ".jpg"
-        prev_3_url = "https://www.cwa.gov.tw/Data/satellite/LCC_IR1_CR_2750/LCC_IR1_CR_2750-" + prev_3_date_str + "-" + prev_3_time_str + ".jpg"
-        prev_4_url = "https://www.cwa.gov.tw/Data/satellite/LCC_IR1_CR_2750/LCC_IR1_CR_2750-" + prev_4_date_str + "-" + prev_4_time_str + ".jpg"
+        # prev_url = "https://www.cwa.gov.tw/Data/satellite/LCC_IR1_CR_2750/LCC_IR1_CR_2750-" + prev_date_str + "-" + prev_time_str + ".jpg"
+        # prev_prev_url = "https://www.cwa.gov.tw/Data/satellite/LCC_IR1_CR_2750/LCC_IR1_CR_2750-" + prev_prev_date_str + "-" + prev_prev_time_str + ".jpg"
+        # prev_3_url = "https://www.cwa.gov.tw/Data/satellite/LCC_IR1_CR_2750/LCC_IR1_CR_2750-" + prev_3_date_str + "-" + prev_3_time_str + ".jpg"
+        # prev_4_url = "https://www.cwa.gov.tw/Data/satellite/LCC_IR1_CR_2750/LCC_IR1_CR_2750-" + prev_4_date_str + "-" + prev_4_time_str + ".jpg"
+
+        prev_url, prev_prev_url, prev_3_url, prev_4_url = get_satellite_pic()
 
         if (check_image_url_exists(prev_url)):
             # url = prev_url
@@ -350,25 +424,27 @@ def handle_message(event):
     if event.message.text == "雷達":
         working_status = True
         
-        prev, prev_, prev_3, prev_4 = get_prev10_4()
+        # prev, prev_, prev_3, prev_4 = get_prev10_4()
 
-        # 將 prev_time 轉換成日期字串
-        prev_date_str = prev.strftime('%Y%m%d')
-        prev_time_str = prev.strftime('%H%M')
+        # # 將 prev_time 轉換成日期字串
+        # prev_date_str = prev.strftime('%Y%m%d')
+        # prev_time_str = prev.strftime('%H%M')
 
-        prev_prev_date_str = prev_.strftime('%Y%m%d')
-        prev_prev_time_str = prev_.strftime('%H%M')
+        # prev_prev_date_str = prev_.strftime('%Y%m%d')
+        # prev_prev_time_str = prev_.strftime('%H%M')
 
-        prev_3_date_str = prev_3.strftime('%Y%m%d')
-        prev_3_time_str = prev_3.strftime('%H%M')
+        # prev_3_date_str = prev_3.strftime('%Y%m%d')
+        # prev_3_time_str = prev_3.strftime('%H%M')
 
-        prev_4_date_str = prev_4.strftime('%Y%m%d')
-        prev_4_time_str = prev_4.strftime('%H%M')
+        # prev_4_date_str = prev_4.strftime('%Y%m%d')
+        # prev_4_time_str = prev_4.strftime('%H%M')
 
-        prev_url = "https://www.cwa.gov.tw/Data/radar/CV1_3600_" + prev_date_str + prev_time_str + ".png"
-        prev_prev_url = "https://www.cwa.gov.tw/Data/radar/CV1_3600_" + prev_prev_date_str + prev_prev_time_str + ".png"
-        prev_3_url = "https://www.cwa.gov.tw/Data/radar/CV1_3600_" + prev_3_date_str + prev_3_time_str + ".png"
-        prev_4_url = "https://www.cwa.gov.tw/Data/radar/CV1_3600_" + prev_4_date_str + prev_4_time_str + ".png"
+        # prev_url = "https://www.cwa.gov.tw/Data/radar/CV1_3600_" + prev_date_str + prev_time_str + ".png"
+        # prev_prev_url = "https://www.cwa.gov.tw/Data/radar/CV1_3600_" + prev_prev_date_str + prev_prev_time_str + ".png"
+        # prev_3_url = "https://www.cwa.gov.tw/Data/radar/CV1_3600_" + prev_3_date_str + prev_3_time_str + ".png"
+        # prev_4_url = "https://www.cwa.gov.tw/Data/radar/CV1_3600_" + prev_4_date_str + prev_4_time_str + ".png"
+
+        prev_url, prev_prev_url, prev_3_url, prev_4_url = get_radar_pic()
 
         if (check_image_url_exists(prev_url)):
             # url = prev_url
@@ -411,6 +487,129 @@ def handle_message(event):
                 event.reply_token,
                 TextSendMessage(text="無法取得雷達圖"))
         return
+
+    if event.message.text == "氣象" or event.message.text == "所有天氣圖":
+        # 取雨量圖
+        rain_prev_url, rain_prev_prev_url = get_rain_pic()
+        if (check_image_url_exists(rain_prev_url)):
+            rain_url = rain_prev_url
+        elif (check_image_url_exists(rain_prev_prev_url)):
+            rain_url = rain_prev_prev_url
+        else:
+            rain_err = "無法取得雨量圖"
+
+        # 取溫度圖
+        temp_prev_url, temp_prev_prev_url = get_temperature_pic()
+        if (check_image_url_exists(temp_prev_url)):
+            temp_url = temp_prev_url
+        elif (check_image_url_exists(temp_prev_prev_url)):
+            temp_url = temp_prev_prev_url
+        else:
+            temp_err = "無法取得溫度圖"
+
+        # 取紫外線圖
+        uvrays_prev_url, uvrays_prev_prev_url = get_uvrays_pic()
+        if (check_image_url_exists(uvrays_prev_url)):
+            uvrays_url = uvrays_prev_url
+        elif (check_image_url_exists(uvrays_prev_prev_url)):
+            uvrays_url = uvrays_prev_prev_url
+        else:
+            uvrays_err = "無法取得紫外線圖"
+
+        # 取衛星圖
+        sat_prev_url, sat_prev_prev_url, sat_prev_3_url, sat_prev_4_url = get_satellite_pic()
+        if (check_image_url_exists(sat_prev_url)):
+            sat_url = sat_prev_url
+        elif (check_image_url_exists(sat_prev_prev_url)):
+            sat_url = sat_prev_prev_url
+        elif (check_image_url_exists(sat_prev_3_url)):
+            sat_url = sat_prev_3_url
+        elif (check_image_url_exists(sat_prev_4_url)):
+            sat_url = sat_prev_4_url
+        else:
+            sat_err = "無法取得衛星雲圖圖"
+
+        # 取雷達圖
+        radar_prev_url, radar_prev_prev_url, radar_prev_3_url, radar_prev_4_url = get_radar_pic()
+        if (check_image_url_exists(radar_prev_url)):
+            radar_url = radar_prev_url
+        elif (check_image_url_exists(radar_prev_prev_url)):
+            radar_url = radar_prev_prev_url
+        elif (check_image_url_exists(radar_prev_3_url)):
+            radar_url = radar_prev_3_url
+        elif (check_image_url_exists(radar_prev_4_url)):
+            radar_url = radar_prev_4_url
+        else:
+            radar_err = "無法取得雷達圖"
+
+        # 錯誤訊息
+        if rain_err is not None
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="{rain_err}"))
+        else:
+            # 回傳訊息
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    ImageSendMessage(original_content_url=rain_url, preview_image_url=rain_url)
+                ]
+            )
+            
+        
+        if temp_err is not None
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="{temp_err}"))
+        else:
+            # 回傳訊息
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    ImageSendMessage(original_content_url=temp_url, preview_image_url=temp_url)
+                ]
+            )
+
+        if uvrays_err is not None
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="{uvrays_err}"))
+        else:
+            # 回傳訊息
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    ImageSendMessage(original_content_url=uvrays_url, preview_image_url=uvrays_url)
+                ]
+            )
+
+        if sat_err is not None
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="{sat_err}"))
+        else:
+            # 回傳訊息
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    ImageSendMessage(original_content_url=sat_url, preview_image_url=sat_url)
+                ]
+            )
+
+        if radar_err is not None
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="{radar_err}"))
+        else:
+            # 回傳訊息
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    ImageSendMessage(original_content_url=radar_url, preview_image_url=radar_url)
+                ]
+            )
+        return
+            
 
     # 暫時使用line設定功能，將此隱藏
     # if event.message.text == "選單" or event.message.text == "功能" or event.message.text == "menu":
