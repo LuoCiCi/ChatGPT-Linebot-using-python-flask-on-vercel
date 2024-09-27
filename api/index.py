@@ -143,6 +143,22 @@ def check_image_url_exists(url):
         # 捕捉各種異常情況（例如網絡錯誤，無法連線等）
         print(f"Error: {e}")
         return False
+
+# 雨量圖
+def get_rain_pic():
+    prev, prev_ = get_prev30_prevprev30()
+
+    # 將 prev_time 轉換成日期字串
+    prev_date_str = prev.strftime('%Y-%m-%d')
+    prev_time_str = prev.strftime('%H%M')
+
+    prev_prev_date_str = prev_.strftime('%Y-%m-%d')
+    prev_prev_time_str = prev_.strftime('%H%M')
+
+    prev_url = "https://www.cwa.gov.tw/Data/rainfall/" + prev_date_str + "_" + prev_time_str + ".QZJ8.jpg"
+    prev_prev_url = "https://www.cwa.gov.tw/Data/rainfall/" + prev_prev_date_str + "_" + prev_prev_time_str + ".QZJ8.jpg"
+    
+    return prev_url, prev_prev_url
         
 @line_handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -153,17 +169,19 @@ def handle_message(event):
     if event.message.text == "天氣" or event.message.text == "雨量" or event.message.text == "濕度":
         working_status = True
         
-        prev, prev_ = get_prev30_prevprev30()
+        # prev, prev_ = get_prev30_prevprev30()
 
-        # 將 prev_time 轉換成日期字串
-        prev_date_str = prev.strftime('%Y-%m-%d')
-        prev_time_str = prev.strftime('%H%M')
+        # # 將 prev_time 轉換成日期字串
+        # prev_date_str = prev.strftime('%Y-%m-%d')
+        # prev_time_str = prev.strftime('%H%M')
 
-        prev_prev_date_str = prev_.strftime('%Y-%m-%d')
-        prev_prev_time_str = prev_.strftime('%H%M')
+        # prev_prev_date_str = prev_.strftime('%Y-%m-%d')
+        # prev_prev_time_str = prev_.strftime('%H%M')
 
-        prev_url = "https://www.cwa.gov.tw/Data/rainfall/" + prev_date_str + "_" + prev_time_str + ".QZJ8.jpg"
-        prev_prev_url = "https://www.cwa.gov.tw/Data/rainfall/" + prev_prev_date_str + "_" + prev_prev_time_str + ".QZJ8.jpg"
+        # prev_url = "https://www.cwa.gov.tw/Data/rainfall/" + prev_date_str + "_" + prev_time_str + ".QZJ8.jpg"
+        # prev_prev_url = "https://www.cwa.gov.tw/Data/rainfall/" + prev_prev_date_str + "_" + prev_prev_time_str + ".QZJ8.jpg"
+
+        prev_url, prev_prev_url = get_rain_pic()
 
         if (check_image_url_exists(prev_url)):
             # url = prev_url
