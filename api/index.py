@@ -547,7 +547,6 @@ def handle_message(event):
             "https://img.cloudimg.in/uploads/shops/7094/products/b0/b02c2e7c86d787f1138c05f32a7e14c7.jpg",
             "https://down-tw.img.susercontent.com/file/215b170d984ed3f48837e7336d3dfab0",
             "https://s.yimg.com/zp/MerchandiseImages/983BEFE4F1-SP-7781092.jpg",
-            "https://gw.alicdn.com/imgextra/i3/2532877733/O1CN01xz4xuX26zlbYAJj0S_!!0-item_pic.jpg_Q75.jpg_.webp",
             "https://api.harpersbazaar.com.hk/var/site/storage/images/_aliases/img_640_w/fashion/girl-next-door-fashion/node_191249/2628795-1-chi-HK/_1.jpg",
             "https://api.harpersbazaar.com.hk/var/site/storage/images/_aliases/img_640_w/fashion/girl-next-door-fashion/node_191248/2628787-1-chi-HK/_1.jpg",
             "https://api.harpersbazaar.com.hk/var/site/storage/images/_aliases/img_640_w/fashion/girl-next-door-fashion/node_191250/2628803-1-chi-HK/_1.jpg",
