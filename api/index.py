@@ -750,7 +750,6 @@ def handle_message(event):
             "https://img.alicdn.com/imgextra/i3/190954632/O1CN01vxrocX1k5VMB7ranX_!!190954632.jpg",
             "https://gw.alicdn.com/imgextra/i3/2532877733/O1CN01xz4xuX26zlbYAJj0S_!!0-item_pic.jpg_Q75.jpg_.webp",
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgHMKS3ryrpSrZvnHWfpiyBEmnF1Oy1Tw3IQ&s",
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMphXkbQsoHxM4DFgzag6F2PVg1zHcrgSutw&s",
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGchDhH0FLs53qrVu_VDFAQ80tM-H_Bq2EBg&s",
             "https://media.zenfs.com/en/nownews.com/b34d3759f2b1382430bfa18cac22ced9",
             "https://dailyview.tw/_next/image?url=https%3A%2F%2Fdvblobcdnjp.azureedge.net%2FContent%2FUpload%2FPopular%2FImages%2F2019-02%2F9265b389-0aca-4318-9f2f-226397be36e9_m.jpg&w=1920&q=75",
