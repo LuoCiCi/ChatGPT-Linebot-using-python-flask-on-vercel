@@ -888,7 +888,7 @@ def handle_message(event):
         TextSendMessage(text="只會睡覺"),
         TextSendMessage(text="閉月羞花"),
         TextSendMessage(text="傾國傾城"),
-        TextSendMessage(text="麗質天成"),
+        TextSendMessage(text="玉潔冰清"),
         TextSendMessage(text="花容月貌"),
         TextSendMessage(text="沒有D")
         ]
