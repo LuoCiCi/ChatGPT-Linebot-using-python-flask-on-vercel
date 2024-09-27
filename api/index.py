@@ -246,7 +246,7 @@ def handle_message(event):
     if event.message.type != "text":
         return
 
-    if event.message.text == "天氣" or event.message.text == "雨量" or event.message.text == "濕度":
+    if event.message.text == "雨量" or event.message.text == "濕度":
         working_status = True
 
         prev_url, prev_prev_url = get_rain_pic()
@@ -488,7 +488,7 @@ def handle_message(event):
                 TextSendMessage(text="無法取得雷達圖"))
         return
 
-    if event.message.text == "氣象" or event.message.text == "所有天氣圖":
+    if event.message.text == "天氣" or event.message.text == "氣象" or event.message.text == "所有天氣圖":
         messages = []  # 存放所有訊息的列表
 
         # 取雨量圖
