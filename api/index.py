@@ -860,20 +860,20 @@ def handle_message(event):
         # )
         # return
 
-    if event.message.text == "洞":
-        working_status = False
-        random_number = random.randint(1, 4)
-        random_number_str = str(random_number)
-        image_urls ="https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/hole"+random_number_str+".jpg"
+    # if event.message.text == "洞":
+    #     working_status = False
+    #     random_number = random.randint(1, 4)
+    #     random_number_str = str(random_number)
+    #     image_urls ="https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/hole"+random_number_str+".jpg"
 
-        # 回傳訊息
-        line_bot_api.reply_message(
-            event.reply_token,
-            [
-                ImageSendMessage(original_content_url=image_urls, preview_image_url=image_urls)
-            ]
-        )
-        return
+    #     # 回傳訊息
+    #     line_bot_api.reply_message(
+    #         event.reply_token,
+    #         [
+    #             ImageSendMessage(original_content_url=image_urls, preview_image_url=image_urls)
+    #         ]
+    #     )
+    #     return
     
     if event.message.text == "珮綺" or event.message.text == "綺綺":
         working_status = False
