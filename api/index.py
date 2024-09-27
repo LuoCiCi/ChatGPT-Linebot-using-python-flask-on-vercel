@@ -611,11 +611,11 @@ def handle_message(event):
             
             random_number_image_urls_2 = random.randint(1,27)
             image_urls_2 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/Drawing%20({random_number_image_urls_2}).jpg"
-            random_value = random.random()        
-            if random_value < 0.9:  # 10% 機率
-                random_image_url = image_urls_2
-            else:
-                random_image_url = random.choice(image_urls_1)        
+            #random_value = random.random()        
+            #if random_value < 0.9:  # 10% 機率
+            random_image_url = image_urls_2
+            #else:
+                #random_image_url = random.choice(image_urls_1)        
             
             # 檢查圖片是否存在
             if check_image_url_exists(random_image_url):
@@ -623,17 +623,18 @@ def handle_message(event):
                 line_bot_api.reply_message(
                     event.reply_token,
                     [
+                        TextSendMessage(f"圖片編號: {random_number_image_urls_2}"),
                         ImageSendMessage(original_content_url=random_image_url, preview_image_url=random_image_url)
                     ]
                 )
-                break  # 找到圖片後退出迴圈
-            attempts += 1
-        else:
+            break  # 找到圖片後退出迴圈
+            #attempts += 1
+        #else:
             # 如果在max_attempts次內未找到有效圖片
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text="無法找到對應的圖片，請稍後再試。")
-            )
+            # line_bot_api.reply_message(
+            #     event.reply_token,
+            #     TextSendMessage(text="無法找到對應的圖片，請稍後再試。")
+            # )
         return
 
         # # 回傳訊息
