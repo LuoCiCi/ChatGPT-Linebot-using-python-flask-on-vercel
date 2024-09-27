@@ -543,7 +543,7 @@ def handle_message(event):
             radar_err = "無法取得雷達圖"
 
         # 錯誤訊息
-        if rain_err is not None
+        if rain_err is not None:
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(text="{rain_err}"))
@@ -557,7 +557,7 @@ def handle_message(event):
             )
             
         
-        if temp_err is not None
+        if temp_err is not None:
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(text="{temp_err}"))
@@ -570,7 +570,7 @@ def handle_message(event):
                 ]
             )
 
-        if uvrays_err is not None
+        if uvrays_err is not None:
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(text="{uvrays_err}"))
@@ -583,7 +583,7 @@ def handle_message(event):
                 ]
             )
 
-        if sat_err is not None
+        if sat_err is not None:
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(text="{sat_err}"))
@@ -596,7 +596,7 @@ def handle_message(event):
                 ]
             )
 
-        if radar_err is not None
+        if radar_err is not None:
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(text="{radar_err}"))
