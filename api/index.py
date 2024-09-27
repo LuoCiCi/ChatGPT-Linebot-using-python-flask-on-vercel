@@ -490,6 +490,7 @@ def handle_message(event):
 
     if event.message.text == "氣象" or event.message.text == "所有天氣圖":
         # 取雨量圖
+        rain_err = None
         rain_prev_url, rain_prev_prev_url = get_rain_pic()
         if (check_image_url_exists(rain_prev_url)):
             rain_url = rain_prev_url
@@ -499,6 +500,7 @@ def handle_message(event):
             rain_err = "無法取得雨量圖"
 
         # 取溫度圖
+        temp_err = None
         temp_prev_url, temp_prev_prev_url = get_temperature_pic()
         if (check_image_url_exists(temp_prev_url)):
             temp_url = temp_prev_url
@@ -508,6 +510,7 @@ def handle_message(event):
             temp_err = "無法取得溫度圖"
 
         # 取紫外線圖
+        uvrays_err = None
         uvrays_prev_url, uvrays_prev_prev_url = get_uvrays_pic()
         if (check_image_url_exists(uvrays_prev_url)):
             uvrays_url = uvrays_prev_url
@@ -517,6 +520,7 @@ def handle_message(event):
             uvrays_err = "無法取得紫外線圖"
 
         # 取衛星圖
+        sat_err = None
         sat_prev_url, sat_prev_prev_url, sat_prev_3_url, sat_prev_4_url = get_satellite_pic()
         if (check_image_url_exists(sat_prev_url)):
             sat_url = sat_prev_url
@@ -530,6 +534,7 @@ def handle_message(event):
             sat_err = "無法取得衛星雲圖圖"
 
         # 取雷達圖
+        radar_err = None
         radar_prev_url, radar_prev_prev_url, radar_prev_3_url, radar_prev_4_url = get_radar_pic()
         if (check_image_url_exists(radar_prev_url)):
             radar_url = radar_prev_url
