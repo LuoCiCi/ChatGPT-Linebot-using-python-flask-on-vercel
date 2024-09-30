@@ -1118,7 +1118,25 @@ def handle_message(event):
             ]
         )
         return
-     
+    
+    if event.message.text == "健豪" or event.message.text == "黃健豪":
+        working_status = False
+        messages = [
+        TextSendMessage(text="帥哥"),
+        TextSendMessage(text="母胎單身"),
+        TextSendMessage(text="飢渴難耐"),
+        TextSendMessage(text="帥到分手"),
+        TextSendMessage(text="桃園妹手到擒來"),
+        TextSendMessage(text="帥到懷孕")
+        ]
+        # 回傳訊息
+        line_bot_api.reply_message(
+            event.reply_token,
+            [
+                random.choice(messages)
+            ]
+        )
+        return 
     # if event.message.text.startswith("!"):
     #     working_status = False#喵喵我可愛
     #     stock_symbol = event.message.text[1:]  # 移除第一個字元「!」
