@@ -424,6 +424,21 @@ def handle_message(event):
                 TextSendMessage(text="無法取得雷達圖"))
         return
 
+    if event.message.text == "颱風":
+        working_status = True
+        typhoon_url = "https://www.cwa.gov.tw/V8/C/P/Typhoon/TY_WARN.html"
+
+        if (check_image_url_exists(typhoon_url)):
+            # 回傳訊息
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=f"{typhoon_url}"))
+        else:
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="無法取得颱風消息"))
+        return          
+    
     if event.message.text == "天氣" or event.message.text == "氣象" or event.message.text == "所有天氣圖":
         messages = []  # 存放所有訊息的列表
 
