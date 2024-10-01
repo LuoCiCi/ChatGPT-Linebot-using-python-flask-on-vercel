@@ -481,7 +481,8 @@ def handle_message(event):
 
     if event.message.text == "颱風":
         working_status = True
-        typhoon_url = "https://www.cwa.gov.tw/V8/C/P/Typhoon/TY_WARN.html"
+        # typhoon_url = "https://www.cwa.gov.tw/V8/C/P/Typhoon/TY_WARN.html"
+        typhoon_url = "https://www.cwa.gov.tw/V8/C/P/Typhoon/TY_NEWS.html"
         typhoon_pic = "https://www.cwa.gov.tw/Data/typhoon/TY_WARN/B20.png"
 
         if (check_image_url_exists(typhoon_url)):
