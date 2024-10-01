@@ -559,16 +559,17 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, messages)
         return
 
-        if event.message.text == "地震":
-            working_status = True
-        
-            reply = earth_quake()   # 執行函式，讀取數值
-            text_message = TextSendMessage(text=reply[0])        # 取得文字內容
-            line_bot_api.reply_message(event.reply_token,
-                    [
-                        TextSendMessage(text=f"{text_message}"),
-                        ImageSendMessage(original_content_url=reply[1], preview_image_url=reply[1])
-                    ]) # 傳送文字
+    if event.message.text == "地震":
+        working_status = True
+    
+        reply = earth_quake()   # 執行函式，讀取數值
+        text_message = TextSendMessage(text=reply[0])        # 取得文字內容
+
+        line_bot_api.reply_message(event.reply_token,
+                [
+                    TextSendMessage(f"{text_message}"),
+                    ImageSendMessage(original_content_url=reply[1], preview_image_url=reply[1])
+                ]) # 傳送文字
         # line_bot_api.reply_message(event.reply_token, ImageSendMessage(original_content_url=reply[1], preview_image_url=reply[1])) # 傳送圖片
         
         # line_bot_api.reply_message(
