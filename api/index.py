@@ -158,7 +158,7 @@ def callback():
         abort(400)
     return 'OK'
 
-@handler.add(MessageEvent, message=TextMessage)
+@line_handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     # 回應訊息，自動已讀
     reply_message = "test OK~"
