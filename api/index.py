@@ -560,15 +560,15 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, messages)
         return
 
-    if event.message.text == "地震":
-        working_status = True
+    # if event.message.text == "地震":
+    #     working_status = True
 
-        earthquake_results = get_earthquake()
+    #     earthquake_results = get_earthquake()
         
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=f"{earthquake_results}"))
-        return
+    #     line_bot_api.reply_message(
+    #         event.reply_token,
+    #         TextSendMessage(text=f"{earthquake_results}"))
+    #     return
             
 
     # 暫時使用line設定功能，將此隱藏
