@@ -139,6 +139,22 @@ def earth_quake():
         result = ['抓取失敗...','']
     return result
 
+# Google drive影片連結轉換
+def convert_drive_link_to_download_url(drive_link):
+    # 驗證輸入的連結是否是 Google Drive 的格式
+    if "drive.google.com" not in drive_link:
+        raise ValueError("這不是有效的 Google Drive 連結")
+    
+    # 提取 FILE_ID (通常位於 /d/ 和 /view 之間)
+    try:
+        file_id = drive_link.split('/d/')[1].split('/')[0]
+    except IndexError:
+        raise ValueError("無法提取 FILE_ID，請確認連結格式")
+
+    # 構建可下載的連結
+    download_url = f"https://drive.google.com/uc?export=download&id={file_id}"
+    return download_url
+
 # domain root
 @app.route('/')
 def home():
