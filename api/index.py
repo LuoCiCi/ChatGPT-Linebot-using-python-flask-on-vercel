@@ -1179,7 +1179,7 @@ def handle_message(event):
     
     if event.message.text == "影片":
         working_status = False    
-        video_url = "https://drive.google.com/file/d/1p1qlL3AcyQYaIGEBuKJwTQ4hym4jVjiN/view?usp=drive_link"  # 替換為你影片的 URL
+        video_url = "https://drive.google.com/uc?export=download&id=1p1qlL3AcyQYaIGEBuKJwTQ4hym4jVjiN"  # 替換為你影片的 URL
         preview_image_url = "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Video/S__29737352.jpg"  # 替換為你的預覽圖片 URL
 
         # 回傳影片訊息
