@@ -621,7 +621,15 @@ def handle_message(event):
         handler.handle(body, signature)      # 綁定訊息回傳的相關資訊
         json_data = json.loads(body)         # 轉換內容為 json 格式
         user_id = json_data['events'][0]['source']['userId']  # 取得使用者 ID ( push message 使用 )
-        line_bot_api.push_message(user_id, TextSendMessage(text='地震監視畫面\nhttps://www.youtube.com/live/Owke6Quk7T0?si=CQYm0rJ3Mq_UnQEv'))
+
+        if user_id:
+            line_bot_api.push_message(user_id, TextSendMessage(text='地震監視畫面\nhttps://www.youtube.com/live/Owke6Quk7T0?si=CQYm0rJ3Mq_UnQEv'))
+        else:
+            line_bot_api.reply_message(event.reply_token,
+                    [
+                        TextSendMessage(f"地震監視畫面\nhttps://www.youtube.com/live/Owke6Quk7T0?si=CQYm0rJ3Mq_UnQEv")  # 傳送解碼後的文字
+                        # ImageSendMessage(original_content_url=reply[1], preview_image_url=reply[1])
+                    ]) # 傳送文字
     
         reply = earth_quake()   # 執行函式，讀取數值
         text_message = TextSendMessage(text=reply[0])        # 取得文字內容
