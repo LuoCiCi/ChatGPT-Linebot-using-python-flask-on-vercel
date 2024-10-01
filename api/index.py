@@ -570,9 +570,12 @@ def handle_message(event):
         reply = earth_quake()   # 執行函式，讀取數值
         text_message = codepoint_to_unicode(TextSendMessage(text=reply[0]))        # 取得文字內容
 
+        # 確保 text_message 是正確的文字格式（Python 會自動處理 Unicode）
+        text_message_decoded = text_message  # 這裡的 text_message 應該是正常的字串
+
         line_bot_api.reply_message(event.reply_token,
                 [
-                    TextSendMessage(f"{text_message}"),
+                    TextSendMessage(text=text_message_decoded),  # 傳送解碼後的文字
                     ImageSendMessage(original_content_url=reply[1], preview_image_url=reply[1])
                 ]) # 傳送文字
         # line_bot_api.reply_message(event.reply_token, ImageSendMessage(original_content_url=reply[1], preview_image_url=reply[1])) # 傳送圖片
