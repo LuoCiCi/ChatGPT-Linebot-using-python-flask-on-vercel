@@ -1193,7 +1193,9 @@ def handle_message(event):
         TextSendMessage(text="陳年法師"),
         TextSendMessage(text="這是小技巧"),
         TextSendMessage(text="啊不然要怎樣"),
-        TextSendMessage(text="台南貴公子"),                       
+        TextSendMessage(text="台南貴公子"), 
+        TextSendMessage(text="皇家禮炮"),
+        TextSendMessage(text="單身狗"),                      
         TextSendMessage(text="帥到懷孕")
         ]
         # 回傳訊息
