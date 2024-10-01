@@ -1081,20 +1081,6 @@ def handle_message(event):
                 TextSendMessage(text="無法找到對應的圖片，請稍後再試。")
             )
         return
-        
-        # # 取隨機數
-        # random_number = random.randint(1, 250)
-        # random_number_str = str(random_number)
-        # image_urls = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/LINE_ALBUM_many_%20("+random_number_str+").jpg"
-
-        # # 回傳訊息
-        # line_bot_api.reply_message(
-        #     event.reply_token,
-        #     [
-        #         ImageSendMessage(original_content_url=image_urls, preview_image_url=image_urls)
-        #     ]
-        # )
-        # return
 
     if event.message.text == "錢多" or event.message.text == "錢錢多多":
         working_status = False
@@ -1125,51 +1111,23 @@ def handle_message(event):
             )
         return
         
-        # # 取隨機數
-        # random_number = random.randint(1, 250)
-        # random_number_str = str(random_number)
-        # image_urls = "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/LINE_ALBUM_moneymany_%20("+random_number_str+").jpg"
-
-        # # 回傳訊息
-        # line_bot_api.reply_message(
-        #     event.reply_token,
-        #     [
-        #         ImageSendMessage(original_content_url=image_urls, preview_image_url=image_urls)
-        #     ]
-        # )
-        # return
-
-    # if event.message.text == "洞":
-    #     working_status = False
-    #     random_number = random.randint(1, 4)
-    #     random_number_str = str(random_number)
-    #     image_urls ="https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/hole"+random_number_str+".jpg"
-
-    #     # 回傳訊息
-    #     line_bot_api.reply_message(
-    #         event.reply_token,
-    #         [
-    #             ImageSendMessage(original_content_url=image_urls, preview_image_url=image_urls)
-    #         ]
-    #     )
-    #     return
     
     if event.message.text == "珮綺" or event.message.text == "綺綺":
         working_status = False
         messages = [
-        TextSendMessage(text="好正"),
-        TextSendMessage(text="貪吃的豬豬"),
-        TextSendMessage(text="好可愛"),
-        TextSendMessage(text="好漂亮"),
-        TextSendMessage(text="美麗動人"),
-        TextSendMessage(text="清新脫俗"),
-        TextSendMessage(text="嬌美如花"),
-        TextSendMessage(text="只會睡覺"),
-        TextSendMessage(text="閉月羞花"),
-        TextSendMessage(text="傾國傾城"),
-        TextSendMessage(text="玉潔冰清"),
-        TextSendMessage(text="花容月貌"),
-        TextSendMessage(text="沒有D")
+            TextSendMessage(text="好正"),
+            TextSendMessage(text="貪吃的豬豬"),
+            TextSendMessage(text="好可愛"),
+            TextSendMessage(text="好漂亮"),
+            TextSendMessage(text="美麗動人"),
+            TextSendMessage(text="清新脫俗"),
+            TextSendMessage(text="嬌美如花"),
+            TextSendMessage(text="只會睡覺"),
+            TextSendMessage(text="閉月羞花"),
+            TextSendMessage(text="傾國傾城"),
+            TextSendMessage(text="玉潔冰清"),
+            TextSendMessage(text="花容月貌"),
+            TextSendMessage(text="沒有D")
         ]
         # 回傳訊息
         line_bot_api.reply_message(
@@ -1183,19 +1141,19 @@ def handle_message(event):
     if event.message.text == "健豪" or event.message.text == "黃健豪":
         working_status = False
         messages = [
-        TextSendMessage(text="帥哥"),
-        TextSendMessage(text="母胎單身"),
-        TextSendMessage(text="飢渴難耐"),
-        TextSendMessage(text="帥到分手"),
-        TextSendMessage(text="桃園妹手到擒來"),
-        TextSendMessage(text="小公舉"),
-        TextSendMessage(text="陳年法師"),
-        TextSendMessage(text="這是小技巧"),
-        TextSendMessage(text="啊不然要怎樣"),
-        TextSendMessage(text="台南貴公子"), 
-        TextSendMessage(text="皇家禮炮"),
-        TextSendMessage(text="單身狗"),                      
-        TextSendMessage(text="帥到懷孕")
+            TextSendMessage(text="帥哥"),
+            TextSendMessage(text="母胎單身"),
+            TextSendMessage(text="飢渴難耐"),
+            TextSendMessage(text="帥到分手"),
+            TextSendMessage(text="桃園妹手到擒來"),
+            TextSendMessage(text="小公舉"),
+            TextSendMessage(text="陳年法師"),
+            TextSendMessage(text="這是小技巧"),
+            TextSendMessage(text="啊不然要怎樣"),
+            TextSendMessage(text="台南貴公子"), 
+            TextSendMessage(text="皇家禮炮"),
+            TextSendMessage(text="單身狗"),                      
+            TextSendMessage(text="帥到懷孕")
         ]
         # 回傳訊息
         line_bot_api.reply_message(
@@ -1205,29 +1163,6 @@ def handle_message(event):
             ]
         )
         return 
-    # if event.message.text.startswith("!"):
-    #     working_status = False#喵喵我可愛
-    #     stock_symbol = event.message.text[1:]  # 移除第一個字元「!」
-    #     stock = yf.Ticker(stock_symbol)
-    #     stock_info = stock.info
-        
-    #     #可愛的回應訊息
-    #     response_message = (
-    #         f"股票名稱: {stock_info.get('longName', '無法獲取')}\n"
-    #         f"當日開盤價: {stock_info.get('regularMarketOpen', '無法獲取')}\n"
-    #         f"當天的最高價: {stock_info.get('regularMarketDayHigh', '無法獲取')}\n"
-    #         f"當天的最低價: {stock_info.get('regularMarketDayLow', '無法獲取')}\n"
-    #         f"當前價格: {stock_info.get('regularMarketPrice', '無法獲取')}\n"
-    #         f"市場價值: {stock_info.get('marketCap', '無法獲取')}"
-    #     )
-        
-    #     # 回傳股票資訊給用戶
-    #     line_bot_api.reply_message(
-    #         event.reply_token,
-    #         TextSendMessage(text=response_message)
-    #     )
-    #     return
-  
 
     if working_status:
         chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
