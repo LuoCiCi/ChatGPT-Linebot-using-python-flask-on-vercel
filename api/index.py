@@ -937,7 +937,6 @@ def handle_message(event):
             "https://image.hkhl.hk/f/1024p0/0x0/100/none/ce50202910d349d7f7ce14913be6456f/2023-06/_alyciac_343289471_538879431656306_1742365294561665946_n.jpg",
             "https://images.chinatimes.com/newsphoto/2020-07-08/656/20200708005597.jpg",
             "https://thumbs.dreamstime.com/z/%E6%BC%82%E4%BA%AE%E7%9A%84%E8%82%96%E5%83%8F%EF%BC%8C%E6%80%A7%E6%84%9F%E7%9A%84%E4%BA%9A%E6%B4%B2%E5%A5%B3%E4%BA%BA%EF%BC%8C%E7%9C%8B%E8%B5%B7%E6%9D%A5%E6%80%A7%E6%84%9F%E8%BF%B7%E4%BA%BA-245021896.jpg",
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8NdHEyL0EmoU8Yy-Llnwt9Y6kJoSfzkT8gA&s",
             "https://diz36nn4q02zr.cloudfront.net/webapi/imagesV3/Original/SalePage/9501574/0/638503534754030000?v=1",
             "https://hk.on.cc/cnt/entertainment/20230625/photo/bkn-20230625210127720-0625_00862_001_02p.jpg?20230625210127",
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzolZ_BFSbZdm7m-CN2Ij8KikM4Rt7M9hafQ&s",
