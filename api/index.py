@@ -160,7 +160,7 @@ def convert_drive_link_to_download_url(drive_link):
 def home():
     return 'Hello, World!'
 
-@app.route("/callback", methods=['POST'])
+@app.route("/webhook", methods=['POST'])
 def callback():
     # get X-Line-Signature header value
     signature = request.headers['X-Line-Signature']
