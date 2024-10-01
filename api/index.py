@@ -9,7 +9,7 @@ import requests
 import random
 import pytz
 # 模擬 searchEarthquakeAction 的功能（此函數應該是你自己定義的）
-from earthquake_data import get_earthquake_data
+# from earthquake_data import get_earthquake_data
 
 line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
 line_handler = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
