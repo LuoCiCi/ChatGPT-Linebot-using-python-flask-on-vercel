@@ -627,13 +627,18 @@ def handle_message(event):
 
         # 確保 text_message 是正確的文字格式（Python 會自動處理 Unicode）
         text_message_decoded = text_message  # 這裡的 text_message 應該是正常的字串
-
-        line_bot_api.reply_message(event.reply_token,
-                [
-                    # TextSendMessage(f"{text_message_decoded}"),  # 傳送解碼後的文字
-                    ImageSendMessage(original_content_url=reply[1], preview_image_url=reply[1])
-                ]) # 傳送文字
-
+        if (check_image_url_exists(reply[1])):
+            line_bot_api.reply_message(event.reply_token,
+                    [
+                        # TextSendMessage(f"{text_message_decoded}"),  # 傳送解碼後的文字
+                        ImageSendMessage(original_content_url=reply[1], preview_image_url=reply[1])
+                    ]) # 傳送文字
+        else:
+            line_bot_api.reply_message(event.reply_token,
+                    [
+                        TextSendMessage(f"抓不到地震資訊")  # 傳送解碼後的文字
+                        # ImageSendMessage(original_content_url=reply[1], preview_image_url=reply[1])
+                    ]) # 傳送文字
         return
 
     
