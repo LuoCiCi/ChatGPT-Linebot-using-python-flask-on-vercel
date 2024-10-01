@@ -114,30 +114,30 @@ def get_prev00_prevprev00():
 def reduce_days(date, days):
     return date - timedelta(days=days)
 
-# 獲取地震資料的主函數
-def get_earthquake():
-    try:
-        # 計算日期範圍
-        start_time = reduce_days(datetime.now(), 3)
-        end_time = datetime.now()
+# # 獲取地震資料的主函數
+# def get_earthquake():
+#     try:
+#         # 計算日期範圍
+#         start_time = reduce_days(datetime.now(), 3)
+#         end_time = datetime.now()
 
-        # 調用 searchEarthquakeAction（即 get_earthquake_data 函數）
-        earthquake_images = get_earthquake_data(start_time.isoformat(), end_time.isoformat())
+#         # 調用 searchEarthquakeAction（即 get_earthquake_data 函數）
+#         earthquake_images = get_earthquake_data(start_time.isoformat(), end_time.isoformat())
 
-        result = []
+#         result = []
 
-        # 構建返回的圖片數據
-        for image_url in earthquake_images:
-            result.append({
-                'type': 'image',
-                'originalContentUrl': image_url,
-                'previewImageUrl': image_url
-            })
+#         # 構建返回的圖片數據
+#         for image_url in earthquake_images:
+#             result.append({
+#                 'type': 'image',
+#                 'originalContentUrl': image_url,
+#                 'previewImageUrl': image_url
+#             })
         
-        return result
-    except Exception as err:
-        print(err)
-        raise ValueError(f"Error occurred: {err}")
+#         return result
+#     except Exception as err:
+#         print(err)
+#         raise ValueError(f"Error occurred: {err}")
     
 # domain root
 @app.route('/')
