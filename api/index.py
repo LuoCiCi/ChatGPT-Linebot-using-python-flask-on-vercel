@@ -609,7 +609,26 @@ def handle_message(event):
                 ]) # 傳送文字
 
         return
-            
+
+    if event.message.text == "颱風":
+        working_status = True
+
+        api_url = "https://api.typhoon.example.com/data"
+        response = requests.get(api_url)
+
+        if response.status_code == 200:
+            typhoon_data = response.json()
+            line_bot_api.reply_message(event.reply_token,
+                    [
+                        TextSendMessage(f"{typhoon_data['records']}")  # 傳送解碼後的文字
+                        # ImageSendMessage(original_content_url=reply[1], preview_image_url=reply[1])
+                    ]) # 傳送文字
+        else:
+            line_bot_api.reply_message(event.reply_token,
+                    [
+                        TextSendMessage(f"抓不到資訊")  # 傳送解碼後的文字
+                        # ImageSendMessage(original_content_url=reply[1], preview_image_url=reply[1])
+                    ]) # 傳送文字
 
     # 暫時使用line設定功能，將此隱藏
     # if event.message.text == "選單" or event.message.text == "功能" or event.message.text == "menu":
