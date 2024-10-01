@@ -8,8 +8,7 @@ from datetime import datetime, timedelta
 import requests
 import random
 import pytz
-# 模擬 searchEarthquakeAction 的功能（此函數應該是你自己定義的）
-# from earthquake_data import get_earthquake_data
+
 
 line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
 line_handler = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
@@ -114,30 +113,30 @@ def get_prev00_prevprev00():
 def reduce_days(date, days):
     return date - timedelta(days=days)
 
-# # 獲取地震資料的主函數
-# def get_earthquake():
-#     try:
-#         # 計算日期範圍
-#         start_time = reduce_days(datetime.now(), 3)
-#         end_time = datetime.now()
-
-#         # 調用 searchEarthquakeAction（即 get_earthquake_data 函數）
-#         earthquake_images = get_earthquake_data(start_time.isoformat(), end_time.isoformat())
-
-#         result = []
-
-#         # 構建返回的圖片數據
-#         for image_url in earthquake_images:
-#             result.append({
-#                 'type': 'image',
-#                 'originalContentUrl': image_url,
-#                 'previewImageUrl': image_url
-#             })
+def earth_quake():
+    result = []
+    code = 'CWA-84D9233C-12BC-4CD7-B744-7C7F35F7AE48'
+    try:
+        # 小區域 https://opendata.cwa.gov.tw/dataset/earthquake/E-A0016-001
+        url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/E-A0016-001?Authorization={code}'
+        req1 = requests.get(url)  # 爬取資料
+        data1 = req1.json()       # 轉換成 json
+        eq1 = data1['records']['Earthquake'][0]           # 取得第一筆地震資訊
+        t1 = data1['records']['Earthquake'][0]['EarthquakeInfo']['OriginTime']
+        # 顯著有感 https://opendata.cwa.gov.tw/dataset/all/E-A0015-001
+        url2 = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/E-A0015-001?Authorization={code}'
+        req2 = requests.get(url2)  # 爬取資料
+        data2 = req2.json()        # 轉換成 json
+        eq2 = data2['records']['Earthquake'][0]           # 取得第一筆地震資訊
+        t2 = data2['records']['Earthquake'][0]['EarthquakeInfo']['OriginTime']
         
-#         return result
-#     except Exception as err:
-#         print(err)
-#         raise ValueError(f"Error occurred: {err}")
+        result = [eq1['ReportContent'], eq1['ReportImageURI']] # 先使用小區域地震
+        if t2>t1:
+          result = [eq2['ReportContent'], eq2['ReportImageURI']] # 如果顯著有感地震時間較近，就用顯著有感地震
+    except Exception as e:
+        print(e)
+        result = ['抓取失敗...','']
+    return result
     
 # domain root
 @app.route('/')
@@ -560,15 +559,18 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, messages)
         return
 
-    # if event.message.text == "地震":
-    #     working_status = True
+    if event.message.text == "地震":
+        working_status = True
 
-    #     earthquake_results = get_earthquake()
+        reply = earth_quake()   # 執行函式，讀取數值
+        text_message = TextSendMessage(text=reply[0])        # 取得文字內容
+        line_bot_api.reply_message(reply_token,text_message) # 傳送文字
+        line_bot_api.push_message(user_id, ImageSendMessage(original_content_url=reply[1], preview_image_url=reply[1])) # 傳送圖片
         
-    #     line_bot_api.reply_message(
-    #         event.reply_token,
-    #         TextSendMessage(text=f"{earthquake_results}"))
-    #     return
+        # line_bot_api.reply_message(
+        #     event.reply_token,
+        #     TextSendMessage(text=f"{earthquake_results}"))
+        return
             
 
     # 暫時使用line設定功能，將此隱藏
