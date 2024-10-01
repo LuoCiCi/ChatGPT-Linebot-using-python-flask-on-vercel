@@ -481,15 +481,15 @@ def handle_message(event):
 
     if event.message.text == "颱風":
         working_status = True
-        # typhoon_url = "https://www.cwa.gov.tw/V8/C/P/Typhoon/TY_WARN.html"
-        typhoon_url = "https://www.cwa.gov.tw/Data/typhoon/TY_WARN/B20.png"
+        typhoon_url = "https://www.cwa.gov.tw/V8/C/P/Typhoon/TY_WARN.html"
+        typhoon_pic = "https://www.cwa.gov.tw/Data/typhoon/TY_WARN/B20.png"
 
         if (check_image_url_exists(typhoon_url)):
             # 回傳訊息
             line_bot_api.reply_message(
                 event.reply_token,
-                # TextSendMessage(text=f"{typhoon_url}")
-                ImageSendMessage(original_content_url=typhoon_url, preview_image_url=typhoon_url)
+                TextSendMessage(text=f"{typhoon_url}"),
+                ImageSendMessage(original_content_url=typhoon_pic, preview_image_url=typhoon_pic)
             )
         else:
             line_bot_api.reply_message(
