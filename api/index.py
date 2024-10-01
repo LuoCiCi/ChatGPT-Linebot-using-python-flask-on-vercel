@@ -562,6 +562,8 @@ def handle_message(event):
 
     if event.message.text == "地震":
         working_status = True
+        user_id = json_data['events'][0]['source']['userId']  # 取得使用者 ID ( push message 使用 )
+        line_bot_api.push_message(user_id, TextSendMessage(text='馬上找給你！抓取資料中....'))
     
         reply = earth_quake()   # 執行函式，讀取數值
         text_message = TextSendMessage(text=reply[0])        # 取得文字內容
