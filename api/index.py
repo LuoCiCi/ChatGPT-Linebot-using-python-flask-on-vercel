@@ -5,7 +5,7 @@ from linebot.models import MessageEvent, TextMessage, TextSendMessage, ImageSend
 from api.chatgpt import ChatGPT
 import os
 from datetime import datetime, timedelta
-import requests
+import requests, json
 import random
 import pytz
 
@@ -157,6 +157,15 @@ def callback():
     except InvalidSignatureError:
         abort(400)
     return 'OK'
+
+@line_handler.add(MessageEvent, message=TextMessage)
+def handle_message(event):
+    # 回應訊息，自動已讀
+    reply_message = "test OK~"
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=reply_message)
+    )
 
 # 確認 URL 是否有效
 def check_image_url_exists(url):
@@ -562,6 +571,10 @@ def handle_message(event):
 
     if event.message.text == "地震":
         working_status = True
+
+        handler = WebhookHandler('34e7238d3ddecc772b31f5a182bca926')    # 確認 secret 是否正確
+        handler.handle(body, signature)      # 綁定訊息回傳的相關資訊
+        json_data = json.loads(body)         # 轉換內容為 json 格式
         user_id = json_data['events'][0]['source']['userId']  # 取得使用者 ID ( push message 使用 )
         line_bot_api.push_message(user_id, TextSendMessage(text='馬上找給你！抓取資料中....'))
     
