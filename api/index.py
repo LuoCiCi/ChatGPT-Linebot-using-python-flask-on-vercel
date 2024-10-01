@@ -5,7 +5,7 @@ from linebot.models import MessageEvent, TextMessage, TextSendMessage, ImageSend
 from api.chatgpt import ChatGPT
 import os
 from datetime import datetime, timedelta
-import requests
+import requests, json
 import random
 import pytz
 
@@ -562,6 +562,8 @@ def handle_message(event):
 
     if event.message.text == "地震":
         working_status = True
+        handler.handle(body, signature)      # 綁定訊息回傳的相關資訊
+        json_data = json.loads(body)         # 轉換內容為 json 格式
         user_id = json_data['events'][0]['source']['userId']  # 取得使用者 ID ( push message 使用 )
         line_bot_api.push_message(user_id, TextSendMessage(text='馬上找給你！抓取資料中....'))
     
