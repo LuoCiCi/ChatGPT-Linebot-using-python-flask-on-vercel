@@ -113,6 +113,7 @@ def get_prev00_prevprev00():
 def reduce_days(date, days):
     return date - timedelta(days=days)
 
+# 至中央氣象屬開放資料平台取得地震資訊
 def earth_quake():
     result = []
     code = 'CWA-84D9233C-12BC-4CD7-B744-7C7F35F7AE48'
@@ -137,6 +138,10 @@ def earth_quake():
         print(e)
         result = ['抓取失敗...','']
     return result
+
+# 將編碼轉換回 Unicode 字符
+def codepoint_to_unicode(codepoint):
+    return chr(codepoint)
     
 # domain root
 @app.route('/')
@@ -563,7 +568,7 @@ def handle_message(event):
         working_status = True
     
         reply = earth_quake()   # 執行函式，讀取數值
-        text_message = TextSendMessage(text=reply[0])        # 取得文字內容
+        text_message = codepoint_to_unicode(TextSendMessage(text=reply[0]))        # 取得文字內容
 
         line_bot_api.reply_message(event.reply_token,
                 [
