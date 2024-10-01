@@ -158,6 +158,15 @@ def callback():
         abort(400)
     return 'OK'
 
+@handler.add(MessageEvent, message=TextMessage)
+def handle_message(event):
+    # 回應訊息，自動已讀
+    reply_message = "test OK~"
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=reply_message)
+    )
+
 # 確認 URL 是否有效
 def check_image_url_exists(url):
     try:
