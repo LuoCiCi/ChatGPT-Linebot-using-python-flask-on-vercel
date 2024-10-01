@@ -1189,6 +1189,11 @@ def handle_message(event):
         TextSendMessage(text="飢渴難耐"),
         TextSendMessage(text="帥到分手"),
         TextSendMessage(text="桃園妹手到擒來"),
+        TextSendMessage(text="小公舉"),
+        TextSendMessage(text="陳年法師"),
+        TextSendMessage(text="這是小技巧"),
+        TextSendMessage(text="啊不然要怎樣"),
+        TextSendMessage(text="台南貴公子"),                       
         TextSendMessage(text="帥到懷孕")
         ]
         # 回傳訊息
