@@ -1178,21 +1178,17 @@ def handle_message(event):
     
     if event.message.text == "影片":
         working_status = False    
-        video_url = 'https://drive.google.com/file/d/1p1qlL3AcyQYaIGEBuKJwTQ4hym4jVjiN/view?usp=drive_link'  # 替換為你影片的 URL
-        preview_image_url = 'https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Video/S__29737352.jpg'  # 替換為你的預覽圖片 URL
+        video_url = "https://drive.google.com/file/d/1p1qlL3AcyQYaIGEBuKJwTQ4hym4jVjiN/view?usp=drive_link"  # 替換為你影片的 URL
+        preview_image_url = "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Video/S__29737352.jpg"  # 替換為你的預覽圖片 URL
 
-    # 回傳影片訊息
-        line_bot_api.reply_message
-        (
+        # 回傳影片訊息
+        line_bot_api.reply_message(
             event.reply_token,
-            [
-                TextSendMessage(text="影片測試"),
-                VideoSendMessage
-                (
-                    original_content_url=video_url,
-                    preview_image_url=preview_image_url
-                )
-            ]
+            VideoSendMessage
+            (
+                original_content_url=video_url,
+                preview_image_url=preview_image_url
+            )
         )
         return
 
