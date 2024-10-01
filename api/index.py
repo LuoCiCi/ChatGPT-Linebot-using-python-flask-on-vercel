@@ -718,7 +718,6 @@ def handle_message(event):
             "https://today-obs.line-scdn.net/0hmUYOwfdbMnpkNiXWpihNLVxgPgtXUChzRlR0SBVka0JLGnQvUAdhGURjZVZADnZ4RFl1H0Jkbx0dACEvWg/w644",
             "https://media.nownews.com/nn_media/thumbnail/2022/04/1649131065438-58adaef36d3d455096b168c087908bf5-800x534.jpg?unShow=false",
             "https://s.yimg.com/zp/MerchandiseImages/28DA6596E9-SP-7775353.jpg",
-            "https://dynamic.zacdn.com/Xgdy0k_T5AnP6XBxcbfeH2V5Cmo=/filters:quality(70):format(webp)/https://static-tw.zacdn.com/p/lycka-9583-0408471-2.jpg",
             "https://img.cloudimg.in/uploads/shops/7094/products/b0/b02c2e7c86d787f1138c05f32a7e14c7.jpg",
             "https://down-tw.img.susercontent.com/file/215b170d984ed3f48837e7336d3dfab0",
             "https://s.yimg.com/zp/MerchandiseImages/983BEFE4F1-SP-7781092.jpg",
