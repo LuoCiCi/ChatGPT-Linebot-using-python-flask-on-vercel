@@ -8,7 +8,8 @@ from datetime import datetime, timedelta
 import requests
 import random
 import pytz
-#import yfinance as yf
+# 模擬 searchEarthquakeAction 的功能（此函數應該是你自己定義的）
+from earthquake_data import get_earthquake_data
 
 line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
 line_handler = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
@@ -108,6 +109,35 @@ def get_prev00_prevprev00():
 
     # 回傳結果
     return prev_time, prev_prev_time
+
+# 減少日期天數
+def reduce_days(date, days):
+    return date - timedelta(days=days)
+
+# 獲取地震資料的主函數
+def get_earthquake():
+    try:
+        # 計算日期範圍
+        start_time = reduce_days(datetime.now(), 3)
+        end_time = datetime.now()
+
+        # 調用 searchEarthquakeAction（即 get_earthquake_data 函數）
+        earthquake_images = get_earthquake_data(start_time.isoformat(), end_time.isoformat())
+
+        result = []
+
+        # 構建返回的圖片數據
+        for image_url in earthquake_images:
+            result.append({
+                'type': 'image',
+                'originalContentUrl': image_url,
+                'previewImageUrl': image_url
+            })
+        
+        return result
+    except Exception as err:
+        print(err)
+        raise ValueError(f"Error occurred: {err}")
     
 # domain root
 @app.route('/')
@@ -529,6 +559,16 @@ def handle_message(event):
         # 最後一次性回傳所有訊息
         line_bot_api.reply_message(event.reply_token, messages)
         return
+
+    if event.message.text == "地震":
+        working_status = True
+
+        earthquake_results = get_earthquake()
+        
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=f"{earthquake_results}"))
+        return
             
 
     # 暫時使用line設定功能，將此隱藏
@@ -754,7 +794,6 @@ def handle_message(event):
             "https://cdn.beautyexchange.com.hk/wp-content/uploads/2022/04/25193732/WhatsApp-Image-2022-04-25-at-7.35.22-PM.jpeg",
             "https://picture.smartweb.tw/3601/prod/title_204330.jpg?1032",
             "https://lovepicture.nosdn.127.net/-1646481156464263096?imageView&thumbnail=560x0&quality=85",
-            "https://imgs.699pic.com/images/600/624/902.jpg!detail.v1",
             "https://img.chilling.tw/images/author/Ivy/0707005.jpg",
             "https://image.cache.storm.mg/styles/smg-800x533-fp/s3/media/image/2018/06/05/20180605-061621_U3927_M419757_1c11.png?itok=fg6OkDtW",
             "https://cdn.bella.tw/index_image/VjehePRYUksdh6Us9FM3Srh98DIdYizwkBlljkQw.jpeg",
