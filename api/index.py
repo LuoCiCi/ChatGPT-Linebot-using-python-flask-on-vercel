@@ -1193,6 +1193,7 @@ def handle_message(event):
                 )
             ]
         )
+        return
 
     if working_status:
         chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
