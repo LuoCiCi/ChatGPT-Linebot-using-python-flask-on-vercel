@@ -488,8 +488,10 @@ def handle_message(event):
             # 回傳訊息
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text=f"{typhoon_url}"),
-                ImageSendMessage(original_content_url=typhoon_pic, preview_image_url=typhoon_pic)
+                [
+                    TextSendMessage(text=f"{typhoon_url}"),
+                    ImageSendMessage(original_content_url=typhoon_pic, preview_image_url=typhoon_pic)
+                ]
             )
         else:
             line_bot_api.reply_message(
