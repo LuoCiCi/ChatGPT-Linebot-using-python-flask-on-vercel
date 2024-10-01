@@ -574,10 +574,11 @@ def handle_message(event):
 
         body = request.get_data(as_text=True)                 # 取得收到的訊息內容
         handler = WebhookHandler('34e7238d3ddecc772b31f5a182bca926')    # 確認 secret 是否正確
+        signature = request.headers['X-Line-Signature']   # 加入回傳的 headers
         handler.handle(body, signature)      # 綁定訊息回傳的相關資訊
         json_data = json.loads(body)         # 轉換內容為 json 格式
         user_id = json_data['events'][0]['source']['userId']  # 取得使用者 ID ( push message 使用 )
-        line_bot_api.push_message(user_id, TextSendMessage(text='馬上找給你！抓取資料中....'))
+        line_bot_api.push_message(user_id, TextSendMessage(text='地震監視畫面\nhttps://www.youtube.com/live/Owke6Quk7T0?si=CQYm0rJ3Mq_UnQEv'))
     
         reply = earth_quake()   # 執行函式，讀取數值
         text_message = TextSendMessage(text=reply[0])        # 取得文字內容
