@@ -908,7 +908,12 @@ def handle_message(event):
             "https://img.ttshow.tw/images/author/ron/FotoJet6556.jpg",
             "https://today-obs.line-scdn.net/0h4efrlPi9a0pbC3tjX_cUHWNdZztobXFDeT8leXxZMX0kJy4eMG84KSkMNGYlOioYez0iKH1cMilyaS0cMA/w644",
             "https://cdn2.ettoday.net/images/6862/d6862322.jpg",
-            "https://imgs.699pic.com/images/501/427/671.jpg!list1x.v2"
+            "https://imgs.699pic.com/images/501/427/671.jpg!list1x.v2",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image1.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image2.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image3.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image4.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image5.jpg"
         ]
         
    
