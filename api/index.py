@@ -782,7 +782,6 @@ def handle_message(event):
             "https://png.pngtree.com/thumb_back/fh260/background/20230424/pngtree-female-asian-woman-posing-with-hands-clasped-korean-beauty-image_2502163.jpg",
             "https://images.pexels.com/photos/3866556/pexels-photo-3866556.png?cs=srgb&dl=pexels-clarango-3866556.jpg&fm=jpg",
             "https://i.pinimg.com/originals/d8/49/fe/d849feca8b1e452f840cd45e1e31b163.jpg",
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_ZbEiVdlzz-LVsiudO626mKI3iN9o2Lu37A&s",
             "https://watermark.lovepik.com/photo/20211207/large/lovepik-charming-red-lips-beauty-makeup-hands-covering-picture_501537693.jpg",
             "https://thumb.photo-ac.com/14/14886183fe43fdff6afbce9a742b5e60_t.jpeg",
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2yV--oN6ZLT4UAGvSs5aCbrrSADVSaNaUug&s",
