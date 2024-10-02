@@ -861,7 +861,6 @@ def handle_message(event):
             "https://cdn2.ettoday.net/images/5320/5320485.jpg",
             "https://images-tw.girlstyle.com/wp-content/uploads/2022/09/598eb5ba.jpg?auto=format&w=1053",
             "https://assets.juksy.com/files/articles/59310/61ba276f9479b.jpg",
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0nM2UeOrWFWM_wUvM8fHrC1FSuZOUsc2c9A&s",
             "https://image.cache.storm.mg/styles/smg-800x533-fp/s3/media/image/2022/02/22/20220222-113855_U20102_M746087_42f0.jpg?itok=feLP6_jB",
             "https://obs.line-scdn.net/0hKo59rqF_FEAIQDx_jkRrFzEWGDE7JAFGZjgJcXoSS3AneU9FZ3ZdOihJGHg5eVRBNDpYJn5HHSUjI1pDMy8",
             "https://megapx-assets.dcard.tw/images/1797d523-7b7c-4516-aa86-0d2f6c5427a7/640.jpeg",
@@ -907,12 +906,36 @@ def handle_message(event):
             "https://img.ttshow.tw/images/author/ron/FotoJet6556.jpg",
             "https://today-obs.line-scdn.net/0h4efrlPi9a0pbC3tjX_cUHWNdZztobXFDeT8leXxZMX0kJy4eMG84KSkMNGYlOioYez0iKH1cMilyaS0cMA/w644",
             "https://cdn2.ettoday.net/images/6862/d6862322.jpg",
+            "https://doqvf81n9htmm.cloudfront.net/data/crop_article/128280/shutterstock_1139488658.jpg_1140x855.jpg",
             "https://imgs.699pic.com/images/501/427/671.jpg!list1x.v2",
+            "https://img.shoplineapp.com/media/image_clips/657c1c59b4f2ea000e569a80/original.jpg?1702632536",
+            "https://image1.gamme.com.tw/news2/2018/87/57/qaCUoaSYkp6bqKU.jpg",
+            "https://images.newtalk.tw/resize_action2/300/album/news/897/6555cbbd36edd.png",
+            "https://img.taotu.cn/ssd/ssd4/1/2024-06-23/1_66f8ce29df2156a0c86130230fc70c2a.webp",
+            "https://img.ltn.com.tw/Upload/ent/page/800/2022/03/08/phphxRlIV.jpg",
+            "https://hips.hearstapps.com/hmg-prod/images/ccqci5mdabg-1597940352.jpg?crop=1.00xw:0.857xh;0,0.143xh&resize=980:*",
+            "https://megapx-assets.dcard.tw/images/9957eef6-d262-4fed-a691-7fc9bc0f6baa/640.jpeg",
+            "https://photo.s3.com.tw/look/Upload/BlogArticleImages/4655/20190731181117769_700_0_80.jpg",
+            "https://p3.itc.cn/q_70/images03/20230516/1c5797b11e434b71a0ea2968d2428b6d.jpeg",
+            "https://media.gq.com.tw/photos/5dbc26098569400008313803/16:9/w_2560%2Cc_limit/2019050867202817.jpg",
+            "https://media.gq.com.tw/photos/5e96f6bc7f05a50008366898/16:9/w_2560%2Cc_limit/8-1.jpg",
+            "https://xximg1.meitudata.com/J84VbapuzaGDm6Nd89Kls0k2qBV0Vg.jpg?imageView2/0/w/900",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpcbYpklheUC7QYjAAiEmi2kPpNcf3LoQwJA&s",
+            "https://media.vogue.com.tw/photos/5db7dd51c2e36100085aecf7/1:1/w_599,h_599,c_limit/2019100470802017.jpg",
+            "https://www.keaitupian.cn/cjpic/frombd/1/253/570874675/4138421745.jpg",
+            "https://rimage.gnst.jp/livejapan.com/public/article/detail/a/00/04/a0004852/img/zh-tw/a0004852_main.jpg",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQO5jcIl4KYYuN7y-2cBbfT2LtRuZcNsJyDSA&s",
+            "https://www.keaitupian.cn/cjpic/frombd/2/253/1620201398/2258677716.jpg",
+            "https://megapx-assets.dcard.tw/images/c51a059e-b6b3-4441-bfa8-3c46fabcee10/640.jpeg",
+            "https://www.keaitupian.cn/cjpic/frombd/0/253/1833225685/1323379224.jpg",
             "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image1.jpg",
             "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image2.jpg",
             "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image3.jpg",
             "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image4.jpg",
-            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image5.jpg"
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image5.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image6.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image7.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image8.jpg"
         ]
         
    
@@ -974,7 +997,6 @@ def handle_message(event):
         
         image_urls = [
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZksY8fVOYn57iAGHhJxokGgdtGc3mugmk4-QmLe_vLyS-7Jgna_sya8PYzFW5QUCW70Q&usqp=CAU",
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBOlQL3xJsiB0rdZ07j0tUmJUdrLgZdC29HQ&s",
             "https://p9.itc.cn/q_70/images03/20230904/f4fe0b05119b4ab8b0075b4c41c46ce7.jpeg",
             "https://thumb.photo-ac.com/cb/cb52df139e3d6b14fdc28b7dc38fbb6c_t.jpeg",
             "https://st.depositphotos.com/3546173/5116/i/950/depositphotos_51163333-stock-photo-beautiful-slim-body-of-woman.jpg",
