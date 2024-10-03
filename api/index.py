@@ -891,7 +891,6 @@ def handle_message(event):
             "https://image1.gamme.com.tw/news2/2021/56/21/pZmSpqCYmKOYqA.jpg",
             "https://shinphotos.com/wp-content/uploads/2020-11-05-180724-78.jpg",
             "https://s3.ap-southeast-1.amazonaws.com/ohmostudio/pet%20photo-11jpg.jpg",
-            "https://express.adobe.com/page/UwSBgPnnvIDdx/images/e6f8b815-2235-4fbb-aeca-e69f8750b4c2.jpg?asset_id=1ff25959-63a6-409b-b769-809a0eb31905&img_etag=1dea946a7c6dd345f1e5b55c5ffbaf29&size=1024",
             "https://watermark.lovepik.com/photo/20211209/large/lovepik-beautiful-woman-with-fashion-makeup-picture_501695280.jpg",
             "https://i-photo7.com/image/data/11A/270-min.jpg",
             "https://i-photo7.com/image/data/11A/269-min.jpg",
@@ -914,7 +913,6 @@ def handle_message(event):
             "https://img.ltn.com.tw/Upload/ent/page/800/2022/03/08/phphxRlIV.jpg",
             "https://hips.hearstapps.com/hmg-prod/images/ccqci5mdabg-1597940352.jpg?crop=1.00xw:0.857xh;0,0.143xh&resize=980:*",
             "https://megapx-assets.dcard.tw/images/9957eef6-d262-4fed-a691-7fc9bc0f6baa/640.jpeg",
-            "https://photo.s3.com.tw/look/Upload/BlogArticleImages/4655/20190731181117769_700_0_80.jpg",
             "https://p3.itc.cn/q_70/images03/20230516/1c5797b11e434b71a0ea2968d2428b6d.jpeg",
             "https://media.gq.com.tw/photos/5dbc26098569400008313803/16:9/w_2560%2Cc_limit/2019050867202817.jpg",
             "https://media.gq.com.tw/photos/5e96f6bc7f05a50008366898/16:9/w_2560%2Cc_limit/8-1.jpg",
@@ -938,7 +936,9 @@ def handle_message(event):
             "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image10.jpg",
             "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image11.jpg",
             "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image12.jpg",
-            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image13.jpg"
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image13.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image14.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image15.jpg"
         ]
         
    
@@ -1024,7 +1024,6 @@ def handle_message(event):
             "https://cdn.hk01.com/di/media/images/dw/20210707/489482591276109824637408.jpeg/sOkuWkg6jdkim0jZYtkbEChKJv3A3Kpw3Pjr2dz469k?v=w1920",
             "https://tshop.r10s.com/b27/50c/cfec/baef/3073/d808/4e76/1145ed930c0242ac110005.jpg?_ex=486x486",
             "https://media.nownews.com/nn_media/thumbnail/2022/03/1647937976105-2ed3e95d6cad43238ed07dcc941aff2b-500x625.jpg?unShow=false&waterMark=false",
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEPBywmA39tptDq3a7cNG4u3O0utt18FVIYg&s",
             "https://s.yimg.com/zp/images/9DA66C9F780B61728BCB58F044CF4AF6F6ABBCA4",
             "https://img.cdn.91app.hk/webapi/imagesV3/Cropped/SalePage/361662/0/638616321323030000?v=1",
             "https://diz36nn4q02zr.cloudfront.net/webapi/imagesV3/Cropped/SalePage/8085430/0/638580602488200000?v=1",
