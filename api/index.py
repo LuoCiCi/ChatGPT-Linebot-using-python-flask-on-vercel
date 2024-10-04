@@ -878,7 +878,6 @@ def handle_message(event):
             "https://today-obs.line-scdn.net/0h4efrlPi9a0pbC3tjX_cUHWNdZztobXFDeT8leXxZMX0kJy4eMG84KSkMNGYlOioYez0iKH1cMilyaS0cMA/w644",
             "https://cdn2.ettoday.net/images/6862/d6862322.jpg",
             "https://doqvf81n9htmm.cloudfront.net/data/crop_article/128280/shutterstock_1139488658.jpg_1140x855.jpg",
-            "https://imgs.699pic.com/images/501/427/671.jpg!list1x.v2",
             "https://img.shoplineapp.com/media/image_clips/657c1c59b4f2ea000e569a80/original.jpg?1702632536",
             "https://image1.gamme.com.tw/news2/2018/87/57/qaCUoaSYkp6bqKU.jpg",
             "https://images.newtalk.tw/resize_action2/300/album/news/897/6555cbbd36edd.png",
