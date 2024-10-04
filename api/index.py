@@ -615,21 +615,11 @@ def handle_message(event):
     if event.message.text == "地震":
         working_status = True
 
-        body = request.get_data(as_text=True)                 # 取得收到的訊息內容
-        handler = WebhookHandler('34e7238d3ddecc772b31f5a182bca926')    # 確認 secret 是否正確
-        signature = request.headers['X-Line-Signature']   # 加入回傳的 headers
-        handler.handle(body, signature)      # 綁定訊息回傳的相關資訊
-        json_data = json.loads(body)         # 轉換內容為 json 格式
-        user_id = json_data['events'][0]['source']['userId']  # 取得使用者 ID ( push message 使用 )
-
-        #if user_id:
-            #line_bot_api.push_message(user_id, TextSendMessage(text=f'{user_id}地震監視畫面\nhttps://www.youtube.com/live/Owke6Quk7T0?si=CQYm0rJ3Mq_UnQEv'))
-        #else:
-            #line_bot_api.reply_message(event.reply_token,
-                    #[
-                        #TextSendMessage(f"地震監視畫面\nhttps://www.youtube.com/live/Owke6Quk7T0?si=CQYm0rJ3Mq_UnQEv")  # 傳送解碼後的文字
-                        # ImageSendMessage(original_content_url=reply[1], preview_image_url=reply[1])
-                    #]) # 傳送文字
+        # body = request.get_data(as_text=True)                 # 取得收到的訊息內容
+        # handler = WebhookHandler('34e7238d3ddecc772b31f5a182bca926')    # 確認 secret 是否正確
+        # signature = request.headers['X-Line-Signature']   # 加入回傳的 headers
+        # handler.handle(body, signature)      # 綁定訊息回傳的相關資訊
+        # json_data = json.loads(body)         # 轉換內容為 json 格式
     
         reply = earth_quake()   # 執行函式，讀取數值
         text_message = TextSendMessage(text=reply[0])        # 取得文字內容
@@ -639,7 +629,6 @@ def handle_message(event):
         if (check_image_url_exists(reply[1])):
             line_bot_api.reply_message(event.reply_token,
                     [
-                        # TextSendMessage(f"{text_message_decoded}"),  # 傳送解碼後的文字
                         TextSendMessage(f"地震監視畫面\nhttps://www.youtube.com/live/Owke6Quk7T0?si=CQYm0rJ3Mq_UnQEv"),
                         ImageSendMessage(original_content_url=reply[1], preview_image_url=reply[1])
                     ]) # 傳送文字
@@ -647,7 +636,6 @@ def handle_message(event):
             line_bot_api.reply_message(event.reply_token,
                     [
                         TextSendMessage(f"抓不到地震資訊")  # 傳送解碼後的文字
-                        # ImageSendMessage(original_content_url=reply[1], preview_image_url=reply[1])
                     ]) # 傳送文字
         return
 
@@ -756,15 +744,6 @@ def handle_message(event):
                 TextSendMessage(text="無法找到對應的圖片，請稍後再試。")
             )
         return
-
-        # # 回傳訊息
-        # line_bot_api.reply_message(
-        #     event.reply_token,
-        #     [
-        #         ImageSendMessage(original_content_url=random_image_url, preview_image_url=random_image_url)
-        #     ]
-        # )
-        # return
 
     if event.message.text == "抽":
         working_status = False
@@ -1006,15 +985,6 @@ def handle_message(event):
             )
         return
 
-        # # 回傳訊息
-        # line_bot_api.reply_message(
-        #     event.reply_token,
-        #     [
-        #         ImageSendMessage(original_content_url=random_image_url, preview_image_url=random_image_url)
-        #     ]
-        # )
-        # return
-
     if event.message.text == "抽奶" or event.message.text == "抽大奶":
         working_status = False
         max_attempts = 5  # 設定最多嘗試的次數
@@ -1118,15 +1088,6 @@ def handle_message(event):
             )
         return
 
-        # # 回傳訊息
-        # line_bot_api.reply_message(
-        #     event.reply_token,
-        #     [
-        #         ImageSendMessage(original_content_url=random_image_url, preview_image_url=random_image_url)
-        #     ]
-        # )
-        # return
-
     if event.message.text == "錢吶" or event.message.text == "錢啊" or event.message.text == "錢錢":       
         working_status = False
         max_attempts = 5  # 設定最多嘗試的次數
@@ -1155,20 +1116,6 @@ def handle_message(event):
                 TextSendMessage(text="無法找到對應的圖片，請稍後再試。")
             )
         return
-        
-        # # 取隨機數
-        # random_number = random.randint(1, 250)
-        # random_number_str = str(random_number)
-        # image_urls = "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/LINE_ALBUM_money_%20("+random_number_str+").jpg"
-
-        # # 回傳訊息
-        # line_bot_api.reply_message(
-        #     event.reply_token,
-        #     [
-        #         ImageSendMessage(original_content_url=image_urls, preview_image_url=image_urls)
-        #     ]
-        # )
-        # return
 
     if event.message.text == "多吶" or event.message.text == "多啊" or event.message.text == "多多":       
         working_status = False
@@ -1281,21 +1228,21 @@ def handle_message(event):
         )
         return 
     
-    if event.message.text == "影片":
-        working_status = False    
-        video_url = "https://drive.google.com/uc?export=download&id=1p1qlL3AcyQYaIGEBuKJwTQ4hym4jVjiN"  # 替換為你影片的 URL
-        preview_image_url = "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Video/S__29737352.jpg"  # 替換為你的預覽圖片 URL
+    # if event.message.text == "影片":
+    #     working_status = False    
+    #     video_url = "https://drive.google.com/uc?export=download&id=1p1qlL3AcyQYaIGEBuKJwTQ4hym4jVjiN"  # 替換為你影片的 URL
+    #     preview_image_url = "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Video/S__29737352.jpg"  # 替換為你的預覽圖片 URL
 
-        # 回傳影片訊息
-        line_bot_api.reply_message(
-            event.reply_token,
-            VideoSendMessage
-            (
-                original_content_url=video_url,
-                preview_image_url=preview_image_url
-            )
-        )
-        return
+    #     # 回傳影片訊息
+    #     line_bot_api.reply_message(
+    #         event.reply_token,
+    #         VideoSendMessage
+    #         (
+    #             original_content_url=video_url,
+    #             preview_image_url=preview_image_url
+    #         )
+    #     )
+    #     return
 
     if working_status:
         chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
