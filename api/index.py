@@ -757,7 +757,6 @@ def handle_message(event):
             "https://i.pinimg.com/originals/d8/49/fe/d849feca8b1e452f840cd45e1e31b163.jpg",
             "https://watermark.lovepik.com/photo/20211207/large/lovepik-charming-red-lips-beauty-makeup-hands-covering-picture_501537693.jpg",
             "https://thumb.photo-ac.com/14/14886183fe43fdff6afbce9a742b5e60_t.jpeg",
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2yV--oN6ZLT4UAGvSs5aCbrrSADVSaNaUug&s",
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEMq-GKWGod1OV1EjDV5OUVnn0VZ-NWsFJyg&s",
             "https://img2.imagemore.com.tw/imagemore_dir/comp/bn1504/bji04280063.jpg",
             "https://thumb.photo-ac.com/4d/4d78cf21bc9d02efdd012e8ae1f4efee_t.jpeg",
@@ -790,7 +789,6 @@ def handle_message(event):
             "https://cdn2.ettoday.net/images/6174/6174968.jpg",
             "https://upload.wikimedia.org/wikipedia/commons/1/13/LAN202301_%28cropped%29.jpg",
             "https://modelmodel.com.tw/mdimg/20190826220110_7Q9GAg5HW8gk.jpg",
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTB6uye2-GrBp9-svkQvvdi1-8ZO9W08vmJZg&s",
             "https://media.vogue.com.tw/photos/6617b306e7da7d48983fb9bc/2:3/w_2560%2Cc_limit/599d0d09cf8e47d674f5c87aebf16762.jpeg",
             "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/240807_IU_at_Estee_Lauder_Photo_Call.png/800px-240807_IU_at_Estee_Lauder_Photo_Call.png",
             "https://www.mtv.com.tw/uploads/files/14194/conversions/1%E5%8D%97%E9%9F%93%E6%A8%82%E5%A3%87%E5%B9%B4%E5%BA%A6%E7%9B%9B%E4%BA%8BMMAIU%E7%A2%BA%E5%AE%9A%E5%87%BA%E5%B8%AD-xl.jpg",
@@ -983,7 +981,6 @@ def handle_message(event):
         attempts = 0
         
         image_urls = [
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZksY8fVOYn57iAGHhJxokGgdtGc3mugmk4-QmLe_vLyS-7Jgna_sya8PYzFW5QUCW70Q&usqp=CAU",
             "https://p9.itc.cn/q_70/images03/20230904/f4fe0b05119b4ab8b0075b4c41c46ce7.jpeg",
             "https://thumb.photo-ac.com/cb/cb52df139e3d6b14fdc28b7dc38fbb6c_t.jpeg",
             "https://st.depositphotos.com/3546173/5116/i/950/depositphotos_51163333-stock-photo-beautiful-slim-body-of-woman.jpg",
