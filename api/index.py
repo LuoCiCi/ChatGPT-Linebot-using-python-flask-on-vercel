@@ -778,7 +778,6 @@ def handle_message(event):
             "https://api.harpersbazaar.com.hk/var/site/storage/images/_aliases/img_640_w/fashion/girl-next-door-fashion/node_191250/2628803-1-chi-HK/_1.jpg",
             "https://obs.line-scdn.net/0htuo9wA1RK1pSQANnU3JUDWsWJythJD5cPDgxOXBAJm95dnANaXZiIHIQdDhjIGkLPTpsaHVFcz4odT5ZaSY",
             "https://img.ltn.com.tw/Upload/ent/page/800/2021/05/24/phpUOn8z7.jpg",
-            "https://cdn.ftvnews.com.tw/manasystem/FileData/News/7476b1eb-3f66-4c50-b186-0fc4ab52bdb0.jpg",
             "https://sw.cool3c.com/article/2018/32151241-adf9-4d94-a9be-c24b5597d209.jpg?fit=max&w=1400&q=80",
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJpAg8wQDXbbZNkAZ9fsbwr6BNTQUwQfhvTg&s",
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGchDhH0FLs53qrVu_VDFAQ80tM-H_Bq2EBg&s",
