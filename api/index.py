@@ -1233,24 +1233,26 @@ def handle_message(event):
         response = requests.get(url)
         lottery_data = response.json()
         random_lottery = random.choice(lottery_data)
-        poem_text = textwrap.dedent(f"""籤詩號碼: {random_lottery.get('id', '未知')}
-        籤詩類型: {random_lottery.get('type', '未知')}
-        籤詩內容: {random_lottery.get('poem', '無內容')}
+        poem_text = textwrap.dedent(
+        f"""籤詩號碼: {random_lottery.get('id', '未知')}
+                                           
+    籤詩類型: {random_lottery.get('type', '未知')}
+    籤詩內容: {random_lottery.get('poem', '無內容')}
+    
+    解釋: {random_lottery.get('explain', '無解釋')}
 
-        解釋: {random_lottery.get('explain', '無解釋')}
+    結果:
+    願望: {random_lottery['result'].get('願望', '未知')}
+    疾病: {random_lottery['result'].get('疾病', '未知')}
+    盼望的人: {random_lottery['result'].get('盼望的人', '未知')}
+    遺失物: {random_lottery['result'].get('遺失物', '未知')}
+    蓋新居: {random_lottery['result'].get('蓋新居', '未知')}
+    搬家: {random_lottery['result'].get('搬家', '未知')}
+    嫁娶: {random_lottery['result'].get('嫁娶', '未知')}
+    旅行: {random_lottery['result'].get('旅行', '未知')}
+    交往: {random_lottery['result'].get('交往', '未知')}
 
-        結果:
-        願望: {random_lottery['result'].get('願望', '未知')}
-        疾病: {random_lottery['result'].get('疾病', '未知')}
-        盼望的人: {random_lottery['result'].get('盼望的人', '未知')}
-        遺失物: {random_lottery['result'].get('遺失物', '未知')}
-        蓋新居: {random_lottery['result'].get('蓋新居', '未知')}
-        搬家: {random_lottery['result'].get('搬家', '未知')}
-        嫁娶: {random_lottery['result'].get('嫁娶', '未知')}
-        旅行: {random_lottery['result'].get('旅行', '未知')}
-        交往: {random_lottery['result'].get('交往', '未知')}
-
-        註解: {random_lottery.get('note', '無註解')}
+    註解: {random_lottery.get('note', '無註解')}
         """)
         line_bot_api.reply_message(
             event.reply_token,
