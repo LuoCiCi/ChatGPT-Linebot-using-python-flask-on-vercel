@@ -932,7 +932,15 @@ def handle_message(event):
             "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image38.jpg",
             "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image39.jpg",
             "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image40.jpg",
-            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image41.jpg"
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image41.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image42.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image43.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image44.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image45.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image46.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image47.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image48.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image49.jpg"
         ]
         
    
