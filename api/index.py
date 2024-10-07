@@ -1237,18 +1237,23 @@ def handle_message(event):
         while attempts < max_attempts:
             random_number = random.randint(0, 59)*8+1
             image_url = f"www.ma-tsu.com.tw/lot/fs{random_number}.jpg"
-            
-            # 檢查圖片是否存在
-            if check_image_url_exists(image_url):
-                # 如果圖片存在，回傳訊息
-                line_bot_api.reply_message(
+            line_bot_api.reply_message(
                     event.reply_token,
                     [
-                        ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
+                        TextSendMessage(text=image_url),
                     ]
                 )
-                break  # 找到圖片後退出迴圈
-            attempts += 1
+            # # 檢查圖片是否存在
+            # if check_image_url_exists(image_url):
+            #     # 如果圖片存在，回傳訊息
+            #     line_bot_api.reply_message(
+            #         event.reply_token,
+            #         [
+            #             ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
+            #         ]
+            #     )
+            #     break  # 找到圖片後退出迴圈
+            # attempts += 1
         else:
             # 如果在max_attempts次內未找到有效圖片
             line_bot_api.reply_message(
