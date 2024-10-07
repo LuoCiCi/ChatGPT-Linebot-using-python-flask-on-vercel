@@ -852,7 +852,6 @@ def handle_message(event):
             "https://liliwed.tw/wp-content/uploads/2020/08/%E7%B6%B2%E9%A0%81%E7%89%88-5.jpg",
             "https://img.ltn.com.tw/Upload/ent/page/800/2019/02/15/phpWyNntS.jpg",
             "https://www.eton.com.tw/img/personal/Hsieh/personal%20(2).jpg",
-            "https://imgs.699pic.com/images/501/631/888.jpg!list1x.v2",
             "https://megapx-assets.dcard.tw/images/6d67a98a-9985-447d-b1d0-0bc215281354/1280.jpeg",
             "https://hellohellophoto.com.tw/wp-content/uploads/2022/09/HEN_2410-2.jpg",
             "https://cdn.hk01.com/di/media/images/dw/20230820/769991776164384768762843.jpeg/aJV4MZMp1BhWlsHpJyfXZgkfXnj8HNmmZ8-nU2fPp1M?v=w1920",
@@ -1237,23 +1236,21 @@ def handle_message(event):
         while attempts < max_attempts:
             random_number = random.randint(0, 59)*8+1
             image_url = f"www.ma-tsu.com.tw/lot/fs{random_number}.jpg"
-            line_bot_api.reply_message(
-                    event.reply_token,
-                    [
-                        TextSendMessage(text=image_url),
-                    ]
-                )
-            # # 檢查圖片是否存在
-            # if check_image_url_exists(image_url):
-            #     # 如果圖片存在，回傳訊息
-            #     line_bot_api.reply_message(
+            # line_bot_api.reply_message(
             #         event.reply_token,
             #         [
-            #             ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
+            #             TextSendMessage(text=image_url),
             #         ]
             #     )
-            #     break  # 找到圖片後退出迴圈
-            # attempts += 1
+            # 檢查圖片是否存在
+            if check_image_url_exists(image_url):
+                # 如果圖片存在，回傳訊息
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
+                )
+                break  # 找到圖片後退出迴圈
+            attempts += 1
         else:
             # 如果在max_attempts次內未找到有效圖片
             line_bot_api.reply_message(
