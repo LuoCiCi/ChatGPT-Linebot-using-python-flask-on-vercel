@@ -1254,6 +1254,7 @@ def handle_message(event):
                 line_bot_api.reply_message(
                     event.reply_token,
                     [
+                        TextSendMessage(text=f"URL={image_url}"),
                         ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
                     ]
                 )
@@ -1264,7 +1265,8 @@ def handle_message(event):
             line_bot_api.reply_message(
                 event.reply_token,
                 [
-                TextSendMessage(text=f"URL={image_url}"),TextSendMessage(text="無法找到對應的圖片，請稍後再試。")
+                TextSendMessage(text=f"URL={image_url}"),
+                TextSendMessage(text="無法找到對應的圖片，請稍後再試。")
                 ]
             )
         return
