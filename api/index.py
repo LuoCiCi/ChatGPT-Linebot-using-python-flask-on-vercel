@@ -1229,11 +1229,12 @@ def handle_message(event):
     
     if event.message.text == "抽籤":       
         working_status = False
-        image_url = f"http://www.chance.org.tw/%E7%B1%A4%E8%A9%A9%E9%9B%86/%E9%9B%B7%E9%9B%A8%E5%B8%AB%E4%B8%80%E7%99%BE%E7%B1%A4/%E9%9B%B7%E9%9B%A8%E5%B8%AB%E3%84%A7%E7%99%BE%E7%B1%A4%E6%8E%83%E6%8F%8F%E6%AA%94/%E9%9B%B7%E9%9B%A8%E5%B8%AB%E3%84%A7%E7%99%BE%E7%B1%A4%20-%20084%E7%B1%A4.jpg"
+        image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image49.jpg"
         line_bot_api.reply_message(
             event.reply_token,
             [
-                ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
+                TextSendMessage(text="測試2"),
+                ImageSendMessage(original_content_url=random_image_url, preview_image_url=random_image_url)
             ]
         )
         return
