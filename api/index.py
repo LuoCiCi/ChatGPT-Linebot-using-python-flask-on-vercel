@@ -928,7 +928,11 @@ def handle_message(event):
             "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image34.jpg",
             "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image35.jpg",
             "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image36.jpg",
-            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image37.jpg"
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image37.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image38.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image39.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image40.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image41.jpg"
         ]
         
    
