@@ -1243,14 +1243,19 @@ def handle_message(event):
             #         ]
             #     )
             # 檢查圖片是否存在
-            if check_image_url_exists(image_url):
-                # 如果圖片存在，回傳訊息
-                line_bot_api.reply_message(
-                    event.reply_token,
-                    ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
-                )
-                break  # 找到圖片後退出迴圈
-            attempts += 1
+            line_bot_api.reply_message(
+                event.reply_token,
+                ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
+            )
+            # if check_image_url_exists(image_url):
+            #     # 如果圖片存在，回傳訊息
+            #     line_bot_api.reply_message(
+            #         event.reply_token,
+            #         ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
+            #     )
+            #     break  # 找到圖片後退出迴圈
+            # attempts += 1
+            break
         else:
             # 如果在max_attempts次內未找到有效圖片
             line_bot_api.reply_message(
