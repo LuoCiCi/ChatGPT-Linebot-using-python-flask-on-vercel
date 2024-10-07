@@ -8,7 +8,6 @@ from datetime import datetime, timedelta
 import requests, json
 import random
 import pytz
-import time
 
 
 line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
@@ -1233,41 +1232,41 @@ def handle_message(event):
         max_attempts = 5  # 設定最多嘗試的次數
         attempts = 0
 
-        random_number = random.randint(1, 60)
-        image_url = f"https://www.citygod.tw/images/fortune/{random_number}.jpg"
-        time.sleep(3)  # 暫停 5 秒
-        # 如果圖片存在，回傳訊息
-        line_bot_api.reply_message(
-            event.reply_token,
-            [
-                ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
-            ]
-        )
+        # random_number = random.randint(1, 28)
+        # image_url = f"https://www.citygod.tw/images/fortune/{random_number}.jpg"
+        # time.sleep(3)  # 暫停 5 秒
+        # # 如果圖片存在，回傳訊息
+        # line_bot_api.reply_message(
+        #     event.reply_token,
+        #     [
+        #         ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
+        #     ]
+        # )
         
-        # # 進行圖片URL檢查
-        # while attempts < max_attempts:
-        #     random_number = random.randint(1, 60)
-        #     image_url = f"https://www.citygod.tw/images/fortune/{random_number}.png"
+        # 進行圖片URL檢查
+        while attempts < max_attempts:
+            random_number = random.randint(1, 28)
+            image_url = f"https://www.nmzizhusi.org.tw/images/post/auspice/auspice{random_number}.jpg"
             
-        #     # 檢查圖片是否存在
-        #     if check_image_url_exists(image_url):
-        #         # 如果圖片存在，回傳訊息
-        #         line_bot_api.reply_message(
-        #             event.reply_token,
-        #             [
-        #                 ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
-        #             ]
-        #         )
-        #         break  # 找到圖片後退出迴圈
-        #     attempts += 1
-        # else:
-        #     # 如果在max_attempts次內未找到有效圖片
-        #     line_bot_api.reply_message(
-        #         event.reply_token,
-        #         [
-        #         TextSendMessage(text=f"URL={image_url}"),TextSendMessage(text="無法找到對應的圖片，請稍後再試。")
-        #         ]
-        #     )
+            # 檢查圖片是否存在
+            if check_image_url_exists(image_url):
+                # 如果圖片存在，回傳訊息
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    [
+                        ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
+                    ]
+                )
+                break  # 找到圖片後退出迴圈
+            attempts += 1
+        else:
+            # 如果在max_attempts次內未找到有效圖片
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                TextSendMessage(text=f"URL={image_url}"),TextSendMessage(text="無法找到對應的圖片，請稍後再試。")
+                ]
+            )
         return
 
     
