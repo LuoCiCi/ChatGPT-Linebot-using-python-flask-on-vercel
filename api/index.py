@@ -1236,7 +1236,7 @@ def handle_message(event):
         # 進行圖片URL檢查
         while attempts < max_attempts:
             random_number = random.randint(0, 59)*8+1
-            image_url = "www.ma-tsu.com.tw/lot/fs" + random_number + ".jpg"
+            image_url = f"www.ma-tsu.com.tw/lot/fs{random_number}.jpg"
             
             # 檢查圖片是否存在
             if check_image_url_exists(image_url):
