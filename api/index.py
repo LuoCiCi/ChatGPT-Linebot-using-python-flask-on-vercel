@@ -746,7 +746,6 @@ def handle_message(event):
         
         image_urls_1 = [
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBOlQL3xJsiB0rdZ07j0tUmJUdrLgZdC29HQ&s",
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZksY8fVOYn57iAGHhJxokGgdtGc3mugmk4-QmLe_vLyS-7Jgna_sya8PYzFW5QUCW70Q&usqp=CAU",
             "https://p5.itc.cn/images01/20230705/986a790ba34a4fb194422611cb684eda.jpeg",
             "https://p9.itc.cn/q_70/images03/20230904/f4fe0b05119b4ab8b0075b4c41c46ce7.jpeg",
             "https://thumb.photo-ac.com/cb/cb52df139e3d6b14fdc28b7dc38fbb6c_t.jpeg",
