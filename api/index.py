@@ -1235,7 +1235,7 @@ def handle_message(event):
         # 進行圖片URL檢查
         while attempts < max_attempts:
             random_number = random.randint(0, 59)*8+1
-            image_url = f"www.ma-tsu.com.tw/lot/fs{random_number}.jpg"
+            image_url = f"https://www.ma-tsu.com.tw/lot/fs{random_number}.jpg"
             # line_bot_api.reply_message(
             #         event.reply_token,
             #         [
