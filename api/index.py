@@ -1233,8 +1233,7 @@ def handle_message(event):
         response = requests.get(url)
         lottery_data = response.json()
         random_lottery = random.choice(lottery_data)
-        poem_text = f"""
-        籤詩號碼: {random_lottery.get('id', '未知')}
+        poem_text = f"""籤詩號碼: {random_lottery.get('id', '未知')}
         籤詩類型: {random_lottery.get('type', '未知')}
         籤詩內容: {random_lottery.get('poem', '無內容')}
 
@@ -1256,7 +1255,7 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             [
-                TextSendMessage(text=poem_text)
+                TextSendMessage(text=poem_text.strip())
             ]
         )
         return 
