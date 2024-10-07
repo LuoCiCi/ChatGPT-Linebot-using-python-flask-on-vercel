@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 import requests, json
 import random
 import pytz
+import time
 
 
 line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
@@ -1233,8 +1234,8 @@ def handle_message(event):
         attempts = 0
 
         random_number = random.randint(1, 60)
-        image_url = f"https://www.citygod.tw/images/fortune/{random_number}.png"
-
+        image_url = f"https://www.citygod.tw/images/fortune/{random_number}.jpg"
+        time.sleep(3)  # 暫停 5 秒
         # 如果圖片存在，回傳訊息
         line_bot_api.reply_message(
             event.reply_token,
