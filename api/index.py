@@ -1233,7 +1233,7 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             [
-                TextSendMessage(text="活著"),
+                TextSendMessage(text="活著2"),
                 ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
             ]
         )
