@@ -1231,45 +1231,44 @@ def handle_message(event):
         working_status = False
         max_attempts = 5  # 設定最多嘗試的次數
         attempts = 0
-
-        # random_number = random.randint(1, 28)
-        # image_url = f"https://www.citygod.tw/images/fortune/{random_number}.jpg"
-        # time.sleep(3)  # 暫停 5 秒
-        # # 如果圖片存在，回傳訊息
-        # line_bot_api.reply_message(
-        #     event.reply_token,
-        #     [
-        #         ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
-        #     ]
-        # )
         
-        # 進行圖片URL檢查
-        while attempts < max_attempts:
-            random_number = random.randint(1, 28)
-            image_url = f"https://www.nmzizhusi.org.tw/images/post/auspice/auspice{random_number}.jpg"
-            
-            # 檢查圖片是否存在
-            if check_image_url_exists(image_url):
-                # 如果圖片存在，回傳訊息
-                line_bot_api.reply_message(
-                    event.reply_token,
-                    [
-                        TextSendMessage(text=f"URL={image_url}"),
-                        ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
-                    ]
-                )
-                break  # 找到圖片後退出迴圈
-            attempts += 1
-        else:
-            # 如果在max_attempts次內未找到有效圖片
-            line_bot_api.reply_message(
-                event.reply_token,
-                [
-                TextSendMessage(text=f"URL={image_url}"),
-                TextSendMessage(text="無法找到對應的圖片，請稍後再試。")
-                ]
-            )
+        url = "https://gist.githubusercontent.com/mmis1000/d94bb0a9f37cfd362453/raw/48ecb6a0fe21fbc2326c09c70b47c7237ac01a82/tcg_lots.json"
+        response = requests.get(url)
+        lottery_data = response.json()
+        random_lottery = random.choice(lottery_data)
+        poem_text = f"籤詩號碼: {random_lottery['編號']}\n籤詩: {random_lottery['內容']}\n註解: {random_lottery['註解']}"
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=poem_text)
+        )
         return
+        # # 進行圖片URL檢查
+        # while attempts < max_attempts:
+        #     random_number = random.randint(1, 28)
+        #     image_url = f"https://www.nmzizhusi.org.tw/images/post/auspice/auspice{random_number}.jpg"
+            
+        #     # 檢查圖片是否存在
+        #     if check_image_url_exists(image_url):
+        #         # 如果圖片存在，回傳訊息
+        #         line_bot_api.reply_message(
+        #             event.reply_token,
+        #             [
+        #                 TextSendMessage(text=f"URL={image_url}"),
+        #                 ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
+        #             ]
+        #         )
+        #         break  # 找到圖片後退出迴圈
+        #     attempts += 1
+        # else:
+        #     # 如果在max_attempts次內未找到有效圖片
+        #     line_bot_api.reply_message(
+        #         event.reply_token,
+        #         [
+        #         TextSendMessage(text=f"URL={image_url}"),
+        #         TextSendMessage(text="無法找到對應的圖片，請稍後再試。")
+        #         ]
+        #     )
+        # return
 
     
     # if event.message.text == "影片":
