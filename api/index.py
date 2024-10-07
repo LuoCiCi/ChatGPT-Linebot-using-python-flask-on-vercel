@@ -1229,47 +1229,16 @@ def handle_message(event):
     
     if event.message.text == "抽籤":       
         working_status = False
-        max_attempts = 5  # 設定最多嘗試的次數
-        attempts = 0
-        
-        # 進行圖片URL檢查
-        while attempts < max_attempts:
-            # 設定變動的範圍
-            start_number = 20001
-            end_number = 20100
-            # 隨機選擇範圍內的數字
-            random_number = random.randint(start_number, end_number)
-            image_url = f"http://www.chance.org.tw/%E7%B1%A4%E8%A9%A9%E9%9B%86/%E9%9B%B7%E9%9B%A8%E5%B8%AB%E4%B8%80%E7%99%BE%E7%B1%A4/%E9%9B%B7%E9%9B%A8%E5%B8%AB%E3%84%A7%E7%99%BE%E7%B1%A4%E6%8E%83%E6%8F%8F%E6%AA%94/%E9%9B%B7%E9%9B%A8%E5%B8%AB%E3%84%A7%E7%99%BE%E7%B1%A4%20-%{random_number}%E7%B1%A4.jpg"
-            # line_bot_api.reply_message(
-            #         event.reply_token,
-            #         [
-            #             TextSendMessage(text=image_url),
-            #         ]
-            #     )
-            # 檢查圖片是否存在
-            line_bot_api.reply_message(
-                event.reply_token,
-                [
-                    TextSendMessage(text="有在抽"),
-                    ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
-                ]
-            )
-            # if check_image_url_exists(image_url):
-            #     # 如果圖片存在，回傳訊息
-            #     line_bot_api.reply_message(
-            #         event.reply_token,
-            #         ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
-            #     )
-            #     break  # 找到圖片後退出迴圈
-            # attempts += 1
-            break
-        else:
-            # 如果在max_attempts次內未找到有效圖片
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text="無法找到對應的圖片，請稍後再試。")
-            )
-        return
+        image_url = f"http://www.chance.org.tw/%E7%B1%A4%E8%A9%A9%E9%9B%86/%E9%9B%B7%E9%9B%A8%E5%B8%AB%E4%B8%80%E7%99%BE%E7%B1%A4/%E9%9B%B7%E9%9B%A8%E5%B8%AB%E3%84%A7%E7%99%BE%E7%B1%A4%E6%8E%83%E6%8F%8F%E6%AA%94/%E9%9B%B7%E9%9B%A8%E5%B8%AB%E3%84%A7%E7%99%BE%E7%B1%A4%20-%20084%E7%B1%A4.jpg"
+        line_bot_api.reply_message(
+            event.reply_token,
+            [
+                TextSendMessage(text="有抽喔"),
+                ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
+            ]
+        )
+        return 
+
     
     # if event.message.text == "影片":
     #     working_status = False    
