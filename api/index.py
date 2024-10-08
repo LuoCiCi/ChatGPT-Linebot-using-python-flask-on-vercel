@@ -764,7 +764,6 @@ def handle_message(event):
             "https://hips.hearstapps.com/hmg-prod/images/271508239-713379336294330-3130045077370608684-n-640614eb1701a.jpg?crop=1xw:1xh;center,top&resize=980:*",
             "https://media.nownews.com/nn_media/thumbnail/2023/05/1683468042856-67eec361d1d74dda99f998189eb5096e-800x450.jpg?unShow=false",
             "https://hips.hearstapps.com/hmg-prod/images/254548076-625165548500065-8965182106882304688-n-1636619991.jpg?crop=1xw:1xh;center,top&resize=980:*",
-            "https://i.pinimg.com/736x/66/c6/df/66c6df8128d654db74ffd1496d4fb3bf.jpg",
             "https://today-obs.line-scdn.net/0hmUYOwfdbMnpkNiXWpihNLVxgPgtXUChzRlR0SBVka0JLGnQvUAdhGURjZVZADnZ4RFl1H0Jkbx0dACEvWg/w644",
             "https://media.nownews.com/nn_media/thumbnail/2022/04/1649131065438-58adaef36d3d455096b168c087908bf5-800x534.jpg?unShow=false",
             "https://s.yimg.com/zp/MerchandiseImages/28DA6596E9-SP-7775353.jpg",
