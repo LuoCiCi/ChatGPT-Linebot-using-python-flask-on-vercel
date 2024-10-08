@@ -1230,12 +1230,13 @@ def handle_message(event):
         working_status = False
         messages = [
             TextSendMessage(text="快生孩子"),
-            TextSendMessage(text="孟柔老公"),
+            TextSendMessage(text="孟柔小狼狗"),
             TextSendMessage(text="人夫"),
             TextSendMessage(text="帥到分手"),
-            TextSendMessage(text="再閃婚阿"),
-            TextSendMessage(text="再買公仔阿"),
-            TextSendMessage(text="好爽")
+            TextSendMessage(text="閃婚狗"),
+            TextSendMessage(text="偷偷買公仔"),
+            TextSendMessage(text="法號樂群"),
+            TextSendMessage(text="有洞")
         ]
         # 回傳訊息
         line_bot_api.reply_message(
