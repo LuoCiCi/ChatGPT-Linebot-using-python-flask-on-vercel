@@ -1215,7 +1215,9 @@ def handle_message(event):
             TextSendMessage(text="台南貴公子"), 
             TextSendMessage(text="皇家禮炮"),
             TextSendMessage(text="單身狗"),                      
-            TextSendMessage(text="帥到懷孕")
+            TextSendMessage(text="帥到懷孕"),
+            TextSendMessage(text="新竹單身漢"),
+            TextSendMessage(text="又再台北？")
         ]
         # 回傳訊息
         line_bot_api.reply_message(
