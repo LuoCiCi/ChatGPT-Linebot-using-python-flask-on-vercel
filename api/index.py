@@ -1225,6 +1225,26 @@ def handle_message(event):
             ]
         )
         return 
+
+    if event.message.text == "聖博" or event.message.text == "王聖博" or event.message.text == "洞":
+        working_status = False
+        messages = [
+            TextSendMessage(text="快生孩子"),
+            TextSendMessage(text="孟柔老公"),
+            TextSendMessage(text="人夫"),
+            TextSendMessage(text="帥到分手"),
+            TextSendMessage(text="再閃婚阿"),
+            TextSendMessage(text="再買公仔阿"),
+            TextSendMessage(text="好爽")
+        ]
+        # 回傳訊息
+        line_bot_api.reply_message(
+            event.reply_token,
+            [
+                random.choice(messages)
+            ]
+        )
+        return 
     
     if event.message.text == "抽籤":       
         working_status = False
