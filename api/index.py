@@ -1256,7 +1256,7 @@ def handle_message(event):
         )
         return 
 
-    if event.message.text == "宇洋" or event.message.text == "陳宇洋":
+    if event.message.text == "宇洋" or event.message.text == "陳宇洋" or event.message.text == "洋" or event.message.text == "羊":
         working_status = False
         messages = [
             TextSendMessage(text="珮綺行動錢包"),
