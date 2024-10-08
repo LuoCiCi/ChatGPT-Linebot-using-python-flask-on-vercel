@@ -1255,6 +1255,29 @@ def handle_message(event):
             ]
         )
         return 
+
+    if event.message.text == "宇洋" or event.message.text == "陳宇洋":
+        working_status = False
+        messages = [
+            TextSendMessage(text="珮綺行動錢包"),
+            TextSendMessage(text="宅"),
+            TextSendMessage(text="鏟屎官1號"),
+            TextSendMessage(text="雷喔"),
+            TextSendMessage(text="汪"),
+            TextSendMessage(text="積積陰陰的"),
+            TextSendMessage(text="馬子狗"),
+            TextSendMessage(text="馬桶沒在刷"),
+            TextSendMessage(text="啥時換工作"),
+            TextSendMessage(text="蟀")
+        ]
+        # 回傳訊息
+        line_bot_api.reply_message(
+            event.reply_token,
+            [
+                random.choice(messages)
+            ]
+        )
+        return 
     
     if event.message.text == "抽籤":       
         working_status = False
