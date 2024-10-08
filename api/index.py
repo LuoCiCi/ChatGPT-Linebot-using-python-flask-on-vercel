@@ -1218,7 +1218,8 @@ def handle_message(event):
             TextSendMessage(text="帥到懷孕"),
             TextSendMessage(text="新竹單身漢"),
             TextSendMessage(text="又再台北？"),
-            TextSendMessage(text="早餐吃600元")
+            TextSendMessage(text="早餐吃600元"),
+            TextSendMessage(text="玩草男孩")
         ]
         # 回傳訊息
         line_bot_api.reply_message(
