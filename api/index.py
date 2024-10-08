@@ -1236,7 +1236,7 @@ def handle_message(event):
             TextSendMessage(text="閃婚狗"),
             TextSendMessage(text="偷偷買公仔"),
             TextSendMessage(text="窮到賣公仔"),
-            TextSendMessage(text="法號樂群"),
+            TextSendMessage(text="法號悅群"),
             TextSendMessage(text="有洞")
         ]
         # 回傳訊息
