@@ -1237,7 +1237,12 @@ def handle_message(event):
             TextSendMessage(text="偷偷買公仔"),
             TextSendMessage(text="窮到賣公仔"),
             TextSendMessage(text="法號悅群"),
-            TextSendMessage(text="有洞")
+            TextSendMessage(text="有洞"),
+            TextSendMessage(text="悅群師兄"),
+            TextSendMessage(text="。"),
+            TextSendMessage(text="喜歡大內內"),
+            TextSendMessage(text="沒有30cm") ,
+            TextSendMessage(text="竹北有房")
         ]
         # 回傳訊息
         line_bot_api.reply_message(
