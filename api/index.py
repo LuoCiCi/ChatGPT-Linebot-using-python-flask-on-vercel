@@ -1232,7 +1232,6 @@ def handle_message(event):
             TextSendMessage(text="快生孩子"),
             TextSendMessage(text="孟柔小狼狗"),
             TextSendMessage(text="人夫"),
-            TextSendMessage(text="帥到分手"),
             TextSendMessage(text="閃婚狗"),
             TextSendMessage(text="偷偷買公仔"),
             TextSendMessage(text="窮到賣公仔"),
