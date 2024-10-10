@@ -1196,7 +1196,22 @@ def handle_message(event):
             "https://atctwn.com/wp-content/uploads/2020/02/yoda-1.jpg",
             "https://static.wixstatic.com/media/931713_d0f31e419e9f4099b00ac74dbc9190f6~mv2.jpg/v1/fill/w_250,h_375,al_c,q_90,enc_auto/931713_d0f31e419e9f4099b00ac74dbc9190f6~mv2.jpg",
             "https://i2.kknews.cc/tNTbLd-nwHY_0AvlNEFZWF-wVJJztVi9Ap6WzLg/0.jpg",
-            "https://i.pinimg.com/1200x/96/c6/23/96c623821b53e8eb00e12ddabef911dd.jpg"
+            "https://i.pinimg.com/1200x/96/c6/23/96c623821b53e8eb00e12ddabef911dd.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image65.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image66.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image67.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image68.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image69.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image70.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image71.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image72.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image73.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image74.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image75.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image76.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image77.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image78.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image79.jpg"
         ]
             
         # 進行圖片URL檢查
@@ -1223,7 +1238,7 @@ def handle_message(event):
             )
         return
 
-    if event.message.text == "錢吶" or event.message.text == "錢啊" or event.message.text == "錢錢":       
+    if "錢吶" in event.message.text or "錢啊" in event.message.text or "錢錢" in event.message.text:       
         working_status = False
         max_attempts = 5  # 設定最多嘗試的次數
         attempts = 0
@@ -1252,7 +1267,7 @@ def handle_message(event):
             )
         return
 
-    if event.message.text == "多吶" or event.message.text == "多啊" or event.message.text == "多多":       
+    if "多吶" in event.message.text or "多啊" in event.message.text or "多多" in event.message.text:       
         working_status = False
         max_attempts = 5  # 設定最多嘗試的次數
         attempts = 0
@@ -1281,7 +1296,7 @@ def handle_message(event):
             )
         return
 
-    if event.message.text == "錢多" or event.message.text == "錢錢多多":
+    if "錢多" in event.message.text or "錢錢多多" in event.message.text:
         working_status = False
         max_attempts = 5  # 設定最多嘗試的次數
         attempts = 0
@@ -1311,7 +1326,7 @@ def handle_message(event):
         return
         
     
-    if "珮綺" in event.message.text or event.message.text == "綺綺":
+    if "珮綺" in event.message.text or "綺綺" in event.message.text:
         working_status = False
         messages = [
             TextSendMessage(text="好正"),
@@ -1337,7 +1352,7 @@ def handle_message(event):
         )
         return
     
-    if event.message.text == "健豪" or event.message.text == "黃健豪":
+    if "健豪" in event.message.text:
         working_status = False
         messages = [
             TextSendMessage(text="帥哥"),
@@ -1367,7 +1382,7 @@ def handle_message(event):
         )
         return 
 
-    if event.message.text == "聖博" or event.message.text == "王聖博" or event.message.text == "洞":
+    if "聖博" in event.message.text or event.message.text == "洞":
         working_status = False
         messages = [
             TextSendMessage(text="快生孩子"),
@@ -1393,7 +1408,7 @@ def handle_message(event):
         )
         return 
 
-    if event.message.text == "宇洋" or event.message.text == "陳宇洋" or event.message.text == "洋" or event.message.text == "羊":
+    if "宇洋" in event.message.text or event.message.text == "洋" or event.message.text == "羊":
         working_status = False
         messages = [
             TextSendMessage(text="珮綺行動錢包"),
@@ -1451,22 +1466,6 @@ def handle_message(event):
             ]
         )
         return 
-    
-    # if event.message.text == "影片":
-    #     working_status = False    
-    #     video_url = "https://drive.google.com/uc?export=download&id=1p1qlL3AcyQYaIGEBuKJwTQ4hym4jVjiN"  # 替換為你影片的 URL
-    #     preview_image_url = "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Video/S__29737352.jpg"  # 替換為你的預覽圖片 URL
-
-    #     # 回傳影片訊息
-    #     line_bot_api.reply_message(
-    #         event.reply_token,
-    #         VideoSendMessage
-    #         (
-    #             original_content_url=video_url,
-    #             preview_image_url=preview_image_url
-    #         )
-    #     )
-    #     return
 
     if working_status:
         chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
