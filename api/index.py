@@ -915,7 +915,6 @@ def handle_message(event):
             "https://media.vogue.com.tw/photos/63651fc449bac8ec3af84118/2:3/w_2560%2Cc_limit/288993936_580506253445260_541891399734496910_n.jpeg",
             "https://im.marieclaire.com.tw/m800c533h100b0/assets/mc/202007/5F23C2421896A1596179010.jpeg",
             "https://attach.setn.com/newsimages/2023/07/26/4255502-PH.jpg",
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEPBywmA39tptDq3a7cNG4u3O0utt18FVIYg&s",
             "https://image1.gamme.com.tw/news2/2010/81/34/qpuYoJ2XlaaWqQ.jpg",
             "https://images.chinatimes.com/newsphoto/2018-06-23/656/20180623002206.jpg",
             "https://cdn2.ettoday.net/images/5512/5512050.jpg",
