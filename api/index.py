@@ -827,7 +827,6 @@ def handle_message(event):
             "https://obs.line-scdn.net/0htuo9wA1RK1pSQANnU3JUDWsWJythJD5cPDgxOXBAJm95dnANaXZiIHIQdDhjIGkLPTpsaHVFcz4odT5ZaSY",
             "https://img.ltn.com.tw/Upload/ent/page/800/2021/05/24/phpUOn8z7.jpg",
             "https://sw.cool3c.com/article/2018/32151241-adf9-4d94-a9be-c24b5597d209.jpg?fit=max&w=1400&q=80",
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJpAg8wQDXbbZNkAZ9fsbwr6BNTQUwQfhvTg&s",
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGchDhH0FLs53qrVu_VDFAQ80tM-H_Bq2EBg&s",
             "https://gw.alicdn.com/imgextra/i1/66032415/O1CN01zhQHU01Ti7U2FRA9d_!!66032415.jpg_Q75.jpg_.webp",
             "https://images.chinatimes.com/newsphoto/2019-05-09/656/20190509004041.jpg",
