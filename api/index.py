@@ -1311,7 +1311,7 @@ def handle_message(event):
         return
         
     
-    if event.message.text == "珮綺" or event.message.text == "綺綺":
+    if "珮綺" in event.message.text or event.message.text == "綺綺":
         working_status = False
         messages = [
             TextSendMessage(text="好正"),
