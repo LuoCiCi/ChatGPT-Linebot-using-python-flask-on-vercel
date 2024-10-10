@@ -673,22 +673,22 @@ def handle_message(event):
             "大家早安，今天又是美好的一天~",
             "早安，工作奴隸認真上班喔！"
         ]
+
+        # 隨機選擇一個文字
+        random_ts_url = random.choice(ts)
         
         # 進行圖片URL檢查
         while attempts < max_attempts:
             random_number = random.randint(1, 22)
             image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/goodmorning{random_number}.jpg"
 
-            # 隨機選擇一個文字
-            random_ts_url = random.choice(ts)
-        
             # 檢查圖片是否存在
             if check_image_url_exists(image_url):
                 # 如果圖片存在，回傳訊息
                 line_bot_api.reply_message(
                     event.reply_token,
                     [
-                        TextSendMessage(text="{random_ts_url}"),
+                        TextSendMessage(text=f"{random_ts_url}"),
                         ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
                     ]
                 )
@@ -698,7 +698,7 @@ def handle_message(event):
             # 如果在max_attempts次內未找到有效圖片
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text="{random_ts_url}")
+                TextSendMessage(text=f"{random_ts_url}")
             )
         return
 
