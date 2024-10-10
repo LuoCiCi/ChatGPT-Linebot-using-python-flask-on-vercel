@@ -667,9 +667,32 @@ def handle_message(event):
 
     if event.message.text == "早安" or event.message.text == "早":
         working_status = False
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text="大家早安，今天又是美好的一天~"))
+        max_attempts = 5  # 設定最多嘗試的次數
+        attempts = 0
+        
+        # 進行圖片URL檢查
+        while attempts < max_attempts:
+            random_number = random.randint(1, 22)
+            image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/goodmorning{random_number}.jpg"
+            
+            # 檢查圖片是否存在
+            if check_image_url_exists(image_url):
+                # 如果圖片存在，回傳訊息
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    [
+                        TextSendMessage(text="大家早安，今天又是美好的一天~"),
+                        ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
+                    ]
+                )
+                break  # 找到圖片後退出迴圈
+            attempts += 1
+        else:
+            # 如果在max_attempts次內未找到有效圖片
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="大家早安，今天又是美好的一天~")
+            )
         return
 
     if event.message.text == "晚安":
@@ -739,13 +762,41 @@ def handle_message(event):
             )
         return
 
+    if event.message.text == "問號" or event.message.text == "?" or event.message.text == "??" or event.message.text == "???" or event.message.text == "？" or event.message.text == "？？":       
+        working_status = False
+        max_attempts = 5  # 設定最多嘗試的次數
+        attempts = 0
+        
+        # 進行圖片URL檢查
+        while attempts < max_attempts:
+            random_number = random.randint(1, 13)
+            image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/questionmark{random_number}.jpg"
+            
+            # 檢查圖片是否存在
+            if check_image_url_exists(image_url):
+                # 如果圖片存在，回傳訊息
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    [
+                        ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
+                    ]
+                )
+                break  # 找到圖片後退出迴圈
+            attempts += 1
+        else:
+            # 如果在max_attempts次內未找到有效圖片
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="無法找到對應的圖片，請稍後再試。")
+            )
+        return
+
     if event.message.text == "抽":
         working_status = False
         max_attempts = 5  # 設定最多嘗試的次數
         attempts = 0
         
         image_urls_1 = [
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBOlQL3xJsiB0rdZ07j0tUmJUdrLgZdC29HQ&s",
             "https://p5.itc.cn/images01/20230705/986a790ba34a4fb194422611cb684eda.jpeg",
             "https://p9.itc.cn/q_70/images03/20230904/f4fe0b05119b4ab8b0075b4c41c46ce7.jpeg",
             "https://thumb.photo-ac.com/cb/cb52df139e3d6b14fdc28b7dc38fbb6c_t.jpeg",
@@ -862,7 +913,6 @@ def handle_message(event):
             "https://i-photo7.com/image/data/11A/270-min.jpg",
             "https://i-photo7.com/image/data/11A/269-min.jpg",
             "https://i1.kknews.cc/_zvD1mWIYS_QpOAjKYXPFiNE6kDbUhIzd5Iep5U/0.jpg",
-            "https://lh6.googleusercontent.com/proxy/PNZjK5kw_Xfsamu0etWi1eCPQubc0igjLPq5LLM_kmE0_MRUAB42HD7xmGeFWRuxzqpt07PJwvyxoGGQK6uQio1z1d5RKzG_4jcZQnJ9ow_nf1UD_OI",
             "https://i1.kknews.cc/EvSLxcrB_ANowxAjloZFvLIdqjQmXY6v3Dxx4LY/0.jpg",
             "https://media.gq.com.tw/photos/5dbc6b4a801fc800083f56c4/master/w_1600%2Cc_limit/2017062062377685.jpg",
             "https://i.getjetso.com/month_1501/20150129_76aa6a1b831aff162d82p8dMgv.jpg?name=%E7%BE%8E%E8%85%BF%7EDudu+Wu%E5%AF%AB%E7%9C%9F",
@@ -938,7 +988,37 @@ def handle_message(event):
             "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image46.jpg",
             "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image47.jpg",
             "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image48.jpg",
-            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image49.jpg"
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image49.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image50.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image51.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image52.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image53.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image54.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image55.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image56.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image57.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image58.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image59.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image60.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image61.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image62.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image63.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image64.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image65.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image66.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image67.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image68.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image69.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image70.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image71.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image72.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image73.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image74.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image75.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image76.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image77.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image78.jpg",
+            "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image79.jpg"
         ]
         
    
