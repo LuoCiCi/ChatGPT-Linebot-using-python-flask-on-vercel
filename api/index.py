@@ -1402,7 +1402,9 @@ def handle_message(event):
             TextSendMessage(text="悅群師兄"),
             TextSendMessage(text="。"),
             TextSendMessage(text="喜歡大內內"),
-            TextSendMessage(text="沒有30cm") ,
+            TextSendMessage(text="沒有30cm"),
+            TextSendMessage(text="睡覺很吵"),
+            TextSendMessage(text="再打呼阿"),
             TextSendMessage(text="竹北有房")
         ]
         # 回傳訊息
