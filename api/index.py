@@ -680,7 +680,7 @@ def handle_message(event):
         # 進行圖片URL檢查
         while attempts < max_attempts:
             random_number = random.randint(1, 22)
-            image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/goodmorning{random_number}.jpg"
+            image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/MemeImage/goodmorning{random_number}.jpg"
 
             # 檢查圖片是否存在
             if check_image_url_exists(image_url):
@@ -777,7 +777,7 @@ def handle_message(event):
         # 進行圖片URL檢查
         while attempts < max_attempts:
             random_number = random.randint(1, 14)
-            image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/questionmark{random_number}.jpg"
+            image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/MemeImage/questionmark{random_number}.jpg"
             
             # 檢查圖片是否存在
             if check_image_url_exists(image_url):
@@ -806,7 +806,7 @@ def handle_message(event):
         # 進行圖片URL檢查
         while attempts < max_attempts:
             random_number = random.randint(1, 6)
-            image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/dumbfounded{random_number}.jpg"
+            image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/MemeImage/dumbfounded{random_number}.jpg"
             
             # 檢查圖片是否存在
             if check_image_url_exists(image_url):
@@ -835,7 +835,7 @@ def handle_message(event):
         # 進行圖片URL檢查
         while attempts < max_attempts:
             random_number = random.randint(1, 10)
-            image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/dot{random_number}.jpg"
+            image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/MemeImage/dot{random_number}.jpg"
             
             # 檢查圖片是否存在
             if check_image_url_exists(image_url):
