@@ -865,7 +865,7 @@ def handle_message(event):
         while attempts < max_attempts:    
             
             random_value = random.random()        
-            if random_value < 0.08:  # 8% 機率
+            if random_value < 0.08787:  # 8.787% 機率
                 
                 random_number_image_urls_2 = random.randint(1,60)
                 image_urls_2 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/Drawing%20({random_number_image_urls_2}).jpg"
