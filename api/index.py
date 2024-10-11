@@ -927,11 +927,9 @@ def handle_message(event):
         
         image_urls = [
             "https://p9.itc.cn/q_70/images03/20230904/f4fe0b05119b4ab8b0075b4c41c46ce7.jpeg",
-            "https://thumb.photo-ac.com/cb/cb52df139e3d6b14fdc28b7dc38fbb6c_t.jpeg",
             "https://media.nownews.com/nn_media/thumbnail/2022/04/1649131065438-58adaef36d3d455096b168c087908bf5-800x534.jpg?unShow=false",
             "https://s.yimg.com/zp/MerchandiseImages/28DA6596E9-SP-7775353.jpg",
             "https://dynamic.zacdn.com/Xgdy0k_T5AnP6XBxcbfeH2V5Cmo=/filters:quality(70):format(webp)/https://static-tw.zacdn.com/p/lycka-9583-0408471-2.jpg",
-            "https://i1.momoshop.com.tw/1712812024/goodsimg/0009/457/451/9457451_R_m.webp",
             "https://img.cloudimg.in/uploads/shops/7094/products/b0/b02c2e7c86d787f1138c05f32a7e14c7.jpg",
             "https://s.yimg.com/zp/MerchandiseImages/983BEFE4F1-SP-7781092.jpg",
             "https://img.alicdn.com/imgextra/i3/190954632/O1CN01vxrocX1k5VMB7ranX_!!190954632.jpg",
@@ -983,7 +981,6 @@ def handle_message(event):
             "https://i1.kknews.cc/OZLWpFd7Sdd6e5Cj0RPSHbH-oLsCiEs_iyR54Sk/0.jpg",
             "https://www.etonwedding.com/img/photo/personal/music/personal%20(1).jpg",
             "https://i.getjetso.com/month_1612/20161209_28719cd2b8a32cd51239FeUOK7.jpg?name=%E6%96%B9%E7%B7%A9%E5%AF%AB%E7%9C%9F",
-            "https://media-proc.singtao.ca/photo.php?s=https://media.singtao.ca/wp-content/uploads/master_sandbox/2020/02/s1000702362.jpg&f=jpeg&w=815&q=75&v=1",
             "https://cdn2.ettoday.net/images/6862/d6862321.jpg",
             "https://static.wixstatic.com/media/931713_32eb7c8072ef49fb9628c18caeb9e143~mv2.jpg/v1/fill/w_250,h_375,al_c,q_90,enc_auto/931713_32eb7c8072ef49fb9628c18caeb9e143~mv2.jpg",
             "https://img.ltn.com.tw/Upload/ent/page/800/2024/07/08/phpk9uyxg.jpg",
