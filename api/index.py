@@ -958,7 +958,6 @@ def handle_message(event):
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOu8MbM1UM9f2qoBFArh01bLef3L2AcAbhVw&s",
             "https://img.ltn.com.tw/Upload/ent/page/800/2021/04/22/phpqElaYW.jpg",
             "https://images.chinatimes.com/newsphoto/2018-06-23/656/20180623002206.jpg",
-            "https://down-tw.img.susercontent.com/file/tw-11134201-7qukz-lhyil61k8nm8c0_tn.webp",
             "https://im2.book.com.tw/image/getImage?i=https://www.books.com.tw/img/001/081/57/0010815753.jpg&v=5c7666aek&w=375&h=375",
             "https://img.ltn.com.tw/Upload/ent/page/800/2020/03/25/phpFHoymZ.jpg",
             "https://cdn.hk01.com/di/media/images/dw/20240531/873078137703895040261407.jpeg/NNjtWk7r1hvScy8dyFMWXQJIMf8k79cvIsXtPiLF7T4?v=w1920",
