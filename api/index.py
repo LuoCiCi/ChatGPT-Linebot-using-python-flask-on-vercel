@@ -1255,6 +1255,23 @@ def handle_message(event):
         )
         return 
 
+    if "擲筊" in event.message.text:
+        working_status = False
+        messages = [
+            TextSendMessage(text="陰筊 - 表示神明否定、憤怒，或者不宜行事"),
+            TextSendMessage(text="笑筊 - 表示神明一笑、不解"),
+            TextSendMessage(text="笑筊 - 考慮中，行事狀況不明"),
+            TextSendMessage(text="聖筊 - 表示神明允許、同意，或行事會順利"),
+        ]
+        # 回傳訊息
+        line_bot_api.reply_message(
+            event.reply_token,
+            [
+                random.choice(messages)
+            ]
+        )
+        return 
+    
     if working_status:
         chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
         reply_msg = chatgpt.get_response().replace("AI:", "", 1)
