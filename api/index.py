@@ -1010,7 +1010,7 @@ def handle_message(event):
         # 進行圖片URL檢查
         while attempts < max_attempts:
             random_number = random.randint(1, 60)
-            image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/BigBusted/bigbusted%20({random_number_image_urls_2}).jpg"
+            image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/BigBusted/bigbusted%20({random_number}).jpg"
             # # 隨機選擇一個圖片 URL
             # image_url = random.choice(image_urls)
             
