@@ -1138,6 +1138,7 @@ def handle_message(event):
             TextSendMessage(text="新竹單身漢"),
             TextSendMessage(text="又再台北？"),
             TextSendMessage(text="早餐吃600元"),
+            TextSendMessage(text="放線大濕"),
             TextSendMessage(text="玩草男孩")
         ]
         # 回傳訊息
@@ -1164,6 +1165,7 @@ def handle_message(event):
             TextSendMessage(text="。"),
             TextSendMessage(text="喜歡大內內"),
             TextSendMessage(text="沒有30cm"),
+            TextSendMessage(text="大概3cm?"),
             TextSendMessage(text="睡覺很吵"),
             TextSendMessage(text="再打呼阿"),
             TextSendMessage(text="竹北有房")
