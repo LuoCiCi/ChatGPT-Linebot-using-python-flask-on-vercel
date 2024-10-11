@@ -702,6 +702,23 @@ def handle_message(event):
             )
         return
 
+    if event.message.text == "午安":
+        working_status = False
+        messages = [
+            TextSendMessage(text="午安，順心如意！"),
+            TextSendMessage(text="午安，來杯下午茶吧~"),
+            TextSendMessage(text="午安唷~吃飽了嗎？"),
+            TextSendMessage(text="午安，小睡一下，繼續加油喔！"),
+            TextSendMessage(text="各位午安，記得吃飯喔！")
+        ]
+        line_bot_api.reply_message(
+            event.reply_token,
+            [
+                random.choice(messages)
+            ]
+        )        
+        return
+
     if event.message.text == "晚安":
         working_status = False
         messages = [
@@ -793,7 +810,7 @@ def handle_message(event):
         
         # 進行圖片URL檢查
         while attempts < max_attempts:
-            random_number = random.randint(1, 14)
+            random_number = random.randint(1, 16)
             image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/MemeImage/questionmark{random_number}.jpg"
             
             # 檢查圖片是否存在
