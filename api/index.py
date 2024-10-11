@@ -704,9 +704,26 @@ def handle_message(event):
 
     if event.message.text == "晚安":
         working_status = False
+        messages = [
+            TextSendMessage(text="晚什麼安，我巴不得你想我想到夜不能寐"),
+            TextSendMessage(text="快睡吧！不然等會我又要想你了"),
+            TextSendMessage(text="好晚安，換一個世界想你"),
+            TextSendMessage(text="我希望你做個甜甜的夢，然後甜甜是我"),
+            TextSendMessage(text="趁星星不注意，我再想你一下下～"),
+            TextSendMessage(text="晚上不要夢到我，夢裡陪睡也是要收費的呦～"),
+            TextSendMessage(text="晚安，晚安！離別是多麼甜蜜的悲傷，我要說晚安，直到明天"),
+            TextSendMessage(text="我希望現在就可以擁抱你，但既然我不能，那麼就只能度過一個美好的夜晚了"),
+            TextSendMessage(text="我希望你成為我睡前最後想到的事。晚安"),
+            TextSendMessage(text="讓我們互道一聲晚安 送走這匆匆的一天值得懷念的請你珍藏 應該忘記的莫再留戀"),
+            TextSendMessage(text="晚安尻尻睡了"),
+            TextSendMessage(text="各位晚安，夢裡見囉~")
+        ]
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text="各位晚安，夢裡見囉~"))
+            [
+                random.choice(messages)
+            ]
+        )        
         return
 
     if event.message.text == "下班":
