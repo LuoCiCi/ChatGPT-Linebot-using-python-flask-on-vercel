@@ -916,7 +916,7 @@ def handle_message(event):
                     break  # 找到圖片後退出迴圈
             else:
                 
-                random_number_image_urls_1 = random.randint(1,300)
+                random_number_image_urls_1 = random.randint(1,320)
                 image_urls_1 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image%20({random_number_image_urls_1}).jpg"
                 
                 if check_image_url_exists(image_urls_1):
