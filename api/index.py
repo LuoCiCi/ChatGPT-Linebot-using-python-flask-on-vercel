@@ -924,7 +924,7 @@ def handle_message(event):
                     line_bot_api.reply_message(
                         event.reply_token,
                         [
-                            TextSendMessage(f"恭喜抽中SSR彩蛋編號: {random_number_image_urls_3}"),
+                            TextSendMessage(f"恭喜抽中超稀有SSR彩蛋編號: {random_number_image_urls_3}"),
                             ImageSendMessage(original_content_url=image_urls_3, preview_image_url=image_urls_3)
                         ]
                     )
