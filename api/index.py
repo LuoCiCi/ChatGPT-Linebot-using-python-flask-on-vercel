@@ -1166,7 +1166,7 @@ def handle_message(event):
             TextSendMessage(text="積積陰陰的"),
             TextSendMessage(text="馬子狗"),
             TextSendMessage(text="馬桶沒在刷"),
-            TextSendMessage(text="啥時換工作"),
+            TextSendMessage(text="又長又大"),
             TextSendMessage(text="蟀")
         ]
         # 回傳訊息
