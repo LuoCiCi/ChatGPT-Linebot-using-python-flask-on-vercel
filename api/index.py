@@ -934,7 +934,7 @@ def handle_message(event):
             else:
                 
                 random_number_image_urls_1 = random.randint(1,330)
-                image_urls_1 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/image%20({random_number_image_urls_1}).jpg"
+                image_urls_1 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/Draw%20({random_number_image_urls_1}).jpg"
                 
                 if check_image_url_exists(image_urls_1):
                 # 如果圖片存在，回傳訊息
