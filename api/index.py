@@ -911,7 +911,7 @@ def handle_message(event):
                         [
                             TextSendMessage(f"抽中稀有SR彩蛋編號: {random_number_image_urls_2}"),
                             TextSendMessage(f"{image_urls_2}"),
-                            ImageSendMessage(original_content_url=image_urls_2, )
+                            ImageSendMessage(original_content_url=image_urls_2, preview_image_url=image_urls_2)
                         ]
                     )
                     break  # 找到圖片後退出迴圈
