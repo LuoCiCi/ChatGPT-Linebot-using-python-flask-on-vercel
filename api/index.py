@@ -902,7 +902,7 @@ def handle_message(event):
             if random_value < 0.5:  # 7% 機率
                 
                 random_number_image_urls_2 = random.randint(1,65)
-                image_urls_2 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/Drawing%20({random_number_image_urls_2}).jpg"
+                image_urls_2 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/SR%20({random_number_image_urls_2}).jpg"
                 
                 if check_image_url_exists(image_urls_2):
                 # 如果圖片存在，回傳訊息
