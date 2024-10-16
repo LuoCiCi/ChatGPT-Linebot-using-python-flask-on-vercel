@@ -1015,7 +1015,7 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             [
-                random.choice(data['food'])
+                TextSendMessage(text="{data['food']}")
             ]
         )
         return
