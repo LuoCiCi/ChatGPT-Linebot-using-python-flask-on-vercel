@@ -1011,6 +1011,45 @@ def handle_message(event):
                 TextSendMessage(text="無法找到對應的圖片，請稍後再試。")
             )
         return
+    
+    if event.message.text == "抽晚餐":
+        working_status = False       
+        messages = [
+            TextSendMessage(text="吃大便"),
+            TextSendMessage(text="吃水餃"),
+            TextSendMessage(text="吃鍋貼"),
+            TextSendMessage(text="吃牛肉麵"),
+            TextSendMessage(text="吃超商"),
+            TextSendMessage(text="吃滷味"),
+            TextSendMessage(text="吃漢堡"),
+            TextSendMessage(text="吃麥當勞"),
+            TextSendMessage(text="吃高級餐廳"),
+            TextSendMessage(text="吃燒肉"),
+            TextSendMessage(text="吃便當"),
+            TextSendMessage(text="吃肉圓"),
+            TextSendMessage(text="吃炸雞"),
+            TextSendMessage(text="吃麵類"),
+            TextSendMessage(text="吃飯類"),
+            TextSendMessage(text="吃麵包"),            
+            TextSendMessage(text="吃日本料理"),
+            TextSendMessage(text="吃韓式料理"),
+            TextSendMessage(text="吃火鍋"),
+            TextSendMessage(text="吃牛排"),
+            TextSendMessage(text="吃鹽酥雞"),
+            TextSendMessage(text="吃炒飯"),
+            TextSendMessage(text="吃烤玉米"),            
+            TextSendMessage(text="回家老婆煮"),
+            TextSendMessage(text="吃醋"),
+            TextSendMessage(text="吃，隨便啦~")
+        ]
+        # 回傳訊息
+        line_bot_api.reply_message(
+            event.reply_token,
+            [
+                random.choice(messages)
+            ]
+        )
+        return
 
     if "錢吶" in event.message.text or "錢啊" in event.message.text or "錢錢" in event.message.text:       
         working_status = False
