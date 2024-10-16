@@ -1010,13 +1010,14 @@ def handle_message(event):
         # 開啟並讀取 JSON 檔案
         with open(json_path, 'r', encoding='utf-8') as file:
             data = json.load(file)
+
+        # 從 'food' 清單中隨機選取一個項目
+        random_food = random.choice(data['food'])
             
         # 回傳訊息
         line_bot_api.reply_message(
             event.reply_token,
-            [
-                TextSendMessage(text="{data['food']}")
-            ]
+            TextSendMessage(text=f"{random_food}")
         )
         return
 
