@@ -310,6 +310,13 @@ def handle_message(event):
                 TextSendMessage(text=f"user_id:{user_id}"))
         return
 
+    if event.message.text == "QQQ":
+        # line_bot_api.push_message(user_id, TextSendMessage(text='test....'))
+        line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=f"@user_id:@{user_id}"))
+        return
+
     if event.message.text == "雨量" or event.message.text == "濕度":
         working_status = True
 
