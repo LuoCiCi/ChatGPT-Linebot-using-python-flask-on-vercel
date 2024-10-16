@@ -186,7 +186,7 @@ def handle_message(event):
         event.reply_token,
         TextSendMessage(text=f"你的 User ID 是: {user_id}")
     )
-
+    
 # 確認 URL 是否有效
 def check_image_url_exists(url):
     try:
@@ -302,7 +302,14 @@ def get_radar_pic():
 @line_handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     global working_status
+
+    # 獲取 userId
+    user_id = event.source.user_id
+
     if event.message.type != "text":
+        line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=f"user_id:{user_id}"))
         return
 
     if event.message.text == "雨量" or event.message.text == "濕度":
@@ -504,26 +511,6 @@ def handle_message(event):
                 TextSendMessage(text="無法取得颱風消息"))
         return
 
-    # if event.message.text == "颱風":
-    #     working_status = True
-
-    #     api_url = "https://api.typhoon.example.com/data"
-    #     response = requests.get(api_url)
-
-    #     if response.status_code == 200:
-    #         typhoon_data = response.json()
-    #         line_bot_api.reply_message(event.reply_token,
-    #                 [
-    #                     TextSendMessage(f"{typhoon_data['records']}")  # 傳送解碼後的文字
-    #                     # ImageSendMessage(original_content_url=reply[1], preview_image_url=reply[1])
-    #                 ]) # 傳送文字
-    #     else:
-    #         line_bot_api.reply_message(event.reply_token,
-    #                 [
-    #                     TextSendMessage(f"抓不到資訊")  # 傳送解碼後的文字
-    #                     # ImageSendMessage(original_content_url=reply[1], preview_image_url=reply[1])
-    #                 ]) # 傳送文字
-    #     return
     
     if event.message.text == "天氣" or event.message.text == "氣象" or event.message.text == "所有天氣圖":
         messages = []  # 存放所有訊息的列表
