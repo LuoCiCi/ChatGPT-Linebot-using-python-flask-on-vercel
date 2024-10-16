@@ -1062,7 +1062,7 @@ def handle_message(event):
         json_path = os.path.join(os.path.dirname(__file__), '../foodmenu.json')
 
         # 開啟並讀取 JSON 檔案
-        with open('json_path', 'r', encoding='utf-8') as file:
+        with open(json_path, 'r', encoding='utf-8') as file:
             data = json.load(file)
 
         line_bot_api.reply_message(
