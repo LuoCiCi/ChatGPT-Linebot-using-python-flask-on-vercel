@@ -1001,7 +1001,7 @@ def handle_message(event):
             )
         return
     
-    if event.message.text == "抽晚餐":
+    if event.message.text == "抽晚餐" or event.message.text == "抽午餐":
         working_status = False       
         messages = [
             TextSendMessage(text="吃大便"),
