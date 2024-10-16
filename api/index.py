@@ -304,10 +304,10 @@ def handle_message(event):
     user_id = event.source.user_id
 
     if event.message.type == "text":
-        line_bot_api.push_message(user_id, TextSendMessage(text='test....'))
-        # line_bot_api.reply_message(
-        #         event.reply_token,
-        #         TextSendMessage(text=f"user_id:{user_id}"))
+        # line_bot_api.push_message(user_id, TextSendMessage(text='test....'))
+        line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=f"user_id:{user_id}"))
         return
 
     if event.message.text == "雨量" or event.message.text == "濕度":
