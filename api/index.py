@@ -176,11 +176,15 @@ def callback():
 
 @line_handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    # 回應訊息，自動已讀
-    reply_message = "test OK~"
+    # # 回應訊息，自動已讀
+    # reply_message = "test OK~"
+
+    # 獲取 userId
+    user_id = event.source.user_id
+    
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=reply_message)
+        TextSendMessage(text=f"你的 User ID 是: {user_id}")
     )
 
 # 確認 URL 是否有效
