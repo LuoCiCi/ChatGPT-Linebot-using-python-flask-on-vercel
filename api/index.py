@@ -1059,7 +1059,7 @@ def handle_message(event):
         working_status = False
 
         # 使用相對路徑讀取 data/config.json
-        json_path = os.path.join(os.path.dirname(__file__), '../foodmenu.json')
+        json_path = os.path.join(os.path.dirname(__file__), '..../data/foodmenu.json')
 
         # 開啟並讀取 JSON 檔案
         with open(json_path, 'r', encoding='utf-8') as file:
