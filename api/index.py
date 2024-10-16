@@ -643,6 +643,7 @@ def handle_message(event):
         else:
             line_bot_api.reply_message(event.reply_token,
                     [
+                        TextSendMessage(f"地震監視畫面\nhttps://www.youtube.com/live/Owke6Quk7T0?si=CQYm0rJ3Mq_UnQEv"),
                         TextSendMessage(f"抓不到地震資訊")  # 傳送解碼後的文字
                     ]) # 傳送文字
         return
