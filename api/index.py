@@ -303,6 +303,24 @@ def handle_message(event):
     # 獲取 userId
     user_id = event.source.user_id
 
+    # 指定回覆私人訊息
+    # 綺:U86fd4e0cce57a1b2d5ec119c8f9d6d7e
+    user_id="U86fd4e0cce57a1b2d5ec119c8f9d6d7e"
+    # line_bot_api.push_message(user_id, TextSendMessage(text='TEST'))
+    
+    # 檢查是否為群組訊息
+    if event.source.type == 'group':
+        # 取得群組 ID
+        group_id = event.source.group_id
+        line_bot_api.push_message(user_id, TextSendMessage(text='TEST'))
+        # # 回傳群組 ID 作為測試
+        # line_bot_api.reply_message(
+        #     event.reply_token,
+        #     TextSendMessage(text=f"群組 ID 是: {group_id}")
+        # )
+        return
+    
+    
     if event.message.text == "text":
         # line_bot_api.push_message(user_id, TextSendMessage(text='test....'))
         line_bot_api.reply_message(
