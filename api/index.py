@@ -1065,9 +1065,12 @@ def handle_message(event):
         with open(json_path, 'r', encoding='utf-8') as file:
             data = json.load(file)
 
+        # 從 'food' 清單中隨機選取一個項目
+        random_food = random.choice(data['food'])
+
         line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text=f"data-->{data}")
+                TextSendMessage(text=f"{random_food}")
             )
         
         # # 回傳訊息
