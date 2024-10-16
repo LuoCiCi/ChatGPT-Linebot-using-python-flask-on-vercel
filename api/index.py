@@ -303,7 +303,7 @@ def handle_message(event):
     # 獲取 userId
     user_id = event.source.user_id
 
-    if event.message.type == "text":
+    if event.message.text == "text":
         # line_bot_api.push_message(user_id, TextSendMessage(text='test....'))
         line_bot_api.reply_message(
                 event.reply_token,
