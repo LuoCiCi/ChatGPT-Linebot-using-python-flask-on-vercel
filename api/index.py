@@ -309,16 +309,16 @@ def handle_message(event):
     # line_bot_api.push_message(user_id, TextSendMessage(text='TEST'))
     
     # 檢查是否為群組訊息
-    if event.source.type == 'group':
+    #if event.source.type == 'group':
         # 取得群組 ID
-        group_id = event.source.group_id
-        line_bot_api.push_message(user_id, TextSendMessage(text='TEST'))
+        #group_id = event.source.group_id
+        #line_bot_api.push_message(user_id, TextSendMessage(text='TEST'))
         # # 回傳群組 ID 作為測試
         # line_bot_api.reply_message(
         #     event.reply_token,
         #     TextSendMessage(text=f"群組 ID 是: {group_id}")
         # )
-        return
+        #return
     
     
     if event.message.text == "text":
