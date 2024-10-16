@@ -1035,7 +1035,16 @@ def handle_message(event):
             TextSendMessage(text="吃烤玉米"),            
             TextSendMessage(text="回家老婆煮"),
             TextSendMessage(text="吃醋"),
-            TextSendMessage(text="吃，隨便啦~")
+            TextSendMessage(text="吃，隨便啦~"),
+            TextSendMessage(text="吃麥當勞"),
+            TextSendMessage(text="吃肯德基"),
+            TextSendMessage(text="吃摩斯bug"),
+            TextSendMessage(text="吃永和豆漿"),
+            TextSendMessage(text="吃土"),
+            TextSendMessage(text="喝西北風"),
+            TextSendMessage(text="吃幼齒<3~"),
+            TextSendMessage(text="吃粉味"),
+            TextSendMessage(text="吃草")
         ]
         # 回傳訊息
         line_bot_api.reply_message(
