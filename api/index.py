@@ -990,7 +990,7 @@ def handle_message(event):
         
         # 進行圖片URL檢查
         while attempts < max_attempts:
-            random_number = random.randint(1, 70)
+            random_number = random.randint(1, 90)
             image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/meme/meme%20({random_number}).jpg"
             
             # 檢查圖片是否存在
