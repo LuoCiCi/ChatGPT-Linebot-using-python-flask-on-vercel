@@ -1056,9 +1056,13 @@ def handle_message(event):
         return
 
     if event.message.text == "food":
-        working_status = False       
+        working_status = False
+
+        # 使用相對路徑讀取 data/config.json
+        json_path = os.path.join(os.path.dirname(__file__), '../foodmenu.json')
+
         # 開啟並讀取 JSON 檔案
-        with open('foodmenu.json', 'r', encoding='utf-8') as file:
+        with open('json_path', 'r', encoding='utf-8') as file:
             data = json.load(file)
 
         line_bot_api.reply_message(
