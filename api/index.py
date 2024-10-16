@@ -1055,6 +1055,26 @@ def handle_message(event):
         )
         return
 
+    if event.message.text == "food":
+        working_status = False       
+        # 開啟並讀取 JSON 檔案
+        with open('foodmenu.json', 'r', encoding='utf-8') as file:
+            data = json.load(file)
+
+        line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=f"data-->{data}")
+            )
+        
+        # # 回傳訊息
+        # line_bot_api.reply_message(
+        #     event.reply_token,
+        #     [
+        #         random.choice(data)
+        #     ]
+        # )
+        return
+
     if "錢吶" in event.message.text or "錢啊" in event.message.text or "錢錢" in event.message.text:       
         working_status = False
         max_attempts = 5  # 設定最多嘗試的次數
