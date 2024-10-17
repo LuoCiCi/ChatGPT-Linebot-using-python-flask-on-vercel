@@ -1246,31 +1246,23 @@ def handle_message(event):
     
     if event.message.text == "抽籤":       
         working_status = False
-        url = "https://gist.githubusercontent.com/mmis1000/d94bb0a9f37cfd362453/raw/0e3a7b06688fd7950a8d5f1ae858b27be2be7e09/%25E6%25B7%25BA%25E8%258D%2589%25E7%25B1%25A4.json"
+        url = "https://raw.githubusercontent.com/you2245g/jsUnderground/refs/heads/master/LV14-Draw/draw.json"
         response = requests.get(url)
         lottery_data = response.json()
         random_lottery = random.choice(lottery_data)
         poem_text = textwrap.dedent(
-        f"""籤詩號碼: {random_lottery.get('id', '未知')}
-               
-                                    
-        籤詩類型: {random_lottery.get('type', '未知')}
-        籤詩內容: {random_lottery.get('poem', '無內容')}
+        f"""📜 籤詩：{random_lottery.get('drawList', '未知')}
+        籤題：{random_lottery.get('drawTitle', '未知')}
+        吉凶：{random_lottery.get('fate', '未知')}
 
-        解釋: {random_lottery.get('explain', '無解釋')}
+        📖 籤詩內容：
+        {random_lottery.get('poem', '無內容')}
 
-        結果:
-        願望: {random_lottery['result'].get('願望', '未知')}
-        疾病: {random_lottery['result'].get('疾病', '未知')}
-        盼望的人: {random_lottery['result'].get('盼望的人', '未知')}
-        遺失物: {random_lottery['result'].get('遺失物', '未知')}
-        蓋新居: {random_lottery['result'].get('蓋新居', '未知')}
-        搬家: {random_lottery['result'].get('搬家', '未知')}
-        嫁娶: {random_lottery['result'].get('嫁娶', '未知')}
-        旅行: {random_lottery['result'].get('旅行', '未知')}
-        交往: {random_lottery['result'].get('交往', '未知')}
+        📝 解釋：
+        {random_lottery.get('explan', '無解釋')}
 
-        註解: {random_lottery.get('note', '無註解')}
+        🧾 詩句含義：
+        {random_lottery.get('mean', '無含義')}
         """)
         line_bot_api.reply_message(
             event.reply_token,
@@ -1278,7 +1270,7 @@ def handle_message(event):
                 TextSendMessage(text=poem_text)
             ]
         )
-        return 
+        return
 
     if "擲筊" in event.message.text:
         working_status = False
