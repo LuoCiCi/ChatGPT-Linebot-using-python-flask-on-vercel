@@ -1138,19 +1138,19 @@ def handle_message(event):
     if "珮綺" in event.message.text or "綺綺" in event.message.text:
         working_status = False
         messages = [
-            TextSendMessage(text="好正"),
-            TextSendMessage(text="貪吃的豬豬"),
-            TextSendMessage(text="好可愛"),
-            TextSendMessage(text="好漂亮"),
-            TextSendMessage(text="美麗動人"),
-            TextSendMessage(text="清新脫俗"),
-            TextSendMessage(text="嬌美如花"),
-            TextSendMessage(text="只會睡覺"),
-            TextSendMessage(text="閉月羞花"),
-            TextSendMessage(text="傾國傾城"),
-            TextSendMessage(text="玉潔冰清"),
-            TextSendMessage(text="花容月貌"),
-            TextSendMessage(text="沒有D")
+            TextSendMessage(text="好正❤️"),
+            TextSendMessage(text="貪吃的豬豬🐷"),
+            TextSendMessage(text="好可愛❤️"),
+            TextSendMessage(text="好漂亮❤️"),
+            TextSendMessage(text="美麗動人💞"),
+            TextSendMessage(text="清新脫俗💞"),
+            TextSendMessage(text="嬌美如花💞"),
+            TextSendMessage(text="只會睡覺💞"),
+            TextSendMessage(text="閉月羞花💞"),
+            TextSendMessage(text="傾國傾城💞"),
+            TextSendMessage(text="玉潔冰清💞"),
+            TextSendMessage(text="花容月貌💞"),
+            TextSendMessage(text="沒有D😿")
         ]
         # 回傳訊息
         line_bot_api.reply_message(
@@ -1164,24 +1164,24 @@ def handle_message(event):
     if "健豪" in event.message.text:
         working_status = False
         messages = [
-            TextSendMessage(text="帥哥"),
-            TextSendMessage(text="母胎單身"),
-            TextSendMessage(text="飢渴難耐"),
-            TextSendMessage(text="帥到分手"),
-            TextSendMessage(text="桃園妹手到擒來"),
-            TextSendMessage(text="小公舉"),
-            TextSendMessage(text="陳年法師"),
-            TextSendMessage(text="這是小技巧"),
-            TextSendMessage(text="啊不然要怎樣"),
-            TextSendMessage(text="台南貴公子"), 
-            TextSendMessage(text="皇家禮炮"),
-            TextSendMessage(text="單身狗"),                      
-            TextSendMessage(text="帥到懷孕"),
-            TextSendMessage(text="新竹單身漢"),
-            TextSendMessage(text="又再台北？"),
+            TextSendMessage(text="帥哥😩"),
+            TextSendMessage(text="母胎單身😖"),
+            TextSendMessage(text="飢渴難耐🤤"),
+            TextSendMessage(text="帥到分手👦"),
+            TextSendMessage(text="桃園妹手到擒來💔"),
+            TextSendMessage(text="小公舉✋"),
+            TextSendMessage(text="陳年法師🧙‍♂️"),
+            TextSendMessage(text="這是小技巧🤷‍♂️"),
+            TextSendMessage(text="啊不然要怎樣🤷‍♂️"),
+            TextSendMessage(text="台南貴公子🏯"), 
+            TextSendMessage(text="🈲皇家禮炮🈲"),
+            TextSendMessage(text="單身狗⭕"),                      
+            TextSendMessage(text="帥到懷孕😕"),
+            TextSendMessage(text="新竹單身漢🙋‍♂️"),
+            TextSendMessage(text="又再台北🗺️？"),
             TextSendMessage(text="早餐吃600元"),
-            TextSendMessage(text="放線大濕"),
-            TextSendMessage(text="玩草男孩")
+            TextSendMessage(text="放線大濕🧵"),
+            TextSendMessage(text="玩草男孩🌱")
         ]
         # 回傳訊息
         line_bot_api.reply_message(
@@ -1195,22 +1195,22 @@ def handle_message(event):
     if "聖博" in event.message.text or event.message.text == "洞":
         working_status = False
         messages = [
-            TextSendMessage(text="快生孩子"),
-            TextSendMessage(text="孟柔小狼狗"),
-            TextSendMessage(text="人夫"),
-            TextSendMessage(text="閃婚狗"),
-            TextSendMessage(text="偷偷買公仔"),
-            TextSendMessage(text="窮到賣公仔"),
-            TextSendMessage(text="法號悅群"),
-            TextSendMessage(text="有洞"),
-            TextSendMessage(text="悅群師兄"),
+            TextSendMessage(text="快生孩子👶"),
+            TextSendMessage(text="孟柔小狼狗🐕"),
+            TextSendMessage(text="人夫🤵‍♀️"),
+            TextSendMessage(text="閃婚狗💍"),
+            TextSendMessage(text="偷偷買公仔🎎"),
+            TextSendMessage(text="窮到賣公仔👾"),
+            TextSendMessage(text="法號悅群☯️"),
+            TextSendMessage(text="有洞🕳️"),
+            TextSendMessage(text="悅群師兄📿"),
             TextSendMessage(text="。"),
             TextSendMessage(text="喜歡大內內"),
-            TextSendMessage(text="沒有30cm"),
-            TextSendMessage(text="大概3cm?"),
-            TextSendMessage(text="睡覺很吵"),
-            TextSendMessage(text="再打呼阿"),
-            TextSendMessage(text="竹北有房")
+            TextSendMessage(text="沒有30cm📏"),
+            TextSendMessage(text="大概3cm?🧷"),
+            TextSendMessage(text="睡覺很吵🔊"),
+            TextSendMessage(text="再打呼阿🗣️"),
+            TextSendMessage(text="竹北有房🏘️")
         ]
         # 回傳訊息
         line_bot_api.reply_message(
@@ -1224,16 +1224,16 @@ def handle_message(event):
     if "宇洋" in event.message.text or event.message.text == "洋" or event.message.text == "羊":
         working_status = False
         messages = [
-            TextSendMessage(text="珮綺行動錢包"),
-            TextSendMessage(text="宅"),
-            TextSendMessage(text="鏟屎官1號"),
-            TextSendMessage(text="雷喔"),
-            TextSendMessage(text="汪"),
-            TextSendMessage(text="積積陰陰的"),
-            TextSendMessage(text="馬子狗"),
-            TextSendMessage(text="馬桶沒在刷"),
-            TextSendMessage(text="又長又大"),
-            TextSendMessage(text="蟀")
+            TextSendMessage(text="珮綺行動錢包💰"),
+            TextSendMessage(text="宅🏠"),
+            TextSendMessage(text="鏟屎官1號🐱"),
+            TextSendMessage(text="雷喔⚡"),
+            TextSendMessage(text="汪🐕‍🦺"),
+            TextSendMessage(text="積積陰陰的🐓"),
+            TextSendMessage(text="馬子狗🐕‍🦺"),
+            TextSendMessage(text="馬桶沒在刷🚽"),
+            TextSendMessage(text="又長又大📏"),
+            TextSendMessage(text="蟀🦗")
         ]
         # 回傳訊息
         line_bot_api.reply_message(
