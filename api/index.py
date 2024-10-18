@@ -1027,7 +1027,7 @@ def handle_message(event):
             )
         return
     
-    if event.message.text == "抽晚餐" or event.message.text == "抽午餐" or "吃什麼" in event.message.text:
+    if event.message.text == "抽晚餐" or event.message.text == "抽午餐": # or "吃什麼" in event.message.text
         working_status = False       
         
         # 使用相對路徑讀取 data/config.json
