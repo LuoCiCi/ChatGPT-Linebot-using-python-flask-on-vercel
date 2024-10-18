@@ -1027,7 +1027,7 @@ def handle_message(event):
             )
         return
     
-    if event.message.text == "抽晚餐" or event.message.text == "抽午餐":
+    if event.message.text == "抽晚餐" or event.message.text == "抽午餐" or "吃什麼" in event.message.text:
         working_status = False       
         
         # 使用相對路徑讀取 data/config.json
@@ -1039,6 +1039,26 @@ def handle_message(event):
 
         # 從 'food' 清單中隨機選取一個項目
         random_food = random.choice(data['food'])
+            
+        # 回傳訊息
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=f"{random_food}")
+        )
+        return
+
+     if event.message.text == "抽飲料" or "喝什麼" in event.message.text:
+        working_status = False       
+        
+        # 使用相對路徑讀取 data/config.json
+        json_path = os.path.join(os.path.dirname(__file__), '/var/task/data/foodmenu.json')
+
+        # 開啟並讀取 JSON 檔案
+        with open(json_path, 'r', encoding='utf-8') as file:
+            data = json.load(file)
+
+        # 從 'food' 清單中隨機選取一個項目
+        random_food = random.choice(data['drink'])
             
         # 回傳訊息
         line_bot_api.reply_message(
