@@ -1047,7 +1047,7 @@ def handle_message(event):
         )
         return
 
-    if event.message.text == "抽飲料":
+    if event.message.text == "抽飲料" or "喝什麼" in event.message.text:
         working_status = False       
         
         # 使用相對路徑讀取 data/config.json
@@ -1057,13 +1057,13 @@ def handle_message(event):
         with open(json_path, 'r', encoding='utf-8') as file:
             data = json.load(file)
 
-        # 從 'food' 清單中隨機選取一個項目
-        random_food = random.choice(data['food'])
+        # 從 'drink' 清單中隨機選取一個項目
+        random_drink = random.choice(data['drink'])
             
         # 回傳訊息
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=f"{random_food}")
+            TextSendMessage(text=f"{random_drink}")
         )
         return
      
