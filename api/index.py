@@ -1047,25 +1047,26 @@ def handle_message(event):
         )
         return
 
-     # if event.message.text == "抽飲料" or "喝什麼" in event.message.text:
-     #    working_status = False       
+    if event.message.text == "抽飲料":
+        working_status = False       
         
-     #    # 使用相對路徑讀取 data/config.json
-     #    json_path = os.path.join(os.path.dirname(__file__), '/var/task/data/foodmenu.json')
+        # 使用相對路徑讀取 data/config.json
+        json_path = os.path.join(os.path.dirname(__file__), '/var/task/data/foodmenu.json')
 
-     #    # 開啟並讀取 JSON 檔案
-     #    with open(json_path, 'r', encoding='utf-8') as file:
-     #        data = json.load(file)
+        # 開啟並讀取 JSON 檔案
+        with open(json_path, 'r', encoding='utf-8') as file:
+            data = json.load(file)
 
-     #    # 從 'drink' 清單中隨機選取一個項目
-     #    random_drink= random.choice(data['drink'])
+        # 從 'food' 清單中隨機選取一個項目
+        random_food = random.choice(data['food'])
             
-     #    # 回傳訊息
-     #    line_bot_api.reply_message(
-     #        event.reply_token,
-     #        TextSendMessage(text=f"{random_drink}")
-     #    )
-     #    return
+        # 回傳訊息
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=f"{random_food}")
+        )
+        return
+     
 
     if "錢吶" in event.message.text or "錢啊" in event.message.text or "錢錢" in event.message.text:       
         working_status = False
