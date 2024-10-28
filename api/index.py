@@ -519,12 +519,20 @@ def handle_message(event):
         tz = pytz.timezone('Asia/Taipei')
         # 取得當前系統日期和時間
         now = datetime.now(tz)
+        yesterday = now - timedelta(days=1)
         nowdate = now.strftime('%Y%m%d')
+        ysdate = yesterday.strftime('%Y%m%d')
         # typhoon_url = "https://www.cwa.gov.tw/V8/C/P/Typhoon/TY_WARN.html"
         typhoon_url = "https://www.cwa.gov.tw/V8/C/P/Typhoon/TY_NEWS.html"
-        typhoon_pic = f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{nowdate}0600-120_zhtw.png"    # "https://www.cwa.gov.tw/Data/typhoon/TY_WARN/B20.png"
+        
+        if (check_image_url_exists(f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{nowdate}0600-120_zhtw.png")):
+            typhoon_pic = f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{nowdate}0600-120_zhtw.png"
+        elif (check_image_url_exists(f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{ysdate}0600-120_zhtw.png")):
+            typhoon_pic = f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{ysdate}0600-120_zhtw.png"
+        else:
+            typhoon_pic = ""
 
-        if (check_image_url_exists(typhoon_url)):
+        if (typhoon_pic):
             # 回傳訊息
             line_bot_api.reply_message(
                 event.reply_token,
@@ -536,7 +544,7 @@ def handle_message(event):
         else:
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text="無法取得颱風消息"))
+                TextSendMessage(text=f"{typhoon_url}")
         return
 
     
