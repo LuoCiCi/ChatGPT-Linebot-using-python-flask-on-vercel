@@ -526,23 +526,30 @@ def handle_message(event):
         typhoon_url = "https://www.cwa.gov.tw/V8/C/P/Typhoon/TY_NEWS.html"
 
         if (check_image_url_exists(f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{nowdate}0600-120_zhtw.png")):
-            # 回傳訊息
-            line_bot_api.reply_message(
-                event.reply_token,
-                [
-                    TextSendMessage(text=f"{typhoon_url}"),
-                    ImageSendMessage(original_content_url=f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{nowdate}0600-120_zhtw.png", preview_image_url=f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{nowdate}0600-120_zhtw.png")
-                ]
-            )
+            typhoon_pic = f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{nowdate}0600-120_zhtw.png"
         elif (check_image_url_exists(f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{ysdate}0600-120_zhtw.png")):
+            typhoon_pic = f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{ysdate}0600-120_zhtw.png"
+        else:
+            typhoon_pic = ""
+
+        if (typhoon_pic):
             # 回傳訊息
             line_bot_api.reply_message(
                 event.reply_token,
                 [
                     TextSendMessage(text=f"{typhoon_url}"),
-                    ImageSendMessage(original_content_url=f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{ysdate}0600-120_zhtw.png", preview_image_url=f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{ysdate}0600-120_zhtw.png")
+                    ImageSendMessage(original_content_url=typhoon_pic, preview_image_url=typhoon_pic)
                 ]
             )
+        # elif (check_image_url_exists(f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{ysdate}0600-120_zhtw.png")):
+        #     # 回傳訊息
+        #     line_bot_api.reply_message(
+        #         event.reply_token,
+        #         [
+        #             TextSendMessage(text=f"{typhoon_url}"),
+        #             ImageSendMessage(original_content_url=f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{ysdate}0600-120_zhtw.png", preview_image_url=f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{ysdate}0600-120_zhtw.png")
+        #         ]
+        #     )
         else:
             line_bot_api.reply_message(
                 event.reply_token,
