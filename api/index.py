@@ -522,7 +522,7 @@ def handle_message(event):
         nowdate = now.strftime('%Y%m%d')
         # typhoon_url = "https://www.cwa.gov.tw/V8/C/P/Typhoon/TY_WARN.html"
         typhoon_url = "https://www.cwa.gov.tw/V8/C/P/Typhoon/TY_NEWS.html"
-        typhoon_pic = "https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{nowdate}0600-120_zhtw.png"    # "https://www.cwa.gov.tw/Data/typhoon/TY_WARN/B20.png"
+        typhoon_pic = f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{nowdate}0600-120_zhtw.png"    # "https://www.cwa.gov.tw/Data/typhoon/TY_WARN/B20.png"
 
         if (check_image_url_exists(typhoon_url)):
             # 回傳訊息
