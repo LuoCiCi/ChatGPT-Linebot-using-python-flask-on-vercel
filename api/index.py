@@ -525,20 +525,21 @@ def handle_message(event):
         # typhoon_url = "https://www.cwa.gov.tw/V8/C/P/Typhoon/TY_WARN.html"
         typhoon_url = "https://www.cwa.gov.tw/V8/C/P/Typhoon/TY_NEWS.html"
         # typhoon_pic = "https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/WSP-MAP_202410290000_zhtw.png"
-        typhoon_pic = ""
+        typhoon_pic = None  # 初始化 typhoon_pic
 
         # 迴圈找最新的圖
         hour_ary = ["120", "96", "72", "48", "24"]
         time_ary = ["20", "16", "12", "08", "04", "00"]
         for t in time_ary:
             for h in hour_ary:
-                if (check_image_url_exists(f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{nowdate}{t}00-{h}_zhtw.png")):
-                    typhoon_pic = f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{nowdate}{t}00-{h}_zhtw.png"
-                    line_bot_api.reply_message(
-                        event.reply_token,
-                        [
-                            TextSendMessage(text=f"{typhoon_pic} 存在，跳出迴圈")]
-                    )
+                url = f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{nowdate}{t}00-{h}_zhtw.png"
+                if check_image_url_exists(url):
+                    typhoon_pic = url
+                    # line_bot_api.reply_message(
+                    #     event.reply_token,
+                    #     [
+                    #         TextSendMessage(text=f"{typhoon_pic} 存在，跳出迴圈")]
+                    # )
                     break
             if (typhoon_pic):
                 line_bot_api.reply_message(
