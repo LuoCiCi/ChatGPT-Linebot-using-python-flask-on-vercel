@@ -529,7 +529,7 @@ def handle_message(event):
 
         # 迴圈找最新的圖
         hour_ary = ["120", "96", "72", "48", "24"]
-        time_ary = ["20", "16", "12", "08", "04", "00"]
+        time_ary = [ "00"]
         for t in time_ary:
             for h in hour_ary:
                 url = f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{nowdate}{t}00-{h}_zhtw.png"
