@@ -535,7 +535,7 @@ def handle_message(event):
                 if (check_image_url_exists(f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{nowdate}{t}00-{h}_zhtw.png")):
                     typhoon_pic = f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{nowdate}{t}00-{h}_zhtw.png"
                     break
-            if (typhoon_pic)
+            if (typhoon_pic):
                 break
 
 
