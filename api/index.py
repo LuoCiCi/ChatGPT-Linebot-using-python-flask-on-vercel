@@ -534,8 +534,10 @@ def handle_message(event):
             for h in hour_ary:
                 if (check_image_url_exists(f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{nowdate}{t}00-{h}_zhtw.png")):
                     typhoon_pic = f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{nowdate}{t}00-{h}_zhtw.png"
+                    print(f"{typhoon_pic} 存在，跳出迴圈")
                     break
             if (typhoon_pic):
+                print(f"{typhoon_pic} 存在2，跳出迴圈")
                 break
 
 
