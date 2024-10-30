@@ -541,13 +541,13 @@ def handle_message(event):
                     #         TextSendMessage(text=f"{typhoon_pic} 存在，跳出迴圈")]
                     # )
                     break
-            if (typhoon_pic):
-                line_bot_api.reply_message(
-                        event.reply_token,
-                        [
-                            TextSendMessage(text=f"{typhoon_pic} 存在2，跳出迴圈")]
-                    )
-                break
+            # if (typhoon_pic):
+            #     line_bot_api.reply_message(
+            #             event.reply_token,
+            #             [
+            #                 TextSendMessage(text=f"{typhoon_pic} 存在2，跳出迴圈")]
+            #         )
+            #     break
 
 
         # if (check_image_url_exists(f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{nowdate}0600-120_zhtw.png")):
