@@ -529,26 +529,13 @@ def handle_message(event):
 
         # 迴圈找最新的圖
         hour_ary = ["120", "96", "72", "48", "24"]
-        time_ary = [ "00"]
+        time_ary = ["08", "00"]
         for t in time_ary:
             for h in hour_ary:
                 url = f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{nowdate}{t}00-{h}_zhtw.png"
                 if check_image_url_exists(url):
                     typhoon_pic = url
-                    # line_bot_api.reply_message(
-                    #     event.reply_token,
-                    #     [
-                    #         TextSendMessage(text=f"{typhoon_pic} 存在，跳出迴圈")]
-                    # )
                     break
-            # if (typhoon_pic):
-            #     line_bot_api.reply_message(
-            #             event.reply_token,
-            #             [
-            #                 TextSendMessage(text=f"{typhoon_pic} 存在2，跳出迴圈")]
-            #         )
-            #     break
-
 
         # if (check_image_url_exists(f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{nowdate}0600-120_zhtw.png")):
         #     typhoon_pic = f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{nowdate}0600-120_zhtw.png"
@@ -566,15 +553,6 @@ def handle_message(event):
                     ImageSendMessage(original_content_url=typhoon_pic, preview_image_url=typhoon_pic)
                 ]
             )
-        # elif (check_image_url_exists(f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{ysdate}0600-120_zhtw.png")):
-        #     # 回傳訊息
-        #     line_bot_api.reply_message(
-        #         event.reply_token,
-        #         [
-        #             TextSendMessage(text=f"{typhoon_url}"),
-        #             ImageSendMessage(original_content_url=f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{ysdate}0600-120_zhtw.png", preview_image_url=f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{ysdate}0600-120_zhtw.png")
-        #         ]
-        #     )
         else:
             line_bot_api.reply_message(
                 event.reply_token,
