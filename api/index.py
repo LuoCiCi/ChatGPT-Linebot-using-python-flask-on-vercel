@@ -1093,7 +1093,42 @@ def handle_message(event):
             TextSendMessage(text=f"{random_drink}")
         )
         return
-     
+
+    if "錢吶三連抽" in event.message.text or "錢啊三連抽" in event.message.text or "錢錢三連抽" in event.message.text:       
+        working_status = False
+        max_attempts = 5  # 設定最多嘗試的次數
+        attempts = 0
+        
+        # 進行圖片URL檢查
+        while attempts < max_attempts:
+            random_number1 = random.randint(1, 500)
+            random_number2 = random.randint(1, 500)
+            random_number3 = random.randint(1, 500)
+            if (random_number1 <> random_number2) and (random_number2 <> random_number3) and (random_number3 <> random_number1):
+                image_url1 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/MoneyMoney/LINE_ALBUM_money_%20({random_number1}).jpg"
+                image_url2 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/MoneyMoney/LINE_ALBUM_money_%20({random_number2}).jpg"
+                image_url3 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/MoneyMoney/LINE_ALBUM_money_%20({random_number3}).jpg"
+                
+                # 檢查圖片是否存在
+                if check_image_url_exists(image_url1) and check_image_url_exists(image_url2) and check_image_url_exists(image_url3):
+                    # 如果圖片存在，回傳訊息
+                    line_bot_api.reply_message(
+                        event.reply_token,
+                        [
+                            ImageSendMessage(original_content_url=image_url1, preview_image_url=image_url1),
+                            ImageSendMessage(original_content_url=image_url2, preview_image_url=image_url2),
+                            ImageSendMessage(original_content_url=image_url3, preview_image_url=image_url3)
+                        ]
+                    )
+                    break  # 找到圖片後退出迴圈
+                attempts += 1
+        else:
+            # 如果在max_attempts次內未找到有效圖片
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="無法找到對應的圖片，請稍後再試。")
+            )
+        return
 
     if "錢吶" in event.message.text or "錢啊" in event.message.text or "錢錢" in event.message.text:       
         working_status = False
