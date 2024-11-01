@@ -1104,7 +1104,7 @@ def handle_message(event):
             random_number1 = random.randint(1, 500)
             random_number2 = random.randint(1, 500)
             random_number3 = random.randint(1, 500)
-            if (random_number1 <> random_number2) and (random_number2 <> random_number3) and (random_number3 <> random_number1):
+            if (random_number1 != random_number2) and (random_number2 != random_number3) and (random_number3 != random_number1):
                 image_url1 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/MoneyMoney/LINE_ALBUM_money_%20({random_number1}).jpg"
                 image_url2 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/MoneyMoney/LINE_ALBUM_money_%20({random_number2}).jpg"
                 image_url3 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/MoneyMoney/LINE_ALBUM_money_%20({random_number3}).jpg"
