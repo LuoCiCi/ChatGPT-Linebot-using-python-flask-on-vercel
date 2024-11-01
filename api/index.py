@@ -1262,14 +1262,14 @@ def handle_message(event):
             TextSendMessage(text="貪吃的豬豬🐷"),
             TextSendMessage(text="好可愛❤️"),
             TextSendMessage(text="好漂亮❤️"),
-            TextSendMessage(text="美麗動人💞"),
-            TextSendMessage(text="清新脫俗💞"),
-            TextSendMessage(text="嬌美如花💞"),
-            TextSendMessage(text="只會睡覺💞"),
-            TextSendMessage(text="閉月羞花💞"),
-            TextSendMessage(text="傾國傾城💞"),
-            TextSendMessage(text="玉潔冰清💞"),
-            TextSendMessage(text="花容月貌💞"),
+            TextSendMessage(text="美麗動人❤️"),
+            TextSendMessage(text="清新脫俗❤️"),
+            TextSendMessage(text="嬌美如花👩"),
+            TextSendMessage(text="只會睡覺😴"),
+            TextSendMessage(text="閉月羞花❤️"),
+            TextSendMessage(text="傾國傾城👩"),
+            TextSendMessage(text="玉潔冰清❤️"),
+            TextSendMessage(text="花容月貌❤️"),
             TextSendMessage(text="沒有D😿")
         ]
         # 回傳訊息
