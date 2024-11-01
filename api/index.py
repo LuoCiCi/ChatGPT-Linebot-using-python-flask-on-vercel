@@ -1094,7 +1094,7 @@ def handle_message(event):
         )
         return
 
-    if "錢吶三連抽" in event.message.text or "錢啊三連抽" in event.message.text or "錢錢三連抽" in event.message.text:       
+    if "錢吶三連抽" in event.message.text or "錢啊三連抽" in event.message.text or "錢錢三連抽" in event.message.text or "錢錢抽抽抽" in event.message.text:       
         working_status = False
         max_attempts = 5  # 設定最多嘗試的次數
         attempts = 0
@@ -1159,7 +1159,7 @@ def handle_message(event):
             )
         return
 
-    if "多吶三連抽" in event.message.text or "多啊三連抽" in event.message.text or "多多三連抽" in event.message.text:       
+    if "多吶三連抽" in event.message.text or "多啊三連抽" in event.message.text or "多多三連抽" in event.message.text or "多多抽抽抽" in event.message.text:       
         working_status = False
         max_attempts = 5  # 設定最多嘗試的次數
         attempts = 0
