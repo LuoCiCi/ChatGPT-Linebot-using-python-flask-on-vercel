@@ -975,7 +975,7 @@ def handle_message(event):
                     break  # 找到圖片後退出迴圈
             else:
                 
-                random_number_image_urls_1 = random.randint(1,330)
+                random_number_image_urls_1 = random.randint(1,350)
                 image_urls_1 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/Draw%20({random_number_image_urls_1}).jpg"
                 
                 if check_image_url_exists(image_urls_1):
@@ -1003,7 +1003,7 @@ def handle_message(event):
             
         # 進行圖片URL檢查
         while attempts < max_attempts:
-            random_number = random.randint(1, 90)
+            random_number = random.randint(1, 100)
             image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/BigBusted/bigbusted%20({random_number}).jpg"
             
             # 檢查圖片是否存在
@@ -1032,7 +1032,7 @@ def handle_message(event):
         
         # 進行圖片URL檢查
         while attempts < max_attempts:
-            random_number = random.randint(1, 110)
+            random_number = random.randint(1, 130)
             image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/meme/meme%20({random_number}).jpg"
             
             # 檢查圖片是否存在
