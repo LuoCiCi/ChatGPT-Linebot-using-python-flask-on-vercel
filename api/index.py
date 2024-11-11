@@ -312,10 +312,6 @@ def get_radar_pic():
 def handle_message(event):
     global working_status
     global prizes  # 使用全域變數，以便重置庫存
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text="測試節點1")
-    )
     # 獲取 userId
     user_id = event.source.user_id
 
@@ -1427,15 +1423,15 @@ def handle_message(event):
         
         prizes = initial_prizes.copy()  # 重置庫存
         
-        inventory_message = "當前獎項庫存：\n"
-        for prize, details in prizes.items():
-            inventory_message += f"{prize} - 剩餘: {details['remaining']}\n"
+        # inventory_message = "當前獎項庫存：\n"
+        # for prize, details in prizes.items():
+        #     inventory_message += f"{prize} - 剩餘: {details['remaining']}\n"
             
         line_bot_api.reply_message(
             event.reply_token,
             [
                 TextSendMessage(text="獎品庫存已重置，歡迎再次抽獎！"),
-                TextSendMessage(text=inventory_message)
+                TextSendMessage(text=prizes)
             ]
         )
         return
