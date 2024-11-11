@@ -30,7 +30,6 @@ initial_prizes = {
 }
 
 # 使用全域變數來追蹤動態庫存
-global prizes  # 使用全域變數，以便重置庫存
 prizes = initial_prizes.copy()
 
 # 計算出前一個10分倍數的時間以及前前一個10分倍數的時間以及前前前一個10分倍數的時間
@@ -1423,6 +1422,7 @@ def handle_message(event):
         )
         return 
     
+    global prizes  # 使用全域變數，以便重置庫存
     if event.message.text == "一番賞" or event.message.text == "抽一番賞":
         working_status = False
         available_prizes = [key for key, value in prizes.items() if value["remaining"] > 0]
