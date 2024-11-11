@@ -29,9 +29,6 @@ initial_prizes = {
     "H賞": {"description": "恭喜衝中H賞!再接再厲!", "remaining": 27}
 }
 
-# 使用全域變數來追蹤動態庫存
-prizes = initial_prizes.copy()
-
 # 計算出前一個10分倍數的時間以及前前一個10分倍數的時間以及前前前一個10分倍數的時間
 def get_prev10_4():
     # 設定台灣時間
@@ -1424,7 +1421,23 @@ def handle_message(event):
         )
         return 
     
-    if event.message.text == "一番賞" or event.message.text == "抽一番賞":
+    if event.message.text == "重製獎品" or event.message.text == "reset" or event.message.text == "Reset":
+        
+        prizes = initial_prizes.copy()  # 重置庫存
+        
+        inventory_message = "當前獎項庫存：\n"
+        for prize, details in prizes.items():
+            inventory_message += f"{prize} - 剩餘: {details['remaining']}\n"
+            
+        line_bot_api.reply_message(
+            event.reply_token,
+            [
+                TextSendMessage(text="獎品庫存已重置，歡迎再次抽獎！"),
+                TextSendMessage(text=inventory_message)
+            ]
+        )
+        return
+    elif event.message.text == "一番賞" or event.message.text == "抽一番賞":
         working_status = False
         available_prizes = [key for key, value in prizes.items() if value["remaining"] > 0]
         
@@ -1454,22 +1467,6 @@ def handle_message(event):
             [
                 TextSendMessage(text=f"抽中了洋洋一番賞：\n\n{chosen_prize} - {prizes[chosen_prize]['description']}\n（剩餘: {prizes[chosen_prize]['remaining']}）"),
                 ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
-            ]
-        )
-        return
-    elif event.message.text == "重製獎品" or event.message.text == "reset":
-        
-        prizes = initial_prizes.copy()  # 重置庫存
-        
-        inventory_message = "當前獎項庫存：\n"
-        for prize, details in prizes.items():
-            inventory_message += f"{prize} - 剩餘: {details['remaining']}\n"
-            
-        line_bot_api.reply_message(
-            event.reply_token,
-            [
-                TextSendMessage(text="獎品庫存已重置，歡迎再次抽獎！"),
-                TextSendMessage(text=inventory_message)
             ]
         )
         return
