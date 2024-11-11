@@ -295,19 +295,7 @@ def get_radar_pic():
     prev_4_url = "https://www.cwa.gov.tw/Data/radar/CV1_3600_" + prev_4_date_str + prev_4_time_str + ".png"
     
     return prev_url, prev_prev_url, prev_3_url, prev_4_url
-
-# 一番賞獎賞庫
-initial_prizes = {
-"A賞": {"description": "恭喜衝中A賞!大賞~", "remaining": 1},
-"B賞": {"description": "恭喜衝中B賞!大賞~", "remaining": 1},
-"C賞": {"description": "恭喜衝中C賞!大賞~", "remaining": 1},
-"D賞": {"description": "恭喜衝中D賞!中賞~", "remaining": 1},
-"E賞": {"description": "恭喜衝中E賞!普通獎品!", "remaining": 3},
-"F賞": {"description": "恭喜衝中F賞!安慰獎品!", "remaining": 26},
-"G賞": {"description": "恭喜衝中G賞!小安慰獎!", "remaining": 20},
-"H賞": {"description": "恭喜衝中H賞!再接再厲!", "remaining": 27}
-}
-       
+        
 @line_handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     global working_status
@@ -331,34 +319,8 @@ def handle_message(event):
         #     TextSendMessage(text=f"群組 ID 是: {group_id}")
         # )
         #return
-        
-
-    if event.message.text == "一番賞":
-        working_status = False
-        prizes = initial_prizes.copy()
-        global prizes  # 使用全域變數，以便重置庫存
-        # 篩選剩餘數量大於0的獎項
-        available_prizes = [key for key, value in prizes.items() if value["remaining"] > 0]
-        
-        # 檢查是否所有獎項都抽完了
-        if not available_prizes:
-            prizes = initial_prizes.copy()  # 重置庫存
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text="所有獎項已抽完！庫存已重置，歡迎再次抽獎！")
-            )
-            return
-
-        # 隨機選擇一個獎項
-        chosen_prize = random.choice(available_prizes)
-        prizes[chosen_prize]["remaining"] -= 1  # 減少庫存
-
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=f"恭喜您抽中了：{chosen_prize} - {prizes[chosen_prize]['description']}（剩餘: {prizes[chosen_prize]['remaining']}）")
-        )
-        return
-
+    
+    
     if event.message.text == "text":
         # line_bot_api.push_message(user_id, TextSendMessage(text='test....'))
         line_bot_api.reply_message(
@@ -1013,7 +975,7 @@ def handle_message(event):
                     break  # 找到圖片後退出迴圈
             else:
                 
-                random_number_image_urls_1 = random.randint(1,350)
+                random_number_image_urls_1 = random.randint(1,330)
                 image_urls_1 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/Draw%20({random_number_image_urls_1}).jpg"
                 
                 if check_image_url_exists(image_urls_1):
@@ -1041,7 +1003,7 @@ def handle_message(event):
             
         # 進行圖片URL檢查
         while attempts < max_attempts:
-            random_number = random.randint(1, 100)
+            random_number = random.randint(1, 90)
             image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/BigBusted/bigbusted%20({random_number}).jpg"
             
             # 檢查圖片是否存在
@@ -1070,7 +1032,7 @@ def handle_message(event):
         
         # 進行圖片URL檢查
         while attempts < max_attempts:
-            random_number = random.randint(1, 130)
+            random_number = random.randint(1, 110)
             image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/meme/meme%20({random_number}).jpg"
             
             # 檢查圖片是否存在
