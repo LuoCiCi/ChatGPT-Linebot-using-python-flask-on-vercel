@@ -310,7 +310,7 @@ def handle_message(event):
         "E賞": {"description": "恭喜衝中E賞!普通獎品!", "remaining": 3},
         "F賞": {"description": "恭喜衝中F賞!安慰獎品!", "remaining": 26},
         "G賞": {"description": "恭喜衝中G賞!小安慰獎!", "remaining": 20},
-        "H賞": {"description": "恭喜衝中H賞!再接再厲!", "remaining": 27}
+        "H賞": {"description": "恭喜衝中H賞!再接再厲!", "remaining": 26}
     }
     # 獲取 userId
     user_id = event.source.user_id
