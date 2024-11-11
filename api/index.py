@@ -312,8 +312,10 @@ def get_radar_pic():
 def handle_message(event):
     global working_status
     global prizes  # 使用全域變數，以便重置庫存
-    if 'prizes' not in globals():
-        prizes = initial_prizes.copy()
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text="測試節點1")
+    )
     # 獲取 userId
     user_id = event.source.user_id
 
