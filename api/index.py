@@ -1436,9 +1436,15 @@ def handle_message(event):
             )
             return
 
-        # 隨機選擇一個獎項
-        chosen_prize = random.choice(available_prizes)
-        prizes[chosen_prize]["remaining"] -= 1  # 減少庫存
+        # 根據剩餘數量設定每個獎項的權重
+        weights = [prizes[prize]["remaining"] for prize in available_prizes]
+
+        # 使用 random.choices 進行基於權重的隨機抽獎
+        chosen_prize = random.choices(available_prizes, weights=weights, k=1)[0]
+
+        # 減少選中的獎項庫存
+        prizes[chosen_prize]["remaining"] -= 1
+        
         chosen_prize_letter = chosen_prize.replace("賞", "")
         image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/IchibanKuji/{chosen_prize_letter}.jpg"
         
