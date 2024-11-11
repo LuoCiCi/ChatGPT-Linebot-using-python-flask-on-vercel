@@ -1450,6 +1450,13 @@ def handle_message(event):
             ]
         )
         return
+    elif event.message.text == "重製獎品" or event.message.text == "reset":
+        prizes = initial_prizes.copy()  # 重置庫存
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="獎品庫存已重置，歡迎再次抽獎！")
+        )
+        return
     
     if working_status:
         chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
