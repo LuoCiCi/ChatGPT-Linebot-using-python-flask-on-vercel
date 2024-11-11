@@ -17,17 +17,6 @@ working_status = os.getenv("DEFAULT_TALKING", default = "true").lower() == "true
 app = Flask(__name__)
 chatgpt = ChatGPT()
 
-# 一番賞獎項庫存定義
-initial_prizes = {
-    "A賞": {"description": "恭喜衝中A賞!大賞~", "remaining": 1},
-    "B賞": {"description": "恭喜衝中B賞!大賞~", "remaining": 1},
-    "C賞": {"description": "恭喜衝中C賞!大賞~", "remaining": 1},
-    "D賞": {"description": "恭喜衝中D賞!中賞~", "remaining": 1},
-    "E賞": {"description": "恭喜衝中E賞!普通獎品!", "remaining": 3},
-    "F賞": {"description": "恭喜衝中F賞!安慰獎品!", "remaining": 26},
-    "G賞": {"description": "恭喜衝中G賞!小安慰獎!", "remaining": 20},
-    "H賞": {"description": "恭喜衝中H賞!再接再厲!", "remaining": 27}
-}
 
 # 計算出前一個10分倍數的時間以及前前一個10分倍數的時間以及前前前一個10分倍數的時間
 def get_prev10_4():
@@ -312,6 +301,17 @@ def get_radar_pic():
 def handle_message(event):
     global working_status
     global prizes  # 使用全域變數，以便重置庫存
+    # 一番賞獎項庫存定義
+    initial_prizes = {
+        "A賞": {"description": "恭喜衝中A賞!大賞~", "remaining": 1},
+        "B賞": {"description": "恭喜衝中B賞!大賞~", "remaining": 1},
+        "C賞": {"description": "恭喜衝中C賞!大賞~", "remaining": 1},
+        "D賞": {"description": "恭喜衝中D賞!中賞~", "remaining": 1},
+        "E賞": {"description": "恭喜衝中E賞!普通獎品!", "remaining": 3},
+        "F賞": {"description": "恭喜衝中F賞!安慰獎品!", "remaining": 26},
+        "G賞": {"description": "恭喜衝中G賞!小安慰獎!", "remaining": 20},
+        "H賞": {"description": "恭喜衝中H賞!再接再厲!", "remaining": 27}
+    }
     # 獲取 userId
     user_id = event.source.user_id
 
