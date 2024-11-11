@@ -1465,6 +1465,7 @@ def handle_message(event):
         )
         return
     elif event.message.text == "庫存" or event.message.text == "inventory":
+        global prizes
         # 顯示所有獎項的剩餘庫存
         inventory_message = "當前獎項庫存：\n"
         for prize, details in prizes.items():
