@@ -1439,10 +1439,22 @@ def handle_message(event):
         # 隨機選擇一個獎項
         chosen_prize = random.choice(available_prizes)
         prizes[chosen_prize]["remaining"] -= 1  # 減少庫存
-
+        chosen_prize_letter = chosen_prize.replace("賞", "")
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=f"恭喜您抽中了：{chosen_prize} - {prizes[chosen_prize]['description']}（剩餘: {prizes[chosen_prize]['remaining']}）")
+            [
+                TextSendMessage(text=f"恭喜您抽中了：{chosen_prize_letter}")
+            ]
+        )
+        return
+        image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/IchibanKuji/{chosen_prize_letter}.jpg"
+        
+        line_bot_api.reply_message(
+            event.reply_token,
+            [
+                ImageSendMessage(original_content_url=image_url, preview_image_url=image_url),
+                TextSendMessage(text=f"恭喜您抽中了：{chosen_prize} - {prizes[chosen_prize]['description']}（剩餘: {prizes[chosen_prize]['remaining']}）")
+            ]
         )
         return
     
