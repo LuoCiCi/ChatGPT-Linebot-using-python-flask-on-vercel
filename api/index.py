@@ -314,7 +314,7 @@ def get_radar_pic():
 @line_handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     global working_status
-
+    global prizes  # 使用全域變數，以便重置庫存
     # 獲取 userId
     user_id = event.source.user_id
 
@@ -1422,7 +1422,6 @@ def handle_message(event):
         )
         return 
     
-    global prizes  # 使用全域變數，以便重置庫存
     if event.message.text == "一番賞" or event.message.text == "抽一番賞":
         working_status = False
         available_prizes = [key for key, value in prizes.items() if value["remaining"] > 0]
@@ -1456,20 +1455,14 @@ def handle_message(event):
             ]
         )
         return
-    
-    global prizes  # 使用全域變數，以便重置庫存
-    if event.message.text == "重製獎品" or event.message.text == "reset":
-        #global prizes
+    elif event.message.text == "重製獎品" or event.message.text == "reset":
         prizes = initial_prizes.copy()  # 重置庫存
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="獎品庫存已重置，歡迎再次抽獎！")
         )
         return
-    
-    global prizes  # 使用全域變數，以便重置庫存
-    if event.message.text == "庫存" or event.message.text == "inventory":
-        #global prizes
+    elif event.message.text == "庫存" or event.message.text == "inventory":
         # 顯示所有獎項的剩餘庫存
         inventory_message = "當前獎項庫存：\n"
         for prize, details in prizes.items():
