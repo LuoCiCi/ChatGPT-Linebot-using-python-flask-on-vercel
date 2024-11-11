@@ -315,6 +315,7 @@ def get_radar_pic():
 def handle_message(event):
     global working_status
     global prizes  # 使用全域變數，以便重置庫存
+    prizes = initial_prizes.copy()
     # 獲取 userId
     user_id = event.source.user_id
 
