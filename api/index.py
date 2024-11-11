@@ -1422,7 +1422,7 @@ def handle_message(event):
         )
         return 
     
-    if event.message.text == "一番賞":
+    if event.message.text == "一番賞" or event.message.text == "抽一番賞":
         working_status = False
         global prizes  # 使用全域變數，以便重置庫存
         available_prizes = [key for key, value in prizes.items() if value["remaining"] > 0]
