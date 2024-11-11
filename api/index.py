@@ -1456,7 +1456,9 @@ def handle_message(event):
             ]
         )
         return
-    elif event.message.text == "重製獎品" or event.message.text == "reset":
+    
+    global prizes  # 使用全域變數，以便重置庫存
+    if event.message.text == "重製獎品" or event.message.text == "reset":
         #global prizes
         prizes = initial_prizes.copy()  # 重置庫存
         line_bot_api.reply_message(
@@ -1464,7 +1466,9 @@ def handle_message(event):
             TextSendMessage(text="獎品庫存已重置，歡迎再次抽獎！")
         )
         return
-    elif event.message.text == "庫存" or event.message.text == "inventory":
+    
+    global prizes  # 使用全域變數，以便重置庫存
+    if event.message.text == "庫存" or event.message.text == "inventory":
         #global prizes
         # 顯示所有獎項的剩餘庫存
         inventory_message = "當前獎項庫存：\n"
