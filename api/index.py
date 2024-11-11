@@ -1431,7 +1431,7 @@ def handle_message(event):
             event.reply_token,
             [
                 TextSendMessage(text="獎品庫存已重置，歡迎再次抽獎！"),
-                TextSendMessage(text=prizes)
+                TextSendMessage(text="當前獎項庫存：\n" + "\n".join([f"{prize} - 剩餘: {details['remaining']}" for prize, details in prizes.items()]))
             ]
         )
         return
