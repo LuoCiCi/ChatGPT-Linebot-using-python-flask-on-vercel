@@ -1537,7 +1537,7 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             [
-                TextSendMessage(text=image_url),
+                TextSendMessage(text=f"{image_url}"),
                 TextSendMessage(text=f"抽中了洋洋一番賞：\n\n{chosen_prize} - {prizes_1[chosen_prize]['description']}\n（剩餘: {prizes_1[chosen_prize]['remaining']}）"),
                 ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
             ]
