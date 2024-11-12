@@ -1491,6 +1491,8 @@ def handle_message(event):
         )
         return
     
+    ####小小兵一番賞
+    
     if event.message.text == "重製獎品1" or event.message.text == "reset1" or event.message.text == "Reset1":
         
         prizes_1 = initial_prizes_1.copy()  # 重置庫存
@@ -1535,6 +1537,7 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             [
+                TextSendMessage(text=image_url),
                 TextSendMessage(text=f"抽中了洋洋一番賞：\n\n{chosen_prize} - {prizes_1[chosen_prize]['description']}\n（剩餘: {prizes_1[chosen_prize]['remaining']}）"),
                 ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
             ]
