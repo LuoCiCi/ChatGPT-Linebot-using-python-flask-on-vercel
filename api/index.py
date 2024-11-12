@@ -301,6 +301,7 @@ def get_radar_pic():
 def handle_message(event):
     global working_status
     global prizes  # 使用全域變數，以便重置庫存
+    global prizes_1  # 使用全域變數，以便重置庫存
     # 一番賞獎項庫存定義
     initial_prizes = {
         "A賞": {"description": "恭喜衝中A賞!大賞~", "remaining": 1},
@@ -311,6 +312,16 @@ def handle_message(event):
         "F賞": {"description": "恭喜衝中F賞!安慰獎品!", "remaining": 26},
         "G賞": {"description": "恭喜衝中G賞!小安慰獎!", "remaining": 20},
         "H賞": {"description": "恭喜衝中H賞!再接再厲!", "remaining": 26}
+    }
+    
+    initial_prizes_1 = {
+        "A賞": {"description": "恭喜衝中A賞!葛斯（Gus）超大娃娃", "remaining": 2},
+        "B賞": {"description": "恭喜衝中B賞!菲爾（Phil）娃娃", "remaining": 2},
+        "C賞": {"description": "恭喜衝中C賞!小小兵兜帽毛巾", "remaining": 3},
+        "D賞": {"description": "恭喜衝中D賞!小小兵玻璃碗", "remaining": 4},
+        "E賞": {"description": "恭喜衝中E賞!小小兵毛巾收藏", "remaining": 15},
+        "F賞": {"description": "恭喜衝中F賞!小小兵反光飾品／文具收藏", "remaining": 20},
+        "G賞": {"description": "恭喜衝中G賞!小小兵夾鏈袋", "remaining": 20}
     }
     # 獲取 userId
     user_id = event.source.user_id
@@ -1479,6 +1490,69 @@ def handle_message(event):
             TextSendMessage(text=inventory_message)
         )
         return
+    
+    if event.message.text == "重製獎品1" or event.message.text == "reset1" or event.message.text == "Reset1":
+        
+        prizes_1 = initial_prizes_1.copy()  # 重置庫存
+        
+        # inventory_message = "當前獎項庫存：\n"
+        # for prize, details in prizes.items():
+        #     inventory_message += f"{prize} - 剩餘: {details['remaining']}\n"
+            
+        line_bot_api.reply_message(
+            event.reply_token,
+            [
+                TextSendMessage(text="獎品庫存已重置，歡迎再次抽獎！"),
+                TextSendMessage(text="當前獎項庫存：\n" + "\n".join([f"{prize} - 剩餘: {details['remaining']}" for prize, details in prizes_1.items()]))
+            ]
+        )
+        return
+    elif event.message.text == "一番賞1" or event.message.text == "抽一番賞1":
+        working_status = False
+        available_prizes = [key for key, value in prizes_1.items() if value["remaining"] > 0]
+        
+        # 檢查是否所有獎項都抽完了
+        if not available_prizes:
+            prizes_1 = initial_prizes.copy()  # 重置庫存
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="所有獎項已抽完！庫存已重置，歡迎再次抽獎！")
+            )
+            return
+
+        # 根據剩餘數量設定每個獎項的權重
+        weights = [prizes_1[prize]["remaining"] for prize in available_prizes]
+
+        # 使用 random.choices 進行基於權重的隨機抽獎
+        chosen_prize = random.choices(available_prizes, weights=weights, k=1)[0]
+
+        # 減少選中的獎項庫存
+        prizes_1[chosen_prize]["remaining"] -= 1
+        
+        chosen_prize_letter = chosen_prize.replace("賞", "")
+        image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/IchibanKuji/{chosen_prize_letter}1.jpg"
+        
+        line_bot_api.reply_message(
+            event.reply_token,
+            [
+                TextSendMessage(text=f"抽中了洋洋一番賞：\n\n{chosen_prize} - {prizes_1[chosen_prize]['description']}\n（剩餘: {prizes_1[chosen_prize]['remaining']}）"),
+                ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
+            ]
+        )
+        return
+    elif event.message.text == "庫存1" or event.message.text == "inventory1":
+        # 顯示所有獎項的剩餘庫存
+        inventory_message = "當前獎項庫存：\n"
+        for prize, details in prizes_1.items():
+            inventory_message += f"{prize} - 剩餘: {details['remaining']}\n"
+        
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=inventory_message)
+        )
+        return
+    
+    
     
     if working_status:
         chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
