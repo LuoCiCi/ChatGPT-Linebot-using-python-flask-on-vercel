@@ -1441,7 +1441,7 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             [
-                TextSendMessage(text="獎品庫存已重置，歡迎再次抽獎！"),
+                TextSendMessage(text="遊戲王獎品庫存已重置，歡迎再次抽獎！"),
                 TextSendMessage(text="當前獎項庫存：\n" + "\n".join([f"{prize} - 剩餘: {details['remaining']}" for prize, details in prizes.items()]))
             ]
         )
@@ -1481,7 +1481,7 @@ def handle_message(event):
         return
     elif event.message.text == "庫存" or event.message.text == "inventory":
         # 顯示所有獎項的剩餘庫存
-        inventory_message = "當前獎項庫存：\n"
+        inventory_message = "遊戲王當前獎項庫存：\n"
         for prize, details in prizes.items():
             inventory_message += f"{prize} - 剩餘: {details['remaining']}\n"
         
@@ -1504,7 +1504,7 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             [
-                TextSendMessage(text="獎品庫存已重置，歡迎再次抽獎！"),
+                TextSendMessage(text="小小兵獎品庫存已重置，歡迎再次抽獎！"),
                 TextSendMessage(text="當前獎項庫存：\n" + "\n".join([f"{prize} - 剩餘: {details['remaining']}" for prize, details in prizes_1.items()]))
             ]
         )
@@ -1544,7 +1544,7 @@ def handle_message(event):
         return
     elif event.message.text == "庫存1" or event.message.text == "inventory1":
         # 顯示所有獎項的剩餘庫存
-        inventory_message = "當前獎項庫存：\n"
+        inventory_message = "小小兵當前獎項庫存：\n"
         for prize, details in prizes_1.items():
             inventory_message += f"{prize} - 剩餘: {details['remaining']}\n"
         
