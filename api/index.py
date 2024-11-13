@@ -1638,18 +1638,19 @@ def handle_message(event):
                 image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/IchibanKuji/{chosen_prize_letter}1.jpg"
                 images.add(image_url)
                 
-            # 計算已經抽過的次數
-            total_drawn = sum(initial_prizes_1[prize]["remaining"] - prizes_1[prize]["remaining"] for prize in initial_prizes_1)
-            # 每次抽獎的花費
-            cost_per_draw = 300
-            # 計算總花費
-            total_cost = total_drawn * cost_per_draw
+            # # 計算已經抽過的次數
+            # total_drawn = sum(initial_prizes_1[prize]["remaining"] - prizes_1[prize]["remaining"] for prize in initial_prizes_1)
+            # # 每次抽獎的花費
+            # cost_per_draw = 300
+            # # 計算總花費
+            # total_cost = total_drawn * cost_per_draw
+            a = f"{initial_prizes_1[prize]["remaining"]}"
             # 顯示總花費的訊息
             cost_message = f"目前已經花費 {total_cost} 元"
             # 組合抽獎結果文字訊息
             draw_result_text = f"小小兵一番賞抽中的{num_draws}獎項為：\n" + ", ".join(draws)
             # 傳送抽獎結果、花費訊息和圖片
-            messages = [TextSendMessage(text=draw_result_text), TextSendMessage(text=cost_message)]
+            messages = [TextSendMessage(text=draw_result_text), TextSendMessage(text=a)]
             for image_url in images:
                 messages.append(ImageSendMessage(original_content_url=image_url, preview_image_url=image_url))
 
