@@ -9,6 +9,7 @@ import requests, json
 import random
 import pytz
 import textwrap
+import re
 
 line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
 line_handler = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
@@ -1430,6 +1431,69 @@ def handle_message(event):
         )
         return 
     
+    # if event.message.text == "重製獎品" or event.message.text == "reset" or event.message.text == "Reset":
+        
+    #     prizes = initial_prizes.copy()  # 重置庫存
+        
+    #     # inventory_message = "當前獎項庫存：\n"
+    #     # for prize, details in prizes.items():
+    #     #     inventory_message += f"{prize} - 剩餘: {details['remaining']}\n"
+            
+    #     line_bot_api.reply_message(
+    #         event.reply_token,
+    #         [
+    #             TextSendMessage(text="遊戲王獎品庫存已重置，歡迎再次抽獎！"),
+    #             TextSendMessage(text="當前獎項庫存：\n" + "\n".join([f"{prize} - 剩餘: {details['remaining']}" for prize, details in prizes.items()]))
+    #         ]
+    #     )
+    #     return
+    # elif event.message.text == "一番賞" or event.message.text == "抽一番賞":
+    #     working_status = False
+    #     available_prizes = [key for key, value in prizes.items() if value["remaining"] > 0]
+        
+    #     # 檢查是否所有獎項都抽完了
+    #     if not available_prizes:
+    #         prizes = initial_prizes.copy()  # 重置庫存
+    #         line_bot_api.reply_message(
+    #             event.reply_token,
+    #             TextSendMessage(text="所有獎項已抽完！庫存已重置，歡迎再次抽獎！")
+    #         )
+    #         return
+
+    #     # 根據剩餘數量設定每個獎項的權重
+    #     weights = [prizes[prize]["remaining"] for prize in available_prizes]
+
+    #     # 使用 random.choices 進行基於權重的隨機抽獎
+    #     chosen_prize = random.choices(available_prizes, weights=weights, k=1)[0]
+
+    #     # 減少選中的獎項庫存
+    #     prizes[chosen_prize]["remaining"] -= 1
+        
+    #     chosen_prize_letter = chosen_prize.replace("賞", "")
+    #     image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/IchibanKuji/{chosen_prize_letter}.jpg"
+        
+    #     line_bot_api.reply_message(
+    #         event.reply_token,
+    #         [
+    #             TextSendMessage(text=f"抽中了遊戲王一番賞：\n\n{chosen_prize} - {prizes[chosen_prize]['description']}\n（剩餘: {prizes[chosen_prize]['remaining']}）"),
+    #             ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
+    #         ]
+    #     )
+    #     return
+    # elif event.message.text == "庫存" or event.message.text == "inventory":
+    #     # 顯示所有獎項的剩餘庫存
+    #     inventory_message = "遊戲王當前獎項庫存：\n"
+    #     for prize, details in prizes.items():
+    #         inventory_message += f"{prize} - 剩餘: {details['remaining']}\n"
+        
+    #     line_bot_api.reply_message(
+    #         event.reply_token,
+    #         TextSendMessage(text=inventory_message)
+    #     )
+    #     return
+    
+    
+    
     if event.message.text == "重製獎品" or event.message.text == "reset" or event.message.text == "Reset":
         
         prizes = initial_prizes.copy()  # 重置庫存
@@ -1448,37 +1512,57 @@ def handle_message(event):
         return
     elif event.message.text == "一番賞" or event.message.text == "抽一番賞":
         working_status = False
-        available_prizes = [key for key, value in prizes.items() if value["remaining"] > 0]
         
-        # 檢查是否所有獎項都抽完了
-        if not available_prizes:
-            prizes = initial_prizes.copy()  # 重置庫存
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text="所有獎項已抽完！庫存已重置，歡迎再次抽獎！")
-            )
+        match = re.match(r"(\d)連抽", event.message.text)
+        if match:
+            num_draws = int(match.group(1))  # 抽獎次數（1 至 5）
+
+            # 確保抽獎次數在 1 到 5 之間
+            if num_draws < 1 or num_draws > 5:
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text="請輸入有效的抽獎次數（1至5次）。")
+                )
+                return
+
+            draws = []
+            images = set()  # 用集合來儲存圖片URL，避免重複圖片
+
+            # 根據抽獎次數進行抽獎
+            for _ in range(num_draws):
+                available_prizes = [key for key, value in prizes.items() if value["remaining"] > 0]
+
+                # 檢查是否還有獎項可抽
+                if not available_prizes:
+                    line_bot_api.reply_message(
+                        event.reply_token,
+                        TextSendMessage(text="所有獎項已抽完！請先重置庫存。")
+                    )
+                    return
+
+                # 根據剩餘數量設置權重來隨機選擇獎項
+                weights = [prizes[prize]["remaining"] for prize in available_prizes]
+                chosen_prize = random.choices(available_prizes, weights=weights, k=1)[0]
+
+                # 減少所選獎項的庫存並記錄抽獎結果
+                prizes[chosen_prize]["remaining"] -= 1
+                draws.append(chosen_prize)
+
+                # 獲取圖片URL並加入集合中（避免重複圖片）
+                chosen_prize_letter = chosen_prize.replace("賞", "")
+                image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/IchibanKuji/{chosen_prize_letter}.jpg"
+                images.add(image_url)
+
+            # 組合抽獎結果文字訊息
+            draw_result_text = f"您抽中的{num_draws}個獎項：\n" + ", ".join(draws)
+
+            # 傳送抽獎結果和圖片
+            messages = [TextSendMessage(text=draw_result_text)]
+            for image_url in images:
+                messages.append(ImageSendMessage(original_content_url=image_url, preview_image_url=image_url))
+
+            line_bot_api.reply_message(event.reply_token, messages)
             return
-
-        # 根據剩餘數量設定每個獎項的權重
-        weights = [prizes[prize]["remaining"] for prize in available_prizes]
-
-        # 使用 random.choices 進行基於權重的隨機抽獎
-        chosen_prize = random.choices(available_prizes, weights=weights, k=1)[0]
-
-        # 減少選中的獎項庫存
-        prizes[chosen_prize]["remaining"] -= 1
-        
-        chosen_prize_letter = chosen_prize.replace("賞", "")
-        image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/IchibanKuji/{chosen_prize_letter}.jpg"
-        
-        line_bot_api.reply_message(
-            event.reply_token,
-            [
-                TextSendMessage(text=f"抽中了遊戲王一番賞：\n\n{chosen_prize} - {prizes[chosen_prize]['description']}\n（剩餘: {prizes[chosen_prize]['remaining']}）"),
-                ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
-            ]
-        )
-        return
     elif event.message.text == "庫存" or event.message.text == "inventory":
         # 顯示所有獎項的剩餘庫存
         inventory_message = "遊戲王當前獎項庫存：\n"
@@ -1491,8 +1575,8 @@ def handle_message(event):
         )
         return
     
-    ####小小兵一番賞
     
+    ####小小兵一番賞 (2024/11/12)
     if event.message.text == "重製獎品1" or event.message.text == "reset1" or event.message.text == "Reset1":
         
         prizes_1 = initial_prizes_1.copy()  # 重置庫存
