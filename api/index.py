@@ -1510,10 +1510,10 @@ def handle_message(event):
             ]
         )
         return
-    elif "一番賞" in event.message.text or "抽一番賞" in event.message.text:
+    elif "一番賞3連抽" in event.message.text or "抽一番賞" in event.message.text:
         working_status = False
         
-        match = re.match(r"(\d)連抽", event.message.text)
+        match = re.match(r"一番賞(\d)連抽", event.message.text)
         if match:
             num_draws = int(match.group(1))  # 抽獎次數（1 至 5）
 
@@ -1563,17 +1563,6 @@ def handle_message(event):
 
             line_bot_api.reply_message(event.reply_token, messages)
             return
-    elif event.message.text == "庫存" or event.message.text == "inventory":
-        # 顯示所有獎項的剩餘庫存
-        inventory_message = "遊戲王當前獎項庫存：\n"
-        for prize, details in prizes.items():
-            inventory_message += f"{prize} - 剩餘: {details['remaining']}\n"
-        
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=inventory_message)
-        )
-        return
     
     
     ####小小兵一番賞 (2024/11/12)
