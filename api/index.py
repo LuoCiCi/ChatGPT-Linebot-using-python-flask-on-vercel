@@ -1521,7 +1521,7 @@ def handle_message(event):
             if num_draws < 1 or num_draws > 5:
                 line_bot_api.reply_message(
                     event.reply_token,
-                    TextSendMessage(text="請輸入有效的抽獎次數（1至5次）。")
+                    TextSendMessage(text="請輸入有效一番賞的抽獎次數1~5次。")
                 )
                 return
 
@@ -1563,7 +1563,7 @@ def handle_message(event):
             # 顯示總花費的訊息
             cost_message = f"目前已經花費 {total_cost} 元"
             # 組合抽獎結果文字訊息
-            draw_result_text = f"您抽中的{num_draws}個獎項：\n" + ", ".join(draws)
+            draw_result_text = f"遊戲王一番賞抽中的{num_draws}獎項為：\n" + ", ".join(draws)
             # 傳送抽獎結果、花費訊息和圖片
             messages = [TextSendMessage(text=draw_result_text), TextSendMessage(text=cost_message)]
             for image_url in images:
@@ -1626,20 +1626,20 @@ def handle_message(event):
                     return
 
                 # 根據剩餘數量設置權重來隨機選擇獎項
-                weights = [prizes_1[prize]["remaining"] for prize in available_prizes]
+                weights = [initial_prizes_1[prize]["remaining"] for prize in available_prizes]
                 chosen_prize = random.choices(available_prizes, weights=weights, k=1)[0]
 
                 # 減少所選獎項的庫存並記錄抽獎結果
-                prizes_1[chosen_prize]["remaining"] -= 1
+                initial_prizes_1[chosen_prize]["remaining"] -= 1
                 draws.append(chosen_prize)
 
                 # 獲取圖片URL並加入集合中（避免重複圖片）
                 chosen_prize_letter = chosen_prize.replace("賞", "")
-                image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/IchibanKuji/{chosen_prize_letter}.jpg"
+                image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/IchibanKuji/{chosen_prize_letter}1.jpg"
                 images.add(image_url)
                 
             # 計算已經抽過的次數
-            total_drawn = sum(initial_prizes_1[prize]["remaining"] - prizes_1[prize]["remaining"] for prizes_1 in initial_prizes_1)
+            total_drawn = sum(initial_prizes_1[prize]["remaining"] - prizes_1[prize]["remaining"] for prize in initial_prizes_1)
             # 每次抽獎的花費
             cost_per_draw = 300
             # 計算總花費
@@ -1647,7 +1647,7 @@ def handle_message(event):
             # 顯示總花費的訊息
             cost_message = f"目前已經花費 {total_cost} 元"
             # 組合抽獎結果文字訊息
-            draw_result_text = f"您抽中的{num_draws}個獎項：\n" + ", ".join(draws)
+            draw_result_text = f"小小兵一番賞抽中的{num_draws}獎項為：\n" + ", ".join(draws)
             # 傳送抽獎結果、花費訊息和圖片
             messages = [TextSendMessage(text=draw_result_text), TextSendMessage(text=cost_message)]
             for image_url in images:
