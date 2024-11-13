@@ -323,7 +323,6 @@ def handle_message(event):
         "F賞": {"description": "恭喜衝中F賞!小小兵反光飾品／文具收藏", "remaining": 20},
         "G賞": {"description": "恭喜衝中G賞!小小兵夾鏈袋", "remaining": 20}
     }
-    
     initial_prizes_2 = {
         "A賞": {"description": "測試A", "remaining": 5},
         "B賞": {"description": "測試B", "remaining": 5},
@@ -332,8 +331,7 @@ def handle_message(event):
         "E賞": {"description": "測試E", "remaining": 5},
         "F賞": {"description": "測試F", "remaining": 5},
         "G賞": {"description": "測試G", "remaining": 5}
-    }
-    
+    } 
     initial_prizes_3 = {
         "A賞": {"description": "測試A", "remaining": 3},
         "B賞": {"description": "測試B", "remaining": 3},
@@ -343,20 +341,7 @@ def handle_message(event):
         "F賞": {"description": "測試F", "remaining": 3},
         "G賞": {"description": "測試G", "remaining": 3}
     }
-    
-    initial_prizes_dict = {
-        "default": initial_prizes.copy(),
-        "A": initial_prizes_1.copy(),
-        "B": initial_prizes_2.copy(),
-        "C": initial_prizes_3.copy()
-    }
-    
-    prizes_dict = {
-        "default": prizes,
-        "A": prizes_1,
-        "B": prizes_2,
-        "C": prizes_3
-    }
+
     # 獲取 userId
     user_id = event.source.user_id
 
