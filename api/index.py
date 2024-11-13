@@ -1510,7 +1510,7 @@ def handle_message(event):
             ]
         )
         return
-    elif "一番賞3連抽" in event.message.text or "抽一番賞" in event.message.text:
+    elif "一番賞" in event.message.text or "抽一番賞" in event.message.text:
         working_status = False
         
         match = re.match(r"一番賞(\d)連抽", event.message.text)
