@@ -1595,27 +1595,14 @@ def handle_message(event):
 
             line_bot_api.reply_message(event.reply_token, messages)
             return
-
     elif event.message.text == "庫存" or event.message.text == "inventory":
         # 顯示所有獎項的剩餘庫存
         inventory_message = "遊戲王當前獎項庫存：\n"
         for prize, details in prizes.items():
-            inventory_message += f"{prize} - 剩餘: {details['remaining']}\n"
-        
+        inventory_message += f"{prize} - 剩餘: {details['remaining']}\n"      
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=inventory_message)
-        )
-        return
-
-    elif re.search(r"(?i)reset", event.message.text):   
-        prizes = initial_prizes.copy()  # 重置庫存
-        line_bot_api.reply_message(
-            event.reply_token,
-            [
-                TextSendMessage(text="遊戲王獎品庫存已重置，歡迎再次抽獎！"),
-                TextSendMessage(text="當前獎項庫存：\n" + "\n".join([f"{prize} - 剩餘: {details['remaining']}" for prize, details in prizes.items()]))
-            ]
         )
         return
     elif re.search(r"(?i)reset", event.message.text):   
