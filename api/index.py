@@ -1527,15 +1527,9 @@ def handle_message(event):
     if "一番賞" in event.message.text or "抽一番賞" in event.message.text:
         working_status = False
         
-        match = re.match(r"一番賞([ABC])([1-5])連抽", event.message.text)
+        match = re.match(r"一番賞([1-5])連抽", event.message.text)
         if match:
-            prize_type = match.group(1)  # 獎項類型 (A, B, C 或空)
-            num_draws = int(match.group(2))  # 抽獎次數 (1~5)
-
-            # 根據獎項類型選擇對應的庫存
-            initial_prizes = initial_prizes_dict.get(prize_type, initial_prizes_dict["default"])  # 取得對應的初始庫存
-            prizes = prizes_dict.get(prize_type, prizes_dict["default"])  # 取得對應的當前庫存
-
+            num_draws = int(match.group(1))  # 抽獎次數 (1~5)
             # 確保抽獎次數在 1 到 5 之間
             if num_draws < 1 or num_draws > 5:
                 line_bot_api.reply_message(
@@ -1554,17 +1548,7 @@ def handle_message(event):
                 # 檢查是否還有獎項可抽
                 if not available_prizes:
                     # 根據獎項類型重置對應庫存
-                    if prize_type == "A":
-                        prizes_1 = initial_prizes_1.copy()
-                        prizes = prizes_1
-                    elif prize_type == "B":
-                        prizes_2 = initial_prizes_2.copy()
-                        prizes = prizes_2
-                    elif prize_type == "C":
-                        prizes_3 = initial_prizes_3.copy()
-                        prizes = prizes_3
-                    else:
-                        prizes = initial_prizes.copy()
+                    prizes = initial_prizes.copy()
 
                     line_bot_api.reply_message(
                         event.reply_token,
@@ -1586,7 +1570,7 @@ def handle_message(event):
                 images.add(image_url)
 
             # 組合抽獎結果文字訊息
-            draw_result_text = f"抽中了一番賞[{prize_type}]{num_draws}賞：\n" + ", ".join(draws)
+            draw_result_text = f"抽中了一番賞{num_draws}賞：\n" + ", ".join(draws)
 
             # 傳送抽獎結果和圖片
             messages = [TextSendMessage(text=draw_result_text)]
@@ -1599,12 +1583,12 @@ def handle_message(event):
         # 顯示所有獎項的剩餘庫存
         inventory_message = "遊戲王當前獎項庫存：\n"
         for prize, details in prizes.items():
-        inventory_message += f"{prize} - 剩餘: {details['remaining']}\n"      
+            inventory_message += f"{prize} - 剩餘: {details['remaining']}\n"      
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=inventory_message)
         )
-        return
+        return  
     elif re.search(r"(?i)reset", event.message.text):   
         prizes = initial_prizes.copy()  # 重置庫存
         line_bot_api.reply_message(
