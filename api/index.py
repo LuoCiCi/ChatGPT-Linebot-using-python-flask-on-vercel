@@ -1696,7 +1696,7 @@ def handle_message(event):
     
     if event.message.text == "指令":
         
-        instruction_message = "⬆️⬆️⬆️一番賞類型⬆️⬆️⬆️\nReset(A~C)\n一番賞(A~C)(1~5)連抽\n庫存(A~C)\n\n➡️➡️➡️問問台灣還好嗎?➡️➡️➡️\n天氣\n颱風\n地震\n雨量\n溫度\n紫外線\n衛星雷達\n\n⬇️⬇️⬇️問問神明我到底在幹嘛?⬇️⬇️⬇️\n抽籤\n擲筊\n\n⬅️⬅️⬅️抽抽圖片系列⬅️⬅️⬅️\n抽\n抽奶\n抽梗圖\n錢錢\n多多\n錢多\n多多三連抽\n錢錢三連抽\n\n↩️↩️↩️我是白癡不知道吃什麼↪️↪️↪️\n抽晚餐\n抽午餐"
+        instruction_message = "【一番賞】\nReset(A~C)\n一番賞(A~C)(1~5)連抽\n庫存(A~C)\n\n【問問台灣還好嗎?】\n天氣\r颱風\r地震\r雨量\n溫度\r紫外線\r衛星\r雷達\n\n【求神問佛】\n抽籤\r擲筊\n\n【提振精神】\n抽\r抽奶\r抽梗圖\n錢錢\r多多\r錢多\n多多三連抽\r錢錢三連抽\n\n【點餐】\n抽晚餐\r抽午餐"
         
         line_bot_api.reply_message(
             event.reply_token,
