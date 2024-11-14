@@ -1693,6 +1693,17 @@ def handle_message(event):
             TextSendMessage(text=inventory_message)
         )
         return
+    
+    if event.message.text == "指令":
+        
+        instruction_message = "Reset(A~C)\n一番賞(A~C)(1~5)連抽\n庫存(A~C)\n天氣\n颱風\n地震\n抽籤\n擲筊\n問號\n傻眼貓咪\n急了\n抽\n抽奶\n抽梗圖\n抽晚餐\n抽午餐\n錢錢\n多多\n錢多\n多多三連抽\n錢錢三連抽\n"
+        
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=instruction_message)
+        )
+        return
+
 
     
     
