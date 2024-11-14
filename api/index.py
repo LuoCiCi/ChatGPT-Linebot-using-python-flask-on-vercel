@@ -1673,7 +1673,7 @@ def handle_message(event):
             line_bot_api.reply_message(event.reply_token, messages)
             return
     elif event.message.text == "resetB" or event.message.text == "ResetB":        
-        prizes = initial_prizes.copy()  # 重置庫存            
+        prizes_2 = initial_prizes_2.copy()  # 重置庫存            
         line_bot_api.reply_message(
             event.reply_token,
             [
