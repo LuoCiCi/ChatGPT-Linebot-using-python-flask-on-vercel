@@ -995,7 +995,7 @@ def handle_message(event):
             pokemon = next((p for p in pokemon_data if p['編號'] == f"#{random_id:04d}"), None)
             if pokemon and check_image_url_exists(image_url):
                 # 組合回應訊息
-                response_text = f"編號: {pokemon['編號']}\n"
+                response_text = f"圖鑑編號: {pokemon['編號']}\n"
                 response_text += f"中文名稱: {pokemon['中文']}\n"
                 response_text += f"日文名稱: {pokemon['日文']}\n"
                 response_text += f"英文名稱: {pokemon['英文']}\n"
