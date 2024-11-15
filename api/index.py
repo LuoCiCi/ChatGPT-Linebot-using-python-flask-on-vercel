@@ -986,7 +986,7 @@ def handle_message(event):
         if response.status_code == 200:
             # 解析 JSON 資料
             pokemon_data = response.json()
-            # 程式塗片檢查
+            # 程式圖片片檢查
             match = re.match(r"抽寶可夢-(\d)", event.message.text)
             if match:
                 num_draws = int(match.group(1))
