@@ -979,37 +979,35 @@ def handle_message(event):
 
     if event.message.text == "抽寶可夢":       
         working_status = False
-        ##抓取json##
+        
         url = "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Pokemon1/Pokemon1.json" 
         response = requests.get(url)
-        pokemon_data = response.json()
-        random_number = random.randint(1,151)
-        image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Pokemon1/Pokemon1%20({random_number}).png"
-        pokemon_found = next((p for p in pokemon_data if p['編號'] == f'#{random_number:04d}'), None)
-        # ##json資料##
-        # if pokemon_found:
-        #     response_text = f"編號: {pokemon_found['編號']}\n"
-        #     response_text += f"中文名稱: {pokemon_found['中文']}\n"
-        #     response_text += f"日文名稱: {pokemon_found['日文']}\n"
-        #     response_text += f"英文名稱: {pokemon_found['英文']}\n"
-        #     response_text += f"屬性: {', '.join(pokemon_found['屬性'])}"
-        # else:
-        #     # 如果找不到對應的寶可夢編號
-        #     line_bot_api.reply_message(
-        #         event['reply_token'],
-        #         TextSendMessage(text="查無此寶可夢，請稍後再試。")
-        #     )
-        #     return
 
-        if check_image_url_exists(image_url):
-            # 如果圖片存在，回傳訊息
-            line_bot_api.reply_message(
-                event.reply_token,
-                [
-                    ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
-                ]
-            )
-            return
+        # 檢查請求是否成功
+        if response.status_code == 200:
+            # 解析 JSON 資料
+            pokemon_data = response.json()
+
+            # 隨機選擇 1 到 150 之間的編號
+            random_id = random.randint(1, 151)
+            image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Pokemon1/Pokemon1%20({random_id}).png"
+            # 查找對應編號的寶可夢資料
+            pokemon = next((p for p in pokemon_data if p['編號'] == f"#{random_id:04d}"), None)
+            if pokemon and check_image_url_exists(image_url):
+                # 組合回應訊息
+                response_text = f"編號: {pokemon['編號']}\n"
+                response_text += f"中文名稱: {pokemon['中文']}\n"
+                response_text += f"日文名稱: {pokemon['日文']}\n"
+                response_text += f"英文名稱: {pokemon['英文']}\n"
+                response_text += f"屬性: {', '.join(pokemon['屬性'])}"
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    [
+                        TextSendMessage(text=response_text),
+                        ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
+                    ]
+                )
+                return
 
     
     
