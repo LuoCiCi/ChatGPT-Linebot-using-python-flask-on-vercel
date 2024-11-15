@@ -986,20 +986,20 @@ def handle_message(event):
         random_number = random.randint(1,151)
         image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Pokemon1/Pokemon1%20({random_number}).png"
         pokemon_found = next((p for p in pokemon_data if p['編號'] == f'#{random_number:04d}'), None)
-        ##json資料##
-        if pokemon_found:
-            response_text = f"編號: {pokemon_found['編號']}\n"
-            response_text += f"中文名稱: {pokemon_found['中文']}\n"
-            response_text += f"日文名稱: {pokemon_found['日文']}\n"
-            response_text += f"英文名稱: {pokemon_found['英文']}\n"
-            response_text += f"屬性: {', '.join(pokemon_found['屬性'])}"
-        else:
-            # 如果找不到對應的寶可夢編號
-            line_bot_api.reply_message(
-                event['reply_token'],
-                TextSendMessage(text="查無此寶可夢，請稍後再試。")
-            )
-            return
+        # ##json資料##
+        # if pokemon_found:
+        #     response_text = f"編號: {pokemon_found['編號']}\n"
+        #     response_text += f"中文名稱: {pokemon_found['中文']}\n"
+        #     response_text += f"日文名稱: {pokemon_found['日文']}\n"
+        #     response_text += f"英文名稱: {pokemon_found['英文']}\n"
+        #     response_text += f"屬性: {', '.join(pokemon_found['屬性'])}"
+        # else:
+        #     # 如果找不到對應的寶可夢編號
+        #     line_bot_api.reply_message(
+        #         event['reply_token'],
+        #         TextSendMessage(text="查無此寶可夢，請稍後再試。")
+        #     )
+        #     return
 
         if check_image_url_exists(image_url):
             # 如果圖片存在，回傳訊息
