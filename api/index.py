@@ -989,7 +989,7 @@ def handle_message(event):
             pokemon_data = response.json()
 
             # 隨機選擇 1 到 150 之間的編號
-            random_id = random.randint(1, 151)
+            random_id = random.randint(1, 251)
             image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Pokemon1/Pokemon1%20({random_id}).png"
             # 查找對應編號的寶可夢資料
             pokemon = next((p for p in pokemon_data if p['編號'] == f"#{random_id:04d}"), None)
