@@ -987,9 +987,15 @@ def handle_message(event):
             # 解析 JSON 資料
             pokemon_data = response.json()
             # 程式圖片片檢查
-            match = re.match(r"抽寶可夢-(\d)", event.message.text)
+            match = re.match(r"抽寶可夢-(\d{1,4})", event.message.text)
             if match:
                 num_draws = int(match.group(1))
+                if num_draws > 1025 or num_draws < 1:
+                    line_bot_api.reply_message(
+                        event.reply_token,
+                        TextSendMessage(text="搞屁阿，數字太多囉")
+                    )
+                    return
                 image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Pokemon/Pokemon%20({num_draws}).png"
                 # 查找對應編號的寶可夢資料
                 pokemon = next((p for p in pokemon_data if p['編號'] == f"#{num_draws:04d}"), None)
@@ -1033,7 +1039,7 @@ def handle_message(event):
                         event.reply_token,
                         TextSendMessage(text="無法找到對應寶可夢圖片，不知道在幹甚麼吃的")
                     )
-                return
+                    return
         else:
             line_bot_api.reply_message(
                 event.reply_token,
