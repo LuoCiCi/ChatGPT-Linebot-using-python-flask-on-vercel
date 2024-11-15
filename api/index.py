@@ -980,7 +980,7 @@ def handle_message(event):
     if event.message.text == "抽寶可夢":       
         working_status = False
         
-        url = "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Pokemon1/Pokemon1.json" 
+        url = "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Pokemon/Pokemon.json" 
         response = requests.get(url)
 
         # 檢查請求是否成功
@@ -1012,6 +1012,12 @@ def handle_message(event):
                     event.reply_token,
                     TextSendMessage(text="無法找到對應寶可夢圖片，不知道在幹甚麼吃的")
                 )
+            return
+        else:
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="抓取json失敗，真是個廢物")
+            )
             return
 
     
