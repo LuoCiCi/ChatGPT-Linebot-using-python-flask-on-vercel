@@ -980,6 +980,7 @@ def handle_message(event):
     if event.message.text == "抽寶可夢":       
         working_status = False
         
+            
         url = "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Pokemon/Pokemon.json" 
         response = requests.get(url)
 
@@ -988,31 +989,53 @@ def handle_message(event):
             # 解析 JSON 資料
             pokemon_data = response.json()
 
-            random_id = random.randint(1, 1025)
-            image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Pokemon/Pokemon%20({random_id}).png"
-            # 查找對應編號的寶可夢資料
-            pokemon = next((p for p in pokemon_data if p['編號'] == f"#{random_id:04d}"), None)
-            if pokemon and check_image_url_exists(image_url):
-                # 組合回應訊息
-                response_text = f"圖鑑編號: {pokemon['編號']}\n"
-                response_text += f"中文名稱: {pokemon['中文']}\n"
-                response_text += f"日文名稱: {pokemon['日文']}\n"
-                response_text += f"英文名稱: {pokemon['英文']}\n"
-                response_text += f"屬性: {', '.join(pokemon['屬性'])}"
-                line_bot_api.reply_message(
-                    event.reply_token,
-                    [
-                        TextSendMessage(text=response_text),
-                        ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
-                    ]
-                )
+            match = re.match(r"抽寶可夢(\d)", event.message.text)
+            if match:
+                num_draws = int(match.group(1))
+                image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Pokemon/Pokemon%20({num_draws}).png"
+                # 查找對應編號的寶可夢資料
+                pokemon = next((p for p in pokemon_data if p['編號'] == f"#{random_id:04d}"), None)
+                if pokemon and check_image_url_exists(image_url):
+                    # 組合回應訊息
+                    response_text = f"圖鑑編號: {pokemon['編號']}\n"
+                    response_text += f"中文名稱: {pokemon['中文']}\n"
+                    response_text += f"日文名稱: {pokemon['日文']}\n"
+                    response_text += f"英文名稱: {pokemon['英文']}\n"
+                    response_text += f"屬性: {', '.join(pokemon['屬性'])}"
+                    line_bot_api.reply_message(
+                        event.reply_token,
+                        [
+                            TextSendMessage(text=response_text),
+                            ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
+                        ]
+                    )
+                    return
+            else:    
+                random_id = random.randint(1, 1025)
+                image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Pokemon/Pokemon%20({random_id}).png"
+                # 查找對應編號的寶可夢資料
+                pokemon = next((p for p in pokemon_data if p['編號'] == f"#{random_id:04d}"), None)
+                if pokemon and check_image_url_exists(image_url):
+                    # 組合回應訊息
+                    response_text = f"圖鑑編號: {pokemon['編號']}\n"
+                    response_text += f"中文名稱: {pokemon['中文']}\n"
+                    response_text += f"日文名稱: {pokemon['日文']}\n"
+                    response_text += f"英文名稱: {pokemon['英文']}\n"
+                    response_text += f"屬性: {', '.join(pokemon['屬性'])}"
+                    line_bot_api.reply_message(
+                        event.reply_token,
+                        [
+                            TextSendMessage(text=response_text),
+                            ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
+                        ]
+                    )
+                    return
+                else:
+                    line_bot_api.reply_message(
+                        event.reply_token,
+                        TextSendMessage(text="無法找到對應寶可夢圖片，不知道在幹甚麼吃的")
+                    )
                 return
-            else:
-                line_bot_api.reply_message(
-                    event.reply_token,
-                    TextSendMessage(text="無法找到對應寶可夢圖片，不知道在幹甚麼吃的")
-                )
-            return
         else:
             line_bot_api.reply_message(
                 event.reply_token,
