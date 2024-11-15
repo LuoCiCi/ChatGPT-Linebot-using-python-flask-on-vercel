@@ -992,7 +992,7 @@ def handle_message(event):
                 num_draws = int(match.group(1))
                 image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Pokemon/Pokemon%20({num_draws}).png"
                 # 查找對應編號的寶可夢資料
-                pokemon = next((p for p in pokemon_data if p['編號'] == f"#{random_id:04d}"), None)
+                pokemon = next((p for p in pokemon_data if p['編號'] == f"#{num_draws:04d}"), None)
                 if pokemon and check_image_url_exists(image_url):
                     # 組合回應訊息
                     response_text = f"圖鑑編號: {pokemon['編號']}\n"
