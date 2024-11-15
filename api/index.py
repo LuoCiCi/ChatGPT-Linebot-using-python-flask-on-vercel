@@ -988,9 +988,8 @@ def handle_message(event):
             # 解析 JSON 資料
             pokemon_data = response.json()
 
-            # 隨機選擇 1 到 150 之間的編號
-            random_id = random.randint(1, 386)
-            image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Pokemon1/Pokemon1%20({random_id}).png"
+            random_id = random.randint(1, 1025)
+            image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Pokemon/Pokemon%20({random_id}).png"
             # 查找對應編號的寶可夢資料
             pokemon = next((p for p in pokemon_data if p['編號'] == f"#{random_id:04d}"), None)
             if pokemon and check_image_url_exists(image_url):
@@ -1008,6 +1007,12 @@ def handle_message(event):
                     ]
                 )
                 return
+            else:
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text="無法找到對應寶可夢圖片，不知道在幹甚麼吃的")
+                )
+            return
 
     
     
