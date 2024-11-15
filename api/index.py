@@ -996,7 +996,7 @@ def handle_message(event):
                         TextSendMessage(text="搞屁阿，數字太多囉")
                     )
                     return
-                image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Pokemon/Pokemon%20({num_draws}).png"
+                image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Pokemon/Pokemon1%20({num_draws}).png"
                 # 查找對應編號的寶可夢資料
                 pokemon = next((p for p in pokemon_data if p['編號'] == f"#{num_draws:04d}"), None)
                 if pokemon and check_image_url_exists(image_url):
@@ -1016,7 +1016,7 @@ def handle_message(event):
                     return
             else:    
                 random_id = random.randint(1, 1025)
-                image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Pokemon/Pokemon%20({random_id}).png"
+                image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Pokemon/Pokemon1%20({random_id}).png"
                 # 查找對應編號的寶可夢資料
                 pokemon = next((p for p in pokemon_data if p['編號'] == f"#{random_id:04d}"), None)
                 if pokemon and check_image_url_exists(image_url):
