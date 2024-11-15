@@ -977,10 +977,8 @@ def handle_message(event):
             )
         return
 
-    if event.message.text == "抽寶可夢":       
+    if "抽寶可夢" in event.message.text:       
         working_status = False
-        
-            
         url = "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Pokemon/Pokemon.json" 
         response = requests.get(url)
 
@@ -989,7 +987,7 @@ def handle_message(event):
             # 解析 JSON 資料
             pokemon_data = response.json()
 
-            match = re.match(r"抽寶可夢(\d)", event.message.text)
+            match = re.match(r"抽寶可夢-(\d)", event.message.text)
             if match:
                 num_draws = int(match.group(1))
                 image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Pokemon/Pokemon%20({num_draws}).png"
