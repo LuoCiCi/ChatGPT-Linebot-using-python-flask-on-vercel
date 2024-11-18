@@ -1822,15 +1822,15 @@ def handle_message(event):
             else:
                 # 猜中
                 messages = [
-                    TextSendMessage(text="健豪的桃園妹子!!"),
-                    TextSendMessage(text="聖博的公仔任選一隻!!"),
-                    TextSendMessage(text="宇洋的親吻券一張!!"),
-                    TextSendMessage(text="健豪家留宿券一張!!"),
-                    TextSendMessage(text="聖博家留宿券一張!!"),
-                    TextSendMessage(text="珮綺的打掃券一張!!"),
-                    TextSendMessage(text="黃奕鈞免費海鮮直送券一張!!"),
-                    TextSendMessage(text="錢錢多多免費抱抱券一張!!"),
-                    TextSendMessage(text="錢錢疏毛券一張!!")
+                    TextSendMessage(text="獲得 - 健豪的桃園妹子!!"),
+                    TextSendMessage(text="獲得 - 聖博的公仔任選一隻!!"),
+                    TextSendMessage(text="獲得 - 宇洋的親吻券一張!!"),
+                    TextSendMessage(text="獲得 - 健豪家留宿券一張!!"),
+                    TextSendMessage(text="獲得 - 聖博家留宿券一張!!"),
+                    TextSendMessage(text="獲得 - 珮綺的打掃券一張!!"),
+                    TextSendMessage(text="獲得 - 黃奕鈞免費海鮮直送券一張!!"),
+                    TextSendMessage(text="獲得 - 錢錢多多免費抱抱券一張!!"),
+                    TextSendMessage(text="獲得 - 錢錢疏毛券一張!!")
                 ]
                 random.choice(messages)
 
