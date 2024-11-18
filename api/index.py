@@ -1822,15 +1822,15 @@ def handle_message(event):
             else:
                 # 猜中
                 messages = [
-                    TextSendMessage(text="健豪的桃園妹子"),
-                    TextSendMessage(text="聖博的公仔任選一隻"),
-                    TextSendMessage(text="宇洋的親吻券一張"),
-                    TextSendMessage(text="健豪家留宿券一張"),
-                    TextSendMessage(text="聖博家留宿券一張"),
-                    TextSendMessage(text="珮綺的打掃券一張"),
-                    TextSendMessage(text="黃奕鈞免費海鮮直送券一張"),
-                    TextSendMessage(text="錢錢多多免費抱抱券一張"),
-                    TextSendMessage(text="錢錢疏毛券一張")
+                    TextSendMessage(text="健豪的桃園妹子!!"),
+                    TextSendMessage(text="聖博的公仔任選一隻!!"),
+                    TextSendMessage(text="宇洋的親吻券一張!!"),
+                    TextSendMessage(text="健豪家留宿券一張!!"),
+                    TextSendMessage(text="聖博家留宿券一張!!"),
+                    TextSendMessage(text="珮綺的打掃券一張!!"),
+                    TextSendMessage(text="黃奕鈞免費海鮮直送券一張!!"),
+                    TextSendMessage(text="錢錢多多免費抱抱券一張!!"),
+                    TextSendMessage(text="錢錢疏毛券一張!!")
                 ]
                 random.choice(messages)
 
@@ -1854,7 +1854,7 @@ def handle_message(event):
     #handle_instruction_message(event, line_bot_api)
     if event.message.text == "指令"or event.message.text == "選單" or event.message.text == "列表" or event.message.text == "help" or event.message.text == "Help":
         
-        instruction_message = "🚀【一番賞】\n\rReset(A~C)\n\r一番賞(A~C)(1~5)連抽\n\r庫存(A~C)\n\n☀️【問問台灣還好嗎?】\n\r天氣\r\r颱風\r\r地震\r\r雨量\n\r溫度\r\r紫外線\r\r衛星\r\r雷達\n\n🙏🏻【求神問佛】\n\r抽籤\r\r擲筊\n\n🔥【提振精神】\n\r抽\r\r抽奶\r\r抽梗圖\n\r錢錢\r\r多多\r\r錢多\n\r多多三連抽\r\r錢錢三連抽\n\r抽寶可夢\r\r抽寶可夢-(0~1025)\n\n🍔【點餐】\n\r抽晚餐\r\r抽午餐"
+        instruction_message = "🚀【一番賞】\n\rReset(A~C)\n\r一番賞(A~C)(1~5)連抽\n\r庫存(A~C)\n\n☀️【問問台灣還好嗎?】\n\r天氣\r\r颱風\r\r地震\r\r雨量\n\r溫度\r\r紫外線\r\r衛星\r\r雷達\n\n🙏🏻【求神問佛】\n\r抽籤\r\r擲筊\n\n🔥【提振精神】\n\r抽\r\r抽奶\r\r抽梗圖\n\r錢錢\r\r多多\r\r錢多\n\r多多三連抽\r\r錢錢三連抽\n\r抽寶可夢\r\r抽寶可夢-(1~1025)\n\n🍔【點餐】\n\r抽晚餐\r\r抽午餐\n\n🎮 【遊戲】\n\r猜數字\r\r猜數字-(1~100)"
         
         line_bot_api.reply_message(
             event.reply_token,
