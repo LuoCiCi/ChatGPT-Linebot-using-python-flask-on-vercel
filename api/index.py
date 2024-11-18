@@ -1777,14 +1777,15 @@ def handle_message(event):
     if event.message.text == "猜數字":
         global game_data_original
         # 一番賞獎項庫存定義
+        random_number = random.randint(1, 100)
         game_data_original = {
-                'secret_number': 50,  # 儲存秘密數字
+                'secret_number': random_number,  # 儲存秘密數字
                 'low': 1,  # 範圍下限
                 'high': 100  # 範圍上限
         }
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text="#5 猜數字遊戲開始了！請猜一個 1 到 100 之間的數字。")
+            TextSendMessage(text="#6 猜數字遊戲開始了！請猜一個 1 到 100 之間的數字。")
         )
         return
     elif event.message.text.startswith("猜數字-"):
