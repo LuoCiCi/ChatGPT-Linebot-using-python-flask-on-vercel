@@ -1784,7 +1784,7 @@ def handle_message(event):
     if event.message.text == "猜數字":
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text="猜數字遊戲開始了！請猜一個 1 到 100 之間的數字。")
+            TextSendMessage(text="#3 猜數字遊戲開始了！請猜一個 1 到 100 之間的數字。")
         )
         return
     elif event.message.text.startswith("猜數字-"):
