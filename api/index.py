@@ -1,18 +1,17 @@
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent, TextMessage, TextSendMessage, ImageSendMessage, VideoSendMessage
+from linebot.models import MessageEvent, TextMessage, TextSendMessage, ImageSendMessage
 from api.chatgpt import ChatGPT
-import os
 from datetime import datetime, timedelta
+from instruction import handle_instruction_message
+import os
 import requests, json
 import random
 import pytz
 import textwrap
 import re
 
-#Function
-#from instruction import handle_instruction_message
 
 line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
 line_handler = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
@@ -305,6 +304,7 @@ def get_radar_pic():
 def handle_message(event):
     global working_status
     global prizes, prizes_1, prizes_2, prizes_3
+    global game_data
     # 一番賞獎項庫存定義
     initial_prizes = {
         "A賞": {"description": "恭喜衝中A賞!大賞~", "remaining": 1},
@@ -1775,7 +1775,71 @@ def handle_message(event):
         )
         return
     
+    if game_data is None:
+        # 隨機產生一個 1 到 100 的數字
+        secret_number = random.randint(1, 100)
+        game_data = {
+            'secret_number': secret_number,  # 儲存秘密數字
+            'low': 1,  # 範圍下限
+            'high': 100  # 範圍上限
+        }
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="猜數字遊戲開始了！請猜一個 1 到 100 之間的數字。")
+        )
+        return
     
+    if event.message.text.startswith("遊戲-"):
+        try:
+            guess = int(event.message.text.split('-')[1])  # 取得玩家的猜測數字
+
+            # 檢查猜測是否在 0 到 100 範圍內
+            if guess < 0 or guess > 100:
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text="請輸入 0 到 100 之間的數字。")
+                )
+                return
+
+            # 檢查猜測是否在目前的範圍內
+            if guess < game_data['low'] or guess > game_data['high']:
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text=f"請猜一個 {game_data['low']} 到 {game_data['high']} 之間的數字。")
+                )
+                return
+
+            # 根據猜測的數字來調整範圍
+            if guess < game_data['secret_number']:
+                game_data['low'] = guess + 1  # 調整範圍
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text=f"範圍：{game_data['low']} 到 {game_data['high']}，猜大一點！")
+                )
+            elif guess > game_data['secret_number']:
+                game_data['high'] = guess - 1  # 調整範圍
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text=f"範圍：{game_data['low']} 到 {game_data['high']}，猜小一點！")
+                )
+            else:
+                # 猜中
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text=f"恭喜你！你猜中號碼 {game_data['secret_number']} 了！")
+                )
+                # 遊戲結束，清除遊戲狀態
+                game_data = None
+        
+        except ValueError:
+            # 如果玩家輸入的不是數字
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="請輸入有效的數字，例如：遊戲-50")
+            )
+    
+    
+
     #handle_instruction_message(event, line_bot_api)
     if event.message.text == "指令"or event.message.text == "選單" or event.message.text == "列表" or event.message.text == "help" or event.message.text == "Help":
         
