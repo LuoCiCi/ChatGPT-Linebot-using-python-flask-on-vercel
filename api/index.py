@@ -1789,54 +1789,6 @@ def handle_message(event):
         )
         return
     
-    if event.message.text.startswith("遊戲-"):
-        try:
-            guess = int(event.message.text.split('-')[1])  # 取得玩家的猜測數字
-
-            # 檢查猜測是否在 0 到 100 範圍內
-            if guess < 0 or guess > 100:
-                line_bot_api.reply_message(
-                    event.reply_token,
-                    TextSendMessage(text="請輸入 0 到 100 之間的數字。")
-                )
-                return
-
-            # 檢查猜測是否在目前的範圍內
-            if guess < game_data['low'] or guess > game_data['high']:
-                line_bot_api.reply_message(
-                    event.reply_token,
-                    TextSendMessage(text=f"請猜一個 {game_data['low']} 到 {game_data['high']} 之間的數字。")
-                )
-                return
-
-            # 根據猜測的數字來調整範圍
-            if guess < game_data['secret_number']:
-                game_data['low'] = guess + 1  # 調整範圍
-                line_bot_api.reply_message(
-                    event.reply_token,
-                    TextSendMessage(text=f"範圍：{game_data['low']} 到 {game_data['high']}，猜大一點！")
-                )
-            elif guess > game_data['secret_number']:
-                game_data['high'] = guess - 1  # 調整範圍
-                line_bot_api.reply_message(
-                    event.reply_token,
-                    TextSendMessage(text=f"範圍：{game_data['low']} 到 {game_data['high']}，猜小一點！")
-                )
-            else:
-                # 猜中
-                line_bot_api.reply_message(
-                    event.reply_token,
-                    TextSendMessage(text=f"恭喜你！你猜中號碼 {game_data['secret_number']} 了！")
-                )
-                # 遊戲結束，清除遊戲狀態
-                game_data = None
-        
-        except ValueError:
-            # 如果玩家輸入的不是數字
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text="請輸入有效的數字，例如：遊戲-50")
-            )
     
     
 
