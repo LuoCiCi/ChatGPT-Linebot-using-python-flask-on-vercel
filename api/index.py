@@ -1782,9 +1782,10 @@ def handle_message(event):
         return
     
     if event.message.text == "猜數字":
+        game_data = game_data_original.copy()  # 重置庫存 
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text="#3 猜數字遊戲開始了！請猜一個 1 到 100 之間的數字。")
+            TextSendMessage(text="#4 猜數字遊戲開始了！請猜一個 1 到 100 之間的數字。")
         )
         return
     elif event.message.text.startswith("猜數字-"):
@@ -1799,30 +1800,30 @@ def handle_message(event):
             )
 
         # 檢查猜測是否在目前的範圍內
-        if guess < game_data_original['low'] or guess > game_data_original['high']:
+        if guess < game_data['low'] or guess > game_data['high']:
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text=f"請猜一個 {game_data_original['low']} 到 {game_data_original['high']} 之間的數字。")
+                TextSendMessage(text=f"請猜一個 {game_data['low']} 到 {game_data['high']} 之間的數字。")
             )
 
         # 根據猜測的數字來調整範圍
-        if guess < game_data_original['secret_number']:
-            game_data_original['low'] = guess + 1  # 調整範圍
+        if guess < game_data['secret_number']:
+            game_data['low'] = guess + 1  # 調整範圍
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text=f"範圍：{game_data_original['low']} 到 {game_data_original['high']}，猜大一點！")
+                TextSendMessage(text=f"範圍：{game_data['low']} 到 {game_data['high']}，猜大一點！")
             )
-        elif guess > game_data_original['secret_number']:
-            game_data_original['high'] = guess - 1  # 調整範圍
+        elif guess > game_data['secret_number']:
+            game_data['high'] = guess - 1  # 調整範圍
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text=f"範圍：{game_data_original['low']} 到 {game_data_original['high']}，猜小一點！")
+                TextSendMessage(text=f"範圍：{game_data['low']} 到 {game_data['high']}，猜小一點！")
             )
         else:
             # 猜中
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text=f"恭喜你！你猜中號碼 {game_data_original['secret_number']} 了！")
+                TextSendMessage(text=f"恭喜你！你猜中號碼 {game_data['secret_number']} 了！")
             )
             return
 
