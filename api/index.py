@@ -304,7 +304,11 @@ def get_radar_pic():
 @line_handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     global working_status
-    game_data = 50
+    game_data = {
+        'secret_number': 50,  # 儲存秘密數字
+        'low': 1,  # 範圍下限
+        'high': 100  # 範圍上限
+    }
     global prizes, prizes_1, prizes_2, prizes_3
     # 一番賞獎項庫存定義
     initial_prizes = {
@@ -1782,6 +1786,52 @@ def handle_message(event):
             TextSendMessage(text="猜數字遊戲開始了！請猜一個 1 到 100 之間的數字。")
         )
         return
+    elif event.message.text.startswith("猜數字-"):
+        try:
+            guess = int(event.message.text.split('-')[1])  # 取得玩家的猜測數字
+
+            # 檢查猜測是否在 0 到 100 範圍內
+            if guess < 0 or guess > 100:
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text="請輸入 0 到 100 之間的數字。")
+                )
+
+            # 檢查猜測是否在目前的範圍內
+            if guess < game_data['low'] or guess > game_data['high']:
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text=f"請猜一個 {game_data['low']} 到 {game_data['high']} 之間的數字。")
+                )
+
+            # 根據猜測的數字來調整範圍
+            if guess < game_data['secret_number']:
+                game_data['low'] = guess + 1  # 調整範圍
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text=f"範圍：{game_data['low']} 到 {game_data['high']}，猜大一點！")
+                )
+            elif guess > game_data['secret_number']:
+                game_data['high'] = guess - 1  # 調整範圍
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text=f"範圍：{game_data['low']} 到 {game_data['high']}，猜小一點！")
+                )
+            else:
+                # 猜中
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text=f"恭喜你！你猜中號碼 {game_data['secret_number']} 了！")
+                )
+                return
+        
+        except ValueError:
+            # 如果玩家輸入的不是數字
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="請輸入有效的數字，例如：遊戲-50")
+            )
+    
     
     #handle_instruction_message(event, line_bot_api)
     if event.message.text == "指令"or event.message.text == "選單" or event.message.text == "列表" or event.message.text == "help" or event.message.text == "Help":
