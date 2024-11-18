@@ -303,7 +303,8 @@ def get_radar_pic():
         
 @line_handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    global working_status,game_data
+    global working_status
+    game_data = 50
     global prizes, prizes_1, prizes_2, prizes_3
     # 一番賞獎項庫存定義
     initial_prizes = {
@@ -1776,19 +1777,11 @@ def handle_message(event):
         return
     
     if event.message.text == "猜數字":
-        if game_data is None:
-            # 隨機產生一個 1 到 100 的數字
-            secret_number = random.randint(1, 100)
-            game_data = {
-                'secret_number': secret_number,  # 儲存秘密數字
-                'low': 1,  # 範圍下限
-                'high': 100  # 範圍上限
-            }
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text="猜數字遊戲開始了！請猜一個 1 到 100 之間的數字。")
-            )
-            return
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="猜數字遊戲開始了！請猜一個 1 到 100 之間的數字。")
+        )
+        return
     
     #handle_instruction_message(event, line_bot_api)
     if event.message.text == "指令"or event.message.text == "選單" or event.message.text == "列表" or event.message.text == "help" or event.message.text == "Help":
