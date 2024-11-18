@@ -304,11 +304,6 @@ def get_radar_pic():
 @line_handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     global working_status
-    game_data = {
-        'secret_number': 50,  # 儲存秘密數字
-        'low': 1,  # 範圍下限
-        'high': 100  # 範圍上限
-    }
     global prizes, prizes_1, prizes_2, prizes_3
     # 一番賞獎項庫存定義
     initial_prizes = {
@@ -1787,6 +1782,11 @@ def handle_message(event):
         )
         return
     elif event.message.text.startswith("猜數字-"):
+        game_data = {
+            'secret_number': 50,  # 儲存秘密數字
+            'low': 1,  # 範圍下限
+            'high': 100  # 範圍上限
+        }
         try:
             guess = int(event.message.text.split('-')[1])  # 取得玩家的猜測數字
 
