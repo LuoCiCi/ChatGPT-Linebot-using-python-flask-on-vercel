@@ -11,6 +11,9 @@ import pytz
 import textwrap
 import re
 
+#Function
+from instruction import handle_instruction_message
+
 line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
 line_handler = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
 working_status = os.getenv("DEFAULT_TALKING", default = "true").lower() == "true"
@@ -1772,15 +1775,17 @@ def handle_message(event):
         )
         return
     
-    if event.message.text == "指令"or event.message.text == "選單" or event.message.text == "列表" or event.message.text == "help" or event.message.text == "Help":
+    
+    handle_instruction_message(event, line_bot_api)
+    # if event.message.text == "指令"or event.message.text == "選單" or event.message.text == "列表" or event.message.text == "help" or event.message.text == "Help":
         
-        instruction_message = "🚀【一番賞】\n\rReset(A~C)\n\r一番賞(A~C)(1~5)連抽\n\r庫存(A~C)\n\n☀️【問問台灣還好嗎?】\n\r天氣\r\r颱風\r\r地震\r\r雨量\n\r溫度\r\r紫外線\r\r衛星\r\r雷達\n\n🙏🏻【求神問佛】\n\r抽籤\r\r擲筊\n\n🔥【提振精神】\n\r抽\r\r抽奶\r\r抽梗圖\n\r錢錢\r\r多多\r\r錢多\n\r多多三連抽\r\r錢錢三連抽\n\r抽寶可夢\r\r抽寶可夢-(0~1025)\n\n🍔【點餐】\n\r抽晚餐\r\r抽午餐"
+    #     instruction_message = "🚀【一番賞】\n\rReset(A~C)\n\r一番賞(A~C)(1~5)連抽\n\r庫存(A~C)\n\n☀️【問問台灣還好嗎?】\n\r天氣\r\r颱風\r\r地震\r\r雨量\n\r溫度\r\r紫外線\r\r衛星\r\r雷達\n\n🙏🏻【求神問佛】\n\r抽籤\r\r擲筊\n\n🔥【提振精神】\n\r抽\r\r抽奶\r\r抽梗圖\n\r錢錢\r\r多多\r\r錢多\n\r多多三連抽\r\r錢錢三連抽\n\r抽寶可夢\r\r抽寶可夢-(0~1025)\n\n🍔【點餐】\n\r抽晚餐\r\r抽午餐"
         
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=instruction_message)
-        )
-        return
+    #     line_bot_api.reply_message(
+    #         event.reply_token,
+    #         TextSendMessage(text=instruction_message)
+    #     )
+    #     return
     
     if working_status:
         chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
