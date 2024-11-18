@@ -12,7 +12,7 @@ import textwrap
 import re
 
 #Function
-from instruction import handle_instruction_message
+#from instruction import handle_instruction_message
 
 line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
 line_handler = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
