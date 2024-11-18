@@ -1785,7 +1785,7 @@ def handle_message(event):
         }
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text="#6 猜數字遊戲開始了！請猜一個 1 到 100 之間的數字。")
+            TextSendMessage(text="猜數字遊戲開始了！請猜一個 1 到 100 之間的數字。")
         )
         return
     elif event.message.text.startswith("猜數字-"):
@@ -1821,16 +1821,29 @@ def handle_message(event):
                 )
             else:
                 # 猜中
+                messages = [
+                    TextSendMessage(text="健豪的桃園妹子"),
+                    TextSendMessage(text="聖博的公仔任選一隻"),
+                    TextSendMessage(text="宇洋的親吻券一張"),
+                    TextSendMessage(text="健豪家留宿券一張"),
+                    TextSendMessage(text="聖博家留宿券一張"),
+                    TextSendMessage(text="珮綺的打掃券一張"),
+                    TextSendMessage(text="黃奕鈞免費海鮮直送券一張"),
+                    TextSendMessage(text="錢錢多多免費抱抱券一張"),
+                    TextSendMessage(text="錢錢疏毛券一張")
+                ]
+                random.choice(messages)
+
                 line_bot_api.reply_message(
                     event.reply_token,
-                    TextSendMessage(text=f"恭喜你！你猜中號碼 {game_data_original['secret_number']} 了！")
+                    TextSendMessage(text=f"恭喜你！你猜中號碼 {game_data_original['secret_number']} 了！獲得{messages}")
                 )
                 return
         except ValueError:
             # 如果玩家輸入的不是數字
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text="請輸入有效的數字，例如：遊戲-50")
+                TextSendMessage(text="請輸入有效的數字，例如：遊戲-XX")
             )
     
     
