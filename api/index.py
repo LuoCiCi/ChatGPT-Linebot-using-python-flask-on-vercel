@@ -304,7 +304,6 @@ def get_radar_pic():
 def handle_message(event):
     global working_status
     global prizes, prizes_1, prizes_2, prizes_3
-    global game_data
     # 一番賞獎項庫存定義
     initial_prizes = {
         "A賞": {"description": "恭喜衝中A賞!大賞~", "remaining": 1},
