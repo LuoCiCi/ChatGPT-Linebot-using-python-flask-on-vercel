@@ -1836,7 +1836,11 @@ def handle_message(event):
 
                 line_bot_api.reply_message(
                     event.reply_token,
-                    TextSendMessage(text=f"恭喜你！你猜中號碼 {game_data_original['secret_number']} 了！獲得{messages}")
+                    [
+                        TextSendMessage(text=f"恭喜你！你猜中號碼 {game_data_original['secret_number']} 了！"),
+                        random.choice(messages)
+                    ]
+                  
                 )
                 return
         except ValueError:
