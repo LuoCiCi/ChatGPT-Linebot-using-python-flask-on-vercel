@@ -1,17 +1,18 @@
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent, TextMessage, TextSendMessage, ImageSendMessage
+from linebot.models import MessageEvent, TextMessage, TextSendMessage, ImageSendMessage, VideoSendMessage
 from api.chatgpt import ChatGPT
-from datetime import datetime, timedelta
-from instruction import handle_instruction_message
 import os
+from datetime import datetime, timedelta
 import requests, json
 import random
 import pytz
 import textwrap
 import re
 
+#Function
+#from instruction import handle_instruction_message
 
 line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
 line_handler = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
@@ -1773,6 +1774,7 @@ def handle_message(event):
             TextSendMessage(text=inventory_message)
         )
         return
+    
     
     #handle_instruction_message(event, line_bot_api)
     if event.message.text == "指令"or event.message.text == "選單" or event.message.text == "列表" or event.message.text == "help" or event.message.text == "Help":
