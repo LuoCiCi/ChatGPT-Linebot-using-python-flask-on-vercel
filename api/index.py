@@ -1545,16 +1545,31 @@ def handle_message(event):
                 # 判斷正面的連續次數
                 if consecutive_heads == 0:
                     message = "雷包!!"
+                    line_bot_api.reply_message(
+                        event.reply_token,
+                        TextSendMessage(f"[{result}]\n{message}"),
+                    )
+                    return                    
                 elif 1 <= consecutive_heads <= 2:
-                    message = "還行~"                    
+                    message = "還行~"
+                    line_bot_api.reply_message(
+                        event.reply_token,
+                        TextSendMessage(f"[{result}]\n{message}"),
+                    )
+                    return                                          
                 elif 3 <= consecutive_heads <= 4:
                     message = "唉唷，不錯喔~"
+                    image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/meme/meme%20(117).jpg"
                 elif consecutive_heads > 4:
                     message = "太神啦~對面已投降！"
-                break  
+                    image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/meme/meme%20(118).jpg"
+                break                  
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(f"[{result}]\n{message}")
+            [
+                TextSendMessage(f"[{result}]\n{message}"),
+                ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
+            ]
         )
         return                 
 
