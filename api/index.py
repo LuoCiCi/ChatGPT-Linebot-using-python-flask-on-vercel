@@ -1530,6 +1530,22 @@ def handle_message(event):
         )
         return 
     
+    if "小霞丟硬幣" in event.message.text:
+        working_status = False
+        result = ""  # 結果
+        while True:
+            flip = random.choice(["正", "反"]) 
+            result += flip
+            if flip == "反":  # 結束遊戲
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text=result)
+                )
+                return 
+            else:
+                continue  # 如是正繼續遊戲
+
+    
     #####  遊戲王一番賞 (2024/11/13)#####
     if "一番賞" in event.message.text or "抽一番賞" in event.message.text:
         working_status = False
