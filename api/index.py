@@ -1557,10 +1557,10 @@ def handle_message(event):
                         TextSendMessage(f"[{result}]\n{message}"),
                     )
                     return                                          
-                elif 3 <= consecutive_heads <= 4:
+                elif 3 <= consecutive_heads < 4:
                     message = "唉唷，不錯喔~"
                     image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/meme/meme%20(117).jpg"
-                elif consecutive_heads > 4:
+                elif consecutive_heads >= 4:
                     message = "太神啦~對面已投降！"
                     image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/meme/meme%20(118).jpg"
                 break                  
