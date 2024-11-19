@@ -1532,18 +1532,32 @@ def handle_message(event):
     
     if "小霞丟硬幣" in event.message.text:
         working_status = False
+        consecutive_heads = 0  # 記錄連續正面的次數
         result = ""  # 結果
+        message = ""  # 最終訊息
         while True:
             flip = random.choice(["正", "反"]) 
             result += flip
-            if flip == "反":  # 結束遊戲
-                line_bot_api.reply_message(
-                    event.reply_token,
-                    TextSendMessage(text=result)
-                )
-                return 
-            else:
-                continue  # 如是正繼續遊戲
+            
+            if flip == "正":
+                consecutive_heads += 1  # 正面次數加 1
+            else:  # 出現反面時結束遊戲  
+                # 判斷正面的連續次數
+                if consecutive_heads == 0:
+                    message = "雷包!!"
+                elif 1 <= consecutive_heads <= 2:
+                    message = "還行~"                    
+                elif 3 <= consecutive_heads <= 4:
+                    message = "唉唷，不錯喔~"
+                elif consecutive_heads > 4:
+                    message = "太神啦~對面已投降！"
+                break  
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(f"[{result}]\n{message}")
+        )
+        return                 
+
 
     
     #####  遊戲王一番賞 (2024/11/13)#####
