@@ -1119,6 +1119,89 @@ def handle_message(event):
             )
         return
 
+    if event.message.text == "三連抽":
+        working_status = False
+        max_attempts = 5  # 設定最多嘗試的次數
+        attempts = 0
+        t1, t2, t3 = ""
+        p1, p2, p3 = ""
+
+        for i in range(0, 3):
+            # 進行圖片URL檢查
+            while attempts < max_attempts:    
+    
+                random_value = random.random()        
+                if random_value < 0.05:  # 10% 機率
+                    
+                    random_number_image_urls_2 = random.randint(1,77)
+                    image_urls_2 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/SR%20({random_number_image_urls_2}).jpg"
+                    
+                    if check_image_url_exists(image_urls_2):
+                        if len(p1) == 0
+                            # 如果圖片存在，回傳訊息
+                            t1 = TextSendMessage(f"抽中稀有SR彩蛋編號: {random_number_image_urls_2}")
+                            p1 = ImageSendMessage(original_content_url=image_urls_2, preview_image_url=image_urls_2)
+                        elif len(p2) == 0
+                            # 如果圖片存在，回傳訊息
+                            t2 = TextSendMessage(f"抽中稀有SR彩蛋編號: {random_number_image_urls_2}")
+                            p2 = ImageSendMessage(original_content_url=image_urls_2, preview_image_url=image_urls_2)
+                        else:
+                            # 如果圖片存在，回傳訊息
+                            t3 = TextSendMessage(f"抽中稀有SR彩蛋編號: {random_number_image_urls_2}")
+                            p3 = ImageSendMessage(original_content_url=image_urls_2, preview_image_url=image_urls_2)
+                        break  # 找到圖片後退出迴圈
+                elif random_value < 0.05 + 0.02: #3% 機率
+                    
+                    random_number_image_urls_3 = random.randint(1,30)
+                    image_urls_3 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/SSR%20({random_number_image_urls_3}).jpg"
+                    
+                    if check_image_url_exists(image_urls_3):
+                        if len(p1) == 0
+                            # 如果圖片存在，回傳訊息
+                            t1 = TextSendMessage(f"恭喜抽中超稀有SSR彩蛋編號: {random_number_image_urls_3}")
+                            p1 = ImageSendMessage(original_content_url=image_urls_3, preview_image_url=image_urls_3)
+                        elif len(p2) == 0
+                            # 如果圖片存在，回傳訊息
+                            t2 = TextSendMessage(f"恭喜抽中超稀有SSR彩蛋編號: {random_number_image_urls_3}")
+                            p2 = ImageSendMessage(original_content_url=image_urls_3, preview_image_url=image_urls_3)
+                        else:
+                            # 如果圖片存在，回傳訊息
+                            t3 = TextSendMessage(f"恭喜抽中超稀有SSR彩蛋編號: {random_number_image_urls_3}")
+                            p3 = ImageSendMessage(original_content_url=image_urls_3, preview_image_url=image_urls_3)
+                        break  # 找到圖片後退出迴圈
+                else:
+                    
+                    random_number_image_urls_1 = random.randint(1,330)
+                    image_urls_1 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/Draw%20({random_number_image_urls_1}).jpg"
+                    
+                    if check_image_url_exists(image_urls_1):
+                        if len(p1) == 0
+                            # 如果圖片存在，回傳訊息
+                            p1 = ImageSendMessage(original_content_url=image_urls_1, preview_image_url=image_urls_1)
+                        elif len(p2) == 0
+                            # 如果圖片存在，回傳訊息
+                            p2 = ImageSendMessage(original_content_url=image_urls_1, preview_image_url=image_urls_1)
+                        else:
+                            # 如果圖片存在，回傳訊息
+                            p3 = ImageSendMessage(original_content_url=image_urls_1, preview_image_url=image_urls_1)
+                        break  # 找到圖片後退出迴圈        
+                attempts += 1
+    
+                 # 如果圖片存在，回傳訊息
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    [
+                        t1,p1,t2,p2,t3,p3
+                    ]
+                )
+            else:
+                # 如果在max_attempts次內未找到有效圖片
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text="無法找到對應的圖片，請稍後再試。")
+                )
+            return
+
     if event.message.text == "抽奶" or event.message.text == "抽大奶":
         working_status = False
         max_attempts = 5  # 設定最多嘗試的次數
