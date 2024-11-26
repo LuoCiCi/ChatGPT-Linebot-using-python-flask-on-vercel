@@ -1122,7 +1122,6 @@ def handle_message(event):
     if event.message.text == "三連抽":
         working_status = False
         max_attempts = 5  # 設定最多嘗試的次數
-        attempts = 0
         t1 = ""
         t2 = ""
         t3 = ""
@@ -1131,6 +1130,8 @@ def handle_message(event):
         p3 = ""
 
         for i in range(0, 3):
+            attempts = 0    # 每次新抽取重置計數
+            
             # 進行圖片URL檢查
             while attempts < max_attempts:    
     
@@ -1198,13 +1199,20 @@ def handle_message(event):
                         t1,p1,t2,p2,t3,p3
                     ]
                 )
+            # else:
+            #     # 如果在max_attempts次內未找到有效圖片
+            #     line_bot_api.reply_message(
+            #         event.reply_token,
+            #         TextSendMessage(text="無法找到對應的圖片，請稍後再試。")
+            #     )
+                
+            # 回傳抽取結果
+            messages = [msg for msg in [t1, p1, t2, p2, t3, p3] if msg]
+            if messages:
+                line_bot_api.reply_message(event.reply_token, messages)
             else:
-                # 如果在max_attempts次內未找到有效圖片
-                line_bot_api.reply_message(
-                    event.reply_token,
-                    TextSendMessage(text="無法找到對應的圖片，請稍後再試。")
-                )
-            return
+                line_bot_api.reply_message(event.reply_token, TextSendMessage(text="無法找到對應的圖片，請稍後再試。"))
+        return
 
     if event.message.text == "抽奶" or event.message.text == "抽大奶":
         working_status = False
