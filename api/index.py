@@ -1192,13 +1192,13 @@ def handle_message(event):
                         break  # 找到圖片後退出迴圈        
                 attempts += 1
 
-                # 如果圖片存在，回傳訊息
-                line_bot_api.reply_message(
-                    event.reply_token,
-                    [
-                        t1,p1,t2,p2,t3,p3
-                    ]
-                )
+                # # 如果圖片存在，回傳訊息
+                # line_bot_api.reply_message(
+                #     event.reply_token,
+                #     [
+                #         t1,p1,t2,p2,t3,p3
+                #     ]
+                # )
             # else:
             #     # 如果在max_attempts次內未找到有效圖片
             #     line_bot_api.reply_message(
