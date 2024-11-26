@@ -1137,11 +1137,11 @@ def handle_message(event):
                     image_urls_2 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/SR%20({random_number_image_urls_2}).jpg"
                     
                     if check_image_url_exists(image_urls_2):
-                        if len(p1) == 0
+                        if len(p1) == 0:
                             # 如果圖片存在，回傳訊息
                             t1 = TextSendMessage(f"抽中稀有SR彩蛋編號: {random_number_image_urls_2}")
                             p1 = ImageSendMessage(original_content_url=image_urls_2, preview_image_url=image_urls_2)
-                        elif len(p2) == 0
+                        elif len(p2) == 0:
                             # 如果圖片存在，回傳訊息
                             t2 = TextSendMessage(f"抽中稀有SR彩蛋編號: {random_number_image_urls_2}")
                             p2 = ImageSendMessage(original_content_url=image_urls_2, preview_image_url=image_urls_2)
@@ -1156,11 +1156,11 @@ def handle_message(event):
                     image_urls_3 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/SSR%20({random_number_image_urls_3}).jpg"
                     
                     if check_image_url_exists(image_urls_3):
-                        if len(p1) == 0
+                        if len(p1) == 0:
                             # 如果圖片存在，回傳訊息
                             t1 = TextSendMessage(f"恭喜抽中超稀有SSR彩蛋編號: {random_number_image_urls_3}")
                             p1 = ImageSendMessage(original_content_url=image_urls_3, preview_image_url=image_urls_3)
-                        elif len(p2) == 0
+                        elif len(p2) == 0:
                             # 如果圖片存在，回傳訊息
                             t2 = TextSendMessage(f"恭喜抽中超稀有SSR彩蛋編號: {random_number_image_urls_3}")
                             p2 = ImageSendMessage(original_content_url=image_urls_3, preview_image_url=image_urls_3)
@@ -1175,10 +1175,10 @@ def handle_message(event):
                     image_urls_1 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/Draw%20({random_number_image_urls_1}).jpg"
                     
                     if check_image_url_exists(image_urls_1):
-                        if len(p1) == 0
+                        if len(p1) == 0:
                             # 如果圖片存在，回傳訊息
                             p1 = ImageSendMessage(original_content_url=image_urls_1, preview_image_url=image_urls_1)
-                        elif len(p2) == 0
+                        elif len(p2) == 0:
                             # 如果圖片存在，回傳訊息
                             p2 = ImageSendMessage(original_content_url=image_urls_1, preview_image_url=image_urls_1)
                         else:
