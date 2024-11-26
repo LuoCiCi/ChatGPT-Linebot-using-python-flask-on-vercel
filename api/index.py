@@ -1123,8 +1123,12 @@ def handle_message(event):
         working_status = False
         max_attempts = 5  # 設定最多嘗試的次數
         attempts = 0
-        t1, t2, t3 = ""
-        p1, p2, p3 = ""
+        t1 = ""
+        t2 = ""
+        t3 = ""
+        p1 = ""
+        p2 = ""
+        p3 = ""
 
         for i in range(0, 3):
             # 進行圖片URL檢查
