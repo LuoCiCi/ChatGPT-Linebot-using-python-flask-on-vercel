@@ -1075,7 +1075,6 @@ def handle_message(event):
                         event.reply_token,
                         [
                             TextSendMessage(f"抽中稀有SR彩蛋編號: {random_number_image_urls_2}"),
-                            #TextSendMessage(f"{image_urls_2}"),
                             ImageSendMessage(original_content_url=image_urls_2, preview_image_url=image_urls_2)
                         ]
                     )
@@ -1091,7 +1090,6 @@ def handle_message(event):
                         event.reply_token,
                         [
                             TextSendMessage(f"恭喜抽中超稀有SSR彩蛋編號: {random_number_image_urls_3}"),
-                            #TextSendMessage(f"{image_urls_3}"),
                             ImageSendMessage(original_content_url=image_urls_3, preview_image_url=image_urls_3)
                         ]
                     )
