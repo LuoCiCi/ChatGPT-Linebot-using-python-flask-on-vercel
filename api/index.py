@@ -720,17 +720,6 @@ def handle_message(event):
                     ]) # 傳送文字
         return
 
-    
-
-    # 暫時使用line設定功能，將此隱藏
-    # if event.message.text == "選單" or event.message.text == "功能" or event.message.text == "menu":
-    #     working_status = True
-    #     menu = "目前功能如下：\n[1] 雨量=天氣=濕度\n[2] 溫度=氣溫\n[3] 衛星=衛星雲圖\n[4] 紫外線\n[5] 急了\n[6] 錢錢=錢吶=錢啊\n[7] 多多=多吶=多啊\n[8] 錢錢多多=錢多\n[9] 抽\n[10] 抽奶=抽大奶"
-    #     line_bot_api.reply_message(
-    #         event.reply_token,
-    #         TextSendMessage(text=f"{menu}"))
-    #     return
-        
     if event.message.text == "說話":
         working_status = True
         line_bot_api.reply_message(
@@ -1054,6 +1043,46 @@ def handle_message(event):
                     TextSendMessage(text="再亂打東西啊，被發現囉!!")
                 )
                 return
+  
+  
+    if "抽美食" in event.message.text:       
+        working_status = False
+        url = "https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Food/Food.json" 
+        response = requests.get(url)
+        # 檢查請求是否成功
+        if response.status_code == 200:
+            Food_data = response.json()
+        else:
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="抓取美食json失敗，真是個廢物")
+            )
+            return           
+        random_id = random.randint(1, 2)
+        image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Food/Food%20({random_id}).jpg"
+        # 查找對應編號的美食資料
+        Food = next((p for p in Food_data if p['編號'] == f"#{random_id:04d}"), None)
+        if Food and check_image_url_exists(image_url):
+            # 組合回應訊息
+            response_text = f"美食圖鑑編號: {Food['編號']}\n"
+            response_text += f"店名: {Food['店名']}\n"
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    TextSendMessage(text=response_text),
+                    ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
+                ]
+            )
+            return
+        else:
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="無法找到對應美食圖片，不知道在幹甚麼吃的")
+            )
+            return
+  
+  
+  
     
     if event.message.text == "抽":
         working_status = False
@@ -1189,6 +1218,7 @@ def handle_message(event):
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text="無法找到對應的圖片，請稍後再試。"))
     
         return
+
 
     if event.message.text == "抽奶" or event.message.text == "抽大奶":
         working_status = False
