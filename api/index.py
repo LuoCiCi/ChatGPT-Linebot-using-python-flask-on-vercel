@@ -364,6 +364,9 @@ def handle_message(event):
         #     TextSendMessage(text=f"群組 ID 是: {group_id}")
         # )
         #return
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=f"user_id:{user_id}"))
     
     
     if event.message.text == "text":
