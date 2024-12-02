@@ -351,7 +351,7 @@ def handle_message(event):
     # 指定回覆私人訊息
     # 綺:U86fd4e0cce57a1b2d5ec119c8f9d6d7e
     # user_id="U86fd4e0cce57a1b2d5ec119c8f9d6d7e"    #綺
-    # line_bot_api.push_message(user_id, TextSendMessage(text='TEST'))
+    line_bot_api.push_message("U86fd4e0cce57a1b2d5ec119c8f9d6d7e", TextSendMessage(text=f"user_id:{user_id}"))
     
     # 檢查是否為群組訊息
     #if event.source.type == 'group':
@@ -364,9 +364,6 @@ def handle_message(event):
         #     TextSendMessage(text=f"群組 ID 是: {group_id}")
         # )
         #return
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=f"user_id:{user_id}"))
     
     
     if event.message.text == "text":
