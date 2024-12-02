@@ -1061,7 +1061,7 @@ def handle_message(event):
         # 隨機選擇編號
         random_id = random.randint(1, len(Food_data))
         random_id_str = f"{random_id:03d}"
-        image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/main/Food/Food%20({random_id}).jpg"
+        image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/main/Food/YamiFood%20({random_id}).jpg"
         
         # 查找對應編號的美食資料
         Food = next((p for p in Food_data if p['編號'] == random_id_str), None)
