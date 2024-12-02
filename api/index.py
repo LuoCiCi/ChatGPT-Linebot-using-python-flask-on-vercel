@@ -1077,7 +1077,10 @@ def handle_message(event):
         else:
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text="無法找到對應美食圖片，不知道在幹甚麼吃的")
+                [
+                    TextSendMessage(text=image_url),
+                    TextSendMessage(text="無法找到對應美食圖片，不知道在幹甚麼吃的")
+                ]
             )
             return
   
