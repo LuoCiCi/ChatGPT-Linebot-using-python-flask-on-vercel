@@ -1067,7 +1067,7 @@ def handle_message(event):
         Food = next((p for p in Food_data if p['編號'] == random_id_str), None)
         if Food and check_image_url_exists(image_url):
             # 組合回應訊息
-            response_text = f"美食圖鑑編號: {Food['編號']}\n"
+            response_text = f"美食圖鑑編號 #{Food['編號']}\n"
             response_text += f"店名: {Food['店名']}\n"
             line_bot_api.reply_message(
                 event.reply_token,
