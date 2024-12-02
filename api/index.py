@@ -1137,7 +1137,7 @@ def handle_message(event):
             # 如果在max_attempts次內未找到有效圖片
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text="乖乖使用抽喔~")
+                TextSendMessage(text="非VIP請乖乖使用抽喔~")
             )
         return
     
