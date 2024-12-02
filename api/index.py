@@ -1492,7 +1492,7 @@ def handle_message(event):
             TextSendMessage(text="新竹單身漢🙋‍♂️"),
             TextSendMessage(text="健豪語錄 : 我要當壞男人 說很多次了"),
             TextSendMessage(text="健豪語錄 : 妹子直接暈船"),
-            TextSendMessage(text="健豪語錄 : 妹子暈船了啦"),
+            TextSendMessage(text="健豪語錄 : 上知天文下知地理"),
             TextSendMessage(text="健豪語錄 : 我要當壞男人，說很多次了"),
             TextSendMessage(text="健豪語錄 : 不想跟沒興趣的女人在一起"),
             TextSendMessage(text="健豪語錄 : 妹子不喜歡都只是玩玩"),
@@ -1513,8 +1513,10 @@ def handle_message(event):
             TextSendMessage(text="健豪語錄 : 要約新妹子都沒時間"),
             TextSendMessage(text="健豪語錄 : 每個禮拜都很忙，要約妹子"),
             TextSendMessage(text="健豪語錄 : 我就閒置冗員爽領薪水"),
-            TextSendMessage(text="健豪語錄 : 我妹子聽我是測試，就不回我了 雞掰"),
+            TextSendMessage(text="健豪語錄 : 妹子聽我是測試，就不回我了 雞掰"),
             TextSendMessage(text="健豪語錄 : 我現在也很青澀"),
+            TextSendMessage(text="健豪語錄 : 在此呼籲各位女性少用美肌"),
+            TextSendMessage(text="螃蟹大濕🦀"),
             TextSendMessage(text="放線大濕🧵"),
             TextSendMessage(text="玩草男孩🌱")
         ]
