@@ -1604,6 +1604,7 @@ def handle_message(event):
             TextSendMessage(text="健豪語錄 : 妹子聽我是測試，就不回我了 雞掰"),
             TextSendMessage(text="健豪語錄 : 我現在也很青澀"),
             TextSendMessage(text="健豪語錄 : 在此呼籲各位女性少用美肌"),
+            TextSendMessage(text="健豪語錄 : 我穿搭品味相信大家都認同"),
             TextSendMessage(text="螃蟹大濕🦀"),
             TextSendMessage(text="放線大濕🧵"),
             TextSendMessage(text="玩草男孩🌱")
