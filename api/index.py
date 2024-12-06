@@ -354,18 +354,15 @@ def handle_message(event):
     # 將傳訊息者的id給我
     # line_bot_api.push_message("U86fd4e0cce57a1b2d5ec119c8f9d6d7e", TextSendMessage(text=f"user_id:{user_id}"))
     
-    # 檢查是否為群組訊息
-    # if event.source.type == 'group':
-    #     # 取得群組 ID
-    #     group_id = event.source.group_id
-    #     #line_bot_api.push_message(user_id, TextSendMessage(text='TEST'))
-    #     # 回傳群組 ID 作為測試
-    #     line_bot_api.reply_message(
-    #         "U86fd4e0cce57a1b2d5ec119c8f9d6d7e",
-    #         TextSendMessage(text=f"群組 ID 是: {group_id}")
-    #     )
-    
-        # return
+    if event.source.type == 'group':
+        group_id = event.source.group_id
+        # print(f"Message from group ID: {group_id}")
+        # 回傳訊息示例
+        line_bot_api.push_message("U86fd4e0cce57a1b2d5ec119c8f9d6d7e", TextSendMessage(text=f"group_id:{group_id}"))
+        # line_bot_api.reply_message(
+        #     event.reply_token,
+        #     TextSendMessage(text=f"這個群組的 ID 是：{group_id}")
+        # )
     
     
     if event.message.text == "text":
