@@ -1146,7 +1146,8 @@ def handle_message(event):
         return
     
     if event.message.text == "抽":
-
+        global limit
+        
         working_status = False
         max_attempts = 5  # 設定最多嘗試的次數
         attempts = 0        
@@ -1155,7 +1156,7 @@ def handle_message(event):
         while attempts < max_attempts:    
             random_value = random.random()
             if limit == 'true':
-                random_value = 1
+                random_value = 0.1
                 
             if random_value < 0.05:  # 10% 機率
                 
