@@ -21,6 +21,9 @@ working_status = os.getenv("DEFAULT_TALKING", default = "true").lower() == "true
 app = Flask(__name__)
 chatgpt = ChatGPT()
 
+moneymany_groupid = "C4ee96dad094278d3f2b530a8e0aef6ed"    #鏟屎官
+mytest_groupid = "Cd627ff8b5c500044e9fc51609cfd4887"    #羊綺機器人測試
+
 
 # 計算出前一個10分倍數的時間以及前前一個10分倍數的時間以及前前前一個10分倍數的時間
 def get_prev10_4():
@@ -353,23 +356,22 @@ def handle_message(event):
     # user_id="U86fd4e0cce57a1b2d5ec119c8f9d6d7e"    #綺
     # 將傳訊息者的id給我
     # line_bot_api.push_message("U86fd4e0cce57a1b2d5ec119c8f9d6d7e", TextSendMessage(text=f"user_id:{user_id}"))
-    
-    if event.source.type == 'group':
-        group_id = event.source.group_id
-        # print(f"Message from group ID: {group_id}")
-        # 回傳訊息示例
-        line_bot_api.push_message("U86fd4e0cce57a1b2d5ec119c8f9d6d7e", TextSendMessage(text=f"group_id:{group_id}"))
-        # line_bot_api.reply_message(
-        #     event.reply_token,
-        #     TextSendMessage(text=f"這個群組的 ID 是：{group_id}")
-        # )
+
+    # #取得群組id
+    # if event.source.type == 'group':
+    #     group_id = event.source.group_id
+    #     # group_id = "C4ee96dad094278d3f2b530a8e0aef6ed"    #鏟屎官
+    #     # group_id = "Cd627ff8b5c500044e9fc51609cfd4887"    #羊綺機器人測試
+    #     # 回傳訊息示例
+    #     line_bot_api.push_message("U86fd4e0cce57a1b2d5ec119c8f9d6d7e", TextSendMessage(text=f"group_id:{group_id}"))
     
     
     if event.message.text == "text":
         # line_bot_api.push_message(user_id, TextSendMessage(text='test....'))
-        line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text=f"user_id:{user_id}"))
+        line_bot_api.push_message("U86fd4e0cce57a1b2d5ec119c8f9d6d7e", TextSendMessage(text=f"group_id:{moneymany_groupid}"))
+        # line_bot_api.push_message(
+        #         "U86fd4e0cce57a1b2d5ec119c8f9d6d7e",
+        #         TextSendMessage(text=f"user_id:{user_id}"))
         return
 
     if event.message.text == "QQQ":
