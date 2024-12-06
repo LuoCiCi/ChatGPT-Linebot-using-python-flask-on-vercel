@@ -23,7 +23,6 @@ chatgpt = ChatGPT()
 
 moneymany_groupid = "C4ee96dad094278d3f2b530a8e0aef6ed"    #鏟屎官
 mytest_groupid = "Cd627ff8b5c500044e9fc51609cfd4887"    #羊綺機器人測試
-limit = "false"
 
 
 # 計算出前一個10分倍數的時間以及前前一個10分倍數的時間以及前前前一個10分倍數的時間
@@ -362,7 +361,9 @@ def handle_message(event):
     if event.source.type == 'group':
         group_id = event.source.group_id
         if group_id == moneymany_groupid or group_id == mytest_groupid:
-            limit = "true"    #限定群組可使用的功能
+            limit = "true"    #特定群組可使用的功能
+        else:
+            limit = "false"    #非特定群組不可使用的功能
     #     # group_id = "C4ee96dad094278d3f2b530a8e0aef6ed"    #鏟屎官
     #     # group_id = "Cd627ff8b5c500044e9fc51609cfd4887"    #羊綺機器人測試
     #     # 回傳訊息示例
