@@ -364,6 +364,8 @@ def handle_message(event):
             limit = "true"    #特定群組可使用的功能
         else:
             limit = "false"    #非特定群組不可使用的功能
+    else:
+        limit = "false"    #非特定群組不可使用的功能
     #     # group_id = "C4ee96dad094278d3f2b530a8e0aef6ed"    #鏟屎官
     #     # group_id = "Cd627ff8b5c500044e9fc51609cfd4887"    #羊綺機器人測試
     #     # 回傳訊息示例
