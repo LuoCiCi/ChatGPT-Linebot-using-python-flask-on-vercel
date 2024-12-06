@@ -367,7 +367,7 @@ def handle_message(event):
     
     
     if event.message.text == "text":
-        line_bot_api.push_message(user_id, TextSendMessage(text='test....'))
+        # line_bot_api.push_message(user_id, TextSendMessage(text='test....'))
         line_bot_api.push_message(
                 "U86fd4e0cce57a1b2d5ec119c8f9d6d7e",
                 TextSendMessage(text=f"user_id:{user_id}"))
@@ -383,6 +383,7 @@ def handle_message(event):
     if event.message.text == "雨量" or event.message.text == "濕度":
         working_status = True
         if event.source.type == 'group':
+            line_bot_api.push_message("U86fd4e0cce57a1b2d5ec119c8f9d6d7e", TextSendMessage(text=f"group_id:{group_id}"))
             if group_id == moneymany_groupid or group_id == mytest_groupid:
 
                 prev_url, prev_prev_url = get_rain_pic()
