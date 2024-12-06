@@ -358,8 +358,8 @@ def handle_message(event):
     # line_bot_api.push_message("U86fd4e0cce57a1b2d5ec119c8f9d6d7e", TextSendMessage(text=f"user_id:{user_id}"))
 
     # #取得群組id
-    # if event.source.type == 'group':
-    #     group_id = event.source.group_id
+    if event.source.type == 'group':
+        group_id = event.source.group_id
     #     # group_id = "C4ee96dad094278d3f2b530a8e0aef6ed"    #鏟屎官
     #     # group_id = "Cd627ff8b5c500044e9fc51609cfd4887"    #羊綺機器人測試
     #     # 回傳訊息示例
@@ -367,11 +367,10 @@ def handle_message(event):
     
     
     if event.message.text == "text":
-        # line_bot_api.push_message(user_id, TextSendMessage(text='test....'))
-        line_bot_api.push_message("U86fd4e0cce57a1b2d5ec119c8f9d6d7e", TextSendMessage(text=f"group_id:{moneymany_groupid}"))
-        # line_bot_api.push_message(
-        #         "U86fd4e0cce57a1b2d5ec119c8f9d6d7e",
-        #         TextSendMessage(text=f"user_id:{user_id}"))
+        line_bot_api.push_message(user_id, TextSendMessage(text='test....'))
+        line_bot_api.push_message(
+                "U86fd4e0cce57a1b2d5ec119c8f9d6d7e",
+                TextSendMessage(text=f"user_id:{user_id}"))
         return
 
     if event.message.text == "QQQ":
@@ -383,30 +382,31 @@ def handle_message(event):
 
     if event.message.text == "雨量" or event.message.text == "濕度":
         working_status = True
+        if group_id or group_id == moneymany_groupid or group_id == mytest_groupid:
 
-        prev_url, prev_prev_url = get_rain_pic()
-
-        if (check_image_url_exists(prev_url)):
-            # url = prev_url
-            # 回傳訊息
-            line_bot_api.reply_message(
-                event.reply_token,
-                [
-                    ImageSendMessage(original_content_url=prev_url, preview_image_url=prev_url)
-                ]
-            )
-        elif (check_image_url_exists(prev_prev_url)):
-            # 回傳訊息
-            line_bot_api.reply_message(
-                event.reply_token,
-                [
-                    ImageSendMessage(original_content_url=prev_prev_url, preview_image_url=prev_prev_url)
-                ]
-            )
-        else:
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text="無法取得雨量圖"))
+            prev_url, prev_prev_url = get_rain_pic()
+    
+            if (check_image_url_exists(prev_url)):
+                # url = prev_url
+                # 回傳訊息
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    [
+                        ImageSendMessage(original_content_url=prev_url, preview_image_url=prev_url)
+                    ]
+                )
+            elif (check_image_url_exists(prev_prev_url)):
+                # 回傳訊息
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    [
+                        ImageSendMessage(original_content_url=prev_prev_url, preview_image_url=prev_prev_url)
+                    ]
+                )
+            else:
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text="無法取得雨量圖"))
         return
 
     if event.message.text == "溫度" or event.message.text == "氣溫":
