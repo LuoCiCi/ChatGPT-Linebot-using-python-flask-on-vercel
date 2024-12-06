@@ -383,7 +383,7 @@ def handle_message(event):
     if event.message.text == "雨量" or event.message.text == "濕度":
         working_status = True
         if event.source.type == 'group':
-            if group_id == moneymany_groupid or group_id == mytest_groupid:
+        #     if group_id == moneymany_groupid or group_id == mytest_groupid:
 
                 prev_url, prev_prev_url = get_rain_pic()
         
