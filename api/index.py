@@ -385,30 +385,30 @@ def handle_message(event):
 
     if event.message.text == "雨量" or event.message.text == "濕度":
         working_status = True
-        if limit == 'true':
-            prev_url, prev_prev_url = get_rain_pic()
-    
-            if (check_image_url_exists(prev_url)):
-                # url = prev_url
-                # 回傳訊息
-                line_bot_api.reply_message(
-                    event.reply_token,
-                    [
-                        ImageSendMessage(original_content_url=prev_url, preview_image_url=prev_url)
-                    ]
-                )
-            elif (check_image_url_exists(prev_prev_url)):
-                # 回傳訊息
-                line_bot_api.reply_message(
-                    event.reply_token,
-                    [
-                        ImageSendMessage(original_content_url=prev_prev_url, preview_image_url=prev_prev_url)
-                    ]
-                )
-            else:
-                line_bot_api.reply_message(
-                    event.reply_token,
-                    TextSendMessage(text="無法取得雨量圖"))
+        
+        prev_url, prev_prev_url = get_rain_pic()
+
+        if (check_image_url_exists(prev_url)):
+            # url = prev_url
+            # 回傳訊息
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    ImageSendMessage(original_content_url=prev_url, preview_image_url=prev_url)
+                ]
+            )
+        elif (check_image_url_exists(prev_prev_url)):
+            # 回傳訊息
+            line_bot_api.reply_message(
+                event.reply_token,
+                [
+                    ImageSendMessage(original_content_url=prev_prev_url, preview_image_url=prev_prev_url)
+                ]
+            )
+        else:
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="無法取得雨量圖"))
         return
 
     if event.message.text == "溫度" or event.message.text == "氣溫":
@@ -1091,6 +1091,7 @@ def handle_message(event):
             return
   
     if event.message.text == "彩蛋抽":
+        # 限定綺可使用功能
         if user_id == "U86fd4e0cce57a1b2d5ec119c8f9d6d7e":
             working_status = False
             max_attempts = 5  # 設定最多嘗試的次數
@@ -1101,7 +1102,7 @@ def handle_message(event):
                 random_value = random.random()        
                 if random_value < 0.7:  # 80% 機率
                     
-                    random_number_image_urls_2 = random.randint(1,78)
+                    random_number_image_urls_2 = random.randint(1,85)
                     image_urls_2 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/SR%20({random_number_image_urls_2}).jpg"
                     
                     if check_image_url_exists(image_urls_2):
@@ -1116,7 +1117,7 @@ def handle_message(event):
                         break  # 找到圖片後退出迴圈
                 else:
                     
-                    random_number_image_urls_3 = random.randint(1,35)
+                    random_number_image_urls_3 = random.randint(1,40)
                     image_urls_3 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/SSR%20({random_number_image_urls_3}).jpg"
                     
                     if check_image_url_exists(image_urls_3):
@@ -1151,41 +1152,55 @@ def handle_message(event):
    
         # 進行圖片URL檢查
         while attempts < max_attempts:    
-            
-            random_value = random.random()        
-            if random_value < 0.05:  # 10% 機率
-                
-                random_number_image_urls_2 = random.randint(1,78)
-                image_urls_2 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/SR%20({random_number_image_urls_2}).jpg"
-                
-                if check_image_url_exists(image_urls_2):
-                # 如果圖片存在，回傳訊息
-                    line_bot_api.reply_message(
-                        event.reply_token,
-                        [
-                            TextSendMessage(f"抽中稀有SR彩蛋編號: {random_number_image_urls_2}"),
-                            ImageSendMessage(original_content_url=image_urls_2, preview_image_url=image_urls_2)
-                        ]
-                    )
-                    break  # 找到圖片後退出迴圈
-            elif random_value < 0.05 + 0.02: #3% 機率
-                
-                random_number_image_urls_3 = random.randint(1,35)
-                image_urls_3 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/SSR%20({random_number_image_urls_3}).jpg"
-                
-                if check_image_url_exists(image_urls_3):
-                # 如果圖片存在，回傳訊息
-                    line_bot_api.reply_message(
-                        event.reply_token,
-                        [
-                            TextSendMessage(f"恭喜抽中超稀有SSR彩蛋編號: {random_number_image_urls_3}"),
-                            ImageSendMessage(original_content_url=image_urls_3, preview_image_url=image_urls_3)
-                        ]
-                    )
-                    break  # 找到圖片後退出迴圈
+            if limit == 'true':
+                random_value = random.random()        
+                if random_value < 0.05:  # 10% 機率
+                    
+                    random_number_image_urls_2 = random.randint(1,85)
+                    image_urls_2 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/SR%20({random_number_image_urls_2}).jpg"
+                    
+                    if check_image_url_exists(image_urls_2):
+                    # 如果圖片存在，回傳訊息
+                        line_bot_api.reply_message(
+                            event.reply_token,
+                            [
+                                TextSendMessage(f"抽中稀有SR彩蛋編號: {random_number_image_urls_2}"),
+                                ImageSendMessage(original_content_url=image_urls_2, preview_image_url=image_urls_2)
+                            ]
+                        )
+                        break  # 找到圖片後退出迴圈
+                elif random_value < 0.05 + 0.02: #3% 機率
+                    
+                    random_number_image_urls_3 = random.randint(1,40)
+                    image_urls_3 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/SSR%20({random_number_image_urls_3}).jpg"
+                    
+                    if check_image_url_exists(image_urls_3):
+                    # 如果圖片存在，回傳訊息
+                        line_bot_api.reply_message(
+                            event.reply_token,
+                            [
+                                TextSendMessage(f"恭喜抽中超稀有SSR彩蛋編號: {random_number_image_urls_3}"),
+                                ImageSendMessage(original_content_url=image_urls_3, preview_image_url=image_urls_3)
+                            ]
+                        )
+                        break  # 找到圖片後退出迴圈
+                else:
+                    
+                    random_number_image_urls_1 = random.randint(1,360)
+                    image_urls_1 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/Draw%20({random_number_image_urls_1}).jpg"
+                    
+                    if check_image_url_exists(image_urls_1):
+                    # 如果圖片存在，回傳訊息
+                        line_bot_api.reply_message(
+                            event.reply_token,
+                            [
+                                ImageSendMessage(original_content_url=image_urls_1, preview_image_url=image_urls_1)
+                            ]
+                        )
+                        break  # 找到圖片後退出迴圈        
             else:
                 
-                random_number_image_urls_1 = random.randint(1,330)
+                random_number_image_urls_1 = random.randint(1,360)
                 image_urls_1 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/Draw%20({random_number_image_urls_1}).jpg"
                 
                 if check_image_url_exists(image_urls_1):
@@ -1220,41 +1235,54 @@ def handle_message(event):
         for i in range(3):
             attempts = 0  # 每次抽取重置計數
             while attempts < max_attempts:
-                random_value = random.random()
-                
-                # 抽取機率
-                if random_value < 0.05:  # 5% 機率
-                    random_number_image_urls_2 = random.randint(1, 78)
-                    image_urls_2 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/SR%20({random_number_image_urls_2}).jpg"
+                if limit == 'true':
+                    random_value = random.random()
                     
-                    if check_image_url_exists(image_urls_2):
-                        if not p1:
-                            t1 = TextSendMessage(f"抽中稀有SR彩蛋編號: {random_number_image_urls_2}")
-                            p1 = ImageSendMessage(original_content_url=image_urls_2, preview_image_url=image_urls_2)
-                        elif not p2:
-                            t2 = TextSendMessage(f"抽中稀有SR彩蛋編號: {random_number_image_urls_2}")
-                            p2 = ImageSendMessage(original_content_url=image_urls_2, preview_image_url=image_urls_2)
-                        else:
-                            t3 = TextSendMessage(f"抽中稀有SR彩蛋編號: {random_number_image_urls_2}")
-                            p3 = ImageSendMessage(original_content_url=image_urls_2, preview_image_url=image_urls_2)
-                        break
-    
-                elif random_value < 0.07:  # 2% 機率
-                    random_number_image_urls_3 = random.randint(1, 35)
-                    image_urls_3 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/SSR%20({random_number_image_urls_3}).jpg"
-                    
-                    if check_image_url_exists(image_urls_3):
-                        if not p1:
-                            t1 = TextSendMessage(f"恭喜抽中超稀有SSR彩蛋編號: {random_number_image_urls_3}")
-                            p1 = ImageSendMessage(original_content_url=image_urls_3, preview_image_url=image_urls_3)
-                        elif not p2:
-                            t2 = TextSendMessage(f"恭喜抽中超稀有SSR彩蛋編號: {random_number_image_urls_3}")
-                            p2 = ImageSendMessage(original_content_url=image_urls_3, preview_image_url=image_urls_3)
-                        else:
-                            t3 = TextSendMessage(f"恭喜抽中超稀有SSR彩蛋編號: {random_number_image_urls_3}")
-                            p3 = ImageSendMessage(original_content_url=image_urls_3, preview_image_url=image_urls_3)
-                        break
-    
+                    # 抽取機率
+                    if random_value < 0.05:  # 5% 機率
+                        random_number_image_urls_2 = random.randint(1, 85)
+                        image_urls_2 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/SR%20({random_number_image_urls_2}).jpg"
+                        
+                        if check_image_url_exists(image_urls_2):
+                            if not p1:
+                                t1 = TextSendMessage(f"抽中稀有SR彩蛋編號: {random_number_image_urls_2}")
+                                p1 = ImageSendMessage(original_content_url=image_urls_2, preview_image_url=image_urls_2)
+                            elif not p2:
+                                t2 = TextSendMessage(f"抽中稀有SR彩蛋編號: {random_number_image_urls_2}")
+                                p2 = ImageSendMessage(original_content_url=image_urls_2, preview_image_url=image_urls_2)
+                            else:
+                                t3 = TextSendMessage(f"抽中稀有SR彩蛋編號: {random_number_image_urls_2}")
+                                p3 = ImageSendMessage(original_content_url=image_urls_2, preview_image_url=image_urls_2)
+                            break
+        
+                    elif random_value < 0.07:  # 2% 機率
+                        random_number_image_urls_3 = random.randint(1, 40)
+                        image_urls_3 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/SSR%20({random_number_image_urls_3}).jpg"
+                        
+                        if check_image_url_exists(image_urls_3):
+                            if not p1:
+                                t1 = TextSendMessage(f"恭喜抽中超稀有SSR彩蛋編號: {random_number_image_urls_3}")
+                                p1 = ImageSendMessage(original_content_url=image_urls_3, preview_image_url=image_urls_3)
+                            elif not p2:
+                                t2 = TextSendMessage(f"恭喜抽中超稀有SSR彩蛋編號: {random_number_image_urls_3}")
+                                p2 = ImageSendMessage(original_content_url=image_urls_3, preview_image_url=image_urls_3)
+                            else:
+                                t3 = TextSendMessage(f"恭喜抽中超稀有SSR彩蛋編號: {random_number_image_urls_3}")
+                                p3 = ImageSendMessage(original_content_url=image_urls_3, preview_image_url=image_urls_3)
+                            break
+        
+                    else:  # 普通圖片
+                        random_number_image_urls_1 = random.randint(1, 360)
+                        image_urls_1 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/Draw%20({random_number_image_urls_1}).jpg"
+                        
+                        if check_image_url_exists(image_urls_1):
+                            if not p1:
+                                p1 = ImageSendMessage(original_content_url=image_urls_1, preview_image_url=image_urls_1)
+                            elif not p2:
+                                p2 = ImageSendMessage(original_content_url=image_urls_1, preview_image_url=image_urls_1)
+                            else:
+                                p3 = ImageSendMessage(original_content_url=image_urls_1, preview_image_url=image_urls_1)
+                            break
                 else:  # 普通圖片
                     random_number_image_urls_1 = random.randint(1, 330)
                     image_urls_1 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/Draw%20({random_number_image_urls_1}).jpg"
@@ -1267,6 +1295,7 @@ def handle_message(event):
                         else:
                             p3 = ImageSendMessage(original_content_url=image_urls_1, preview_image_url=image_urls_1)
                         break
+                    
     
                 attempts += 1
     
