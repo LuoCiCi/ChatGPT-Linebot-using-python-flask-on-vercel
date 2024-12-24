@@ -1140,7 +1140,7 @@ def handle_message(event):
                     # 如果在max_attempts次內未找到有效圖片
                     line_bot_api.reply_message(
                         event.reply_token,
-                        TextSendMessage(text="無法找到對應的圖片，請稍後再試。")
+                        TextSendMessage(text="無法找到對應的圖片。")
                     )
             elif "彩蛋抽SSR" in event.message.text:
                 match = re.match(r"彩蛋抽SSR(\d{1,3})", event.message.text)
@@ -1164,7 +1164,7 @@ def handle_message(event):
                         # 如果在max_attempts次內未找到有效圖片
                         line_bot_api.reply_message(
                             event.reply_token,
-                            TextSendMessage(text="無法找到對應的圖片，請稍後再試。")
+                            TextSendMessage(text="無法找到對應的圖片。")
                         )
                         return;
             else:
@@ -1189,7 +1189,7 @@ def handle_message(event):
                         # 如果在max_attempts次內未找到有效圖片
                         line_bot_api.reply_message(
                             event.reply_token,
-                            TextSendMessage(text="無法找到對應的圖片，請稍後再試。")
+                            TextSendMessage(text="無法找到對應的圖片。")
                         )
                         return;
         else:
