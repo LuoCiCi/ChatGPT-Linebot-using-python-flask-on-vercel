@@ -1160,6 +1160,13 @@ def handle_message(event):
                             ]
                         )
                         return
+                    else:
+                        # 如果在max_attempts次內未找到有效圖片
+                        line_bot_api.reply_message(
+                            event.reply_token,
+                            TextSendMessage(text="無法找到對應的圖片，請稍後再試。")
+                        )
+                        return;
             else:
                 match = re.match(r"彩蛋抽SR(\d{1,3})", event.message.text)
                 if match:
@@ -1178,6 +1185,13 @@ def handle_message(event):
                             ]
                         )
                         return
+                    else:
+                        # 如果在max_attempts次內未找到有效圖片
+                        line_bot_api.reply_message(
+                            event.reply_token,
+                            TextSendMessage(text="無法找到對應的圖片，請稍後再試。")
+                        )
+                        return;
         else:
             # 如果在max_attempts次內未找到有效圖片
             line_bot_api.reply_message(
