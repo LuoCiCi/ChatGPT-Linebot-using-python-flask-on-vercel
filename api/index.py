@@ -1093,53 +1093,91 @@ def handle_message(event):
             )
             return
   
-    if event.message.text == "彩蛋抽":
+    if "彩蛋抽" in event.message.text:
         # 限定綺可使用功能
         if user_id == "U86fd4e0cce57a1b2d5ec119c8f9d6d7e":
-            working_status = False
-            max_attempts = 5  # 設定最多嘗試的次數
-            attempts = 0
-    
-            # 進行圖片URL檢查
-            while attempts < max_attempts:
-                random_value = random.random()        
-                if random_value < 0.7:  # 80% 機率
-                    
-                    random_number_image_urls_2 = random.randint(1,85)
-                    image_urls_2 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/SR%20({random_number_image_urls_2}).jpg"
-                    
-                    if check_image_url_exists(image_urls_2):
-                    # 如果圖片存在，回傳訊息
-                        line_bot_api.reply_message(
-                            event.reply_token,
-                            [
-                                TextSendMessage(f"抽中稀有SR彩蛋編號: {random_number_image_urls_2}"),
-                                ImageSendMessage(original_content_url=image_urls_2, preview_image_url=image_urls_2)
-                            ]
-                        )
-                        break  # 找到圖片後退出迴圈
+
+            if event.message.text == "彩蛋抽" :
+                working_status = False
+                max_attempts = 5  # 設定最多嘗試的次數
+                attempts = 0
+        
+                # 進行圖片URL檢查
+                while attempts < max_attempts:
+                    random_value = random.random()        
+                    if random_value < 0.7:  # 80% 機率
+                        
+                        random_number_image_urls_2 = random.randint(1,85)
+                        image_urls_2 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/SR%20({random_number_image_urls_2}).jpg"
+                        
+                        if check_image_url_exists(image_urls_2):
+                        # 如果圖片存在，回傳訊息
+                            line_bot_api.reply_message(
+                                event.reply_token,
+                                [
+                                    TextSendMessage(f"抽中稀有SR彩蛋編號: {random_number_image_urls_2}"),
+                                    ImageSendMessage(original_content_url=image_urls_2, preview_image_url=image_urls_2)
+                                ]
+                            )
+                            break  # 找到圖片後退出迴圈
+                    else:
+                        
+                        random_number_image_urls_3 = random.randint(1,40)
+                        image_urls_3 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/SSR%20({random_number_image_urls_3}).jpg"
+                        
+                        if check_image_url_exists(image_urls_3):
+                        # 如果圖片存在，回傳訊息
+                            line_bot_api.reply_message(
+                                event.reply_token,
+                                [
+                                    TextSendMessage(f"恭喜抽中超稀有SSR彩蛋編號: {random_number_image_urls_3}"),
+                                    ImageSendMessage(original_content_url=image_urls_3, preview_image_url=image_urls_3)
+                                ]
+                            )
+                            break  # 找到圖片後退出迴圈
+                    attempts += 1
                 else:
-                    
-                    random_number_image_urls_3 = random.randint(1,40)
-                    image_urls_3 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/SSR%20({random_number_image_urls_3}).jpg"
-                    
-                    if check_image_url_exists(image_urls_3):
-                    # 如果圖片存在，回傳訊息
+                    # 如果在max_attempts次內未找到有效圖片
+                    line_bot_api.reply_message(
+                        event.reply_token,
+                        TextSendMessage(text="無法找到對應的圖片，請稍後再試。")
+                    )
+            elif "彩蛋抽SSR" in event.message.text:
+                match = re.match(r"彩蛋抽SSR(\d{1,3})", event.message.text)
+                if match:
+                    num_draws = int(match.group(1))
+
+                    # image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Pokemon/Pokemon1%20({num_draws}).png"
+                    image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/SSR%20({num_draws}).jpg"
+
+                    if check_image_url_exists(image_url):
+                        # 如果圖片存在，回傳訊息
                         line_bot_api.reply_message(
                             event.reply_token,
                             [
-                                TextSendMessage(f"恭喜抽中超稀有SSR彩蛋編號: {random_number_image_urls_3}"),
-                                ImageSendMessage(original_content_url=image_urls_3, preview_image_url=image_urls_3)
+                                TextSendMessage(f"恭喜抽中超稀有SSR彩蛋編號: {num_draws}"),
+                                ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
                             ]
                         )
-                        break  # 找到圖片後退出迴圈
-                attempts += 1
+                        return
             else:
-                # 如果在max_attempts次內未找到有效圖片
-                line_bot_api.reply_message(
-                    event.reply_token,
-                    TextSendMessage(text="無法找到對應的圖片，請稍後再試。")
-                )
+                match = re.match(r"彩蛋抽SR(\d{1,3})", event.message.text)
+                if match:
+                    num_draws = int(match.group(1))
+
+                    # image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Pokemon/Pokemon1%20({num_draws}).png"
+                    image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/SR%20({num_draws}).jpg"
+
+                    if check_image_url_exists(image_url):
+                        # 如果圖片存在，回傳訊息
+                        line_bot_api.reply_message(
+                            event.reply_token,
+                            [
+                                TextSendMessage(f"恭喜抽中超稀有SR彩蛋編號: {num_draws}"),
+                                ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
+                            ]
+                        )
+                        return
         else:
             # 如果在max_attempts次內未找到有效圖片
             line_bot_api.reply_message(
