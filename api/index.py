@@ -1095,7 +1095,7 @@ def handle_message(event):
   
     if "彩蛋抽" in event.message.text:
         # 限定綺可使用功能
-        if user_id == "U86fd4e0cce57a1b2d5ec119c8f9d6d7e":
+        if user_id == "U86fd4e0cce57a1b2d5ec119c8f9d6d7e" or user_id == "U4188c86fdcb702ced35ff9af8eb5b0bd":
 
             if event.message.text == "彩蛋抽" :
                 working_status = False
