@@ -1683,7 +1683,11 @@ def handle_message(event):
             TextSendMessage(text="健豪語錄 : 在此呼籲各位女性少用美肌"),
             TextSendMessage(text="健豪語錄 : 我穿搭品味相信大家都認同"),
             TextSendMessage(text="健豪語錄 : 我約再兩年結婚，我都規劃很好(2024/12/05)"),
-            TextSendMessage(text="螃蟹大濕🦀"),
+            TextSendMessage(text="健豪語錄 : 看來只有我CP值最高"),
+            TextSendMessage(text="健豪語錄 : 會聊天又長的OK，收入也OK"),
+            TextSendMessage(text="健豪語錄 : 有車有又帥房高CP男子"),
+            TextSendMessage(text="健豪語錄 : 不要懷疑我很會聊，我被很多妹子肯定了"),
+            TextSendMessage(text="健豪語錄 : 跟妹子聊天都會變答錄機，話題太多了"),
             TextSendMessage(text="放線大濕🧵"),
             TextSendMessage(text="玩草男孩🌱")
         ]
