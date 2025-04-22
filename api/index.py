@@ -1617,15 +1617,17 @@ def handle_message(event):
             TextSendMessage(text="貪吃的豬豬🐷"),
             TextSendMessage(text="好可愛❤️"),
             TextSendMessage(text="好漂亮❤️"),
-            TextSendMessage(text="美麗動人❤️"),
+            TextSendMessage(text="貓奴"),
             TextSendMessage(text="清新脫俗❤️"),
-            TextSendMessage(text="嬌美如花👩"),
+            TextSendMessage(text="腦洞少女"),
             TextSendMessage(text="只會睡覺😴"),
             TextSendMessage(text="閉月羞花❤️"),
-            TextSendMessage(text="傾國傾城👩"),
+            TextSendMessage(text="反差系才女"),
             TextSendMessage(text="玉潔冰清❤️"),
-            TextSendMessage(text="花容月貌❤️"),
-            TextSendMessage(text="沒有D😿")
+            TextSendMessage(text="壞壞惹人愛"),
+            TextSendMessage(text="療癒系女友"),
+            TextSendMessage(text="永遠的POE新手"),
+            TextSendMessage(text="人間小貓咪")
         ]
         # 回傳訊息
         line_bot_api.reply_message(
@@ -1698,7 +1700,12 @@ def handle_message(event):
         working_status = False
         messages = [
             TextSendMessage(text="快生孩子👶"),
+            TextSendMessage(text="讓老婆睡到半夜三點睡不著"),
+            TextSendMessage(text="一直偷買公仔"),
+            TextSendMessage(text="不跟老婆當志工，在家偷壞壞"),
             TextSendMessage(text="孟柔小狼狗🐕"),
+            TextSendMessage(text="考慮養狗中"),
+            TextSendMessage(text="公仔守恆定律"),
             TextSendMessage(text="人夫🤵‍♀️"),
             TextSendMessage(text="閃婚狗💍"),
             TextSendMessage(text="偷偷買公仔🎎"),
@@ -1706,11 +1713,8 @@ def handle_message(event):
             TextSendMessage(text="法號悅群☯️"),
             TextSendMessage(text="有洞🕳️"),
             TextSendMessage(text="悅群師兄📿"),
-            TextSendMessage(text="。"),
             TextSendMessage(text="喜歡大內內"),
             TextSendMessage(text="沒有30cm📏"),
-            TextSendMessage(text="大概3cm?🧷"),
-            TextSendMessage(text="睡覺很吵🔊"),
             TextSendMessage(text="再打呼阿🗣️"),
             TextSendMessage(text="竹北有房🏘️")
         ]
@@ -1727,11 +1731,18 @@ def handle_message(event):
         working_status = False
         messages = [
             TextSendMessage(text="珮綺行動錢包💰"),
+            TextSendMessage(text="模型新手"),
+            TextSendMessage(text="電腦工具人"),
+            TextSendMessage(text="想要換電腦"),
+            TextSendMessage(text="不懂女人"),
+            TextSendMessage(text="讓珮綺不能睡覺"),
             TextSendMessage(text="宅🏠"),
             TextSendMessage(text="鏟屎官1號🐱"),
             TextSendMessage(text="雷喔⚡"),
             TextSendMessage(text="汪🐕‍🦺"),
-            TextSendMessage(text="積積陰陰的🐓"),
+            TextSendMessage(text="珮綺御用司機"),
+            TextSendMessage(text="負責吃飯睡覺"),
+            TextSendMessage(text="錢錢多多老爸"),
             TextSendMessage(text="馬子狗🐕‍🦺"),
             TextSendMessage(text="馬桶沒在刷🚽"),
             TextSendMessage(text="又長又大📏"),
