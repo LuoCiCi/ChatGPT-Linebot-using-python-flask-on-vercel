@@ -1688,6 +1688,10 @@ def handle_message(event):
             TextSendMessage(text="健豪語錄 : 有車有又帥房高CP男子"),
             TextSendMessage(text="健豪語錄 : 不要懷疑我很會聊，我被很多妹子肯定了"),
             TextSendMessage(text="健豪語錄 : 跟妹子聊天都會變答錄機，話題太多了"),
+            TextSendMessage(text="健豪語錄 : 真的無法當壞男人，心中道德感太高"),
+            TextSendMessage(text="健豪語錄 : 海王修煉中"),
+            TextSendMessage(text="健豪語錄 : 好女孩別錯過，壞女孩別浪費"),
+            TextSendMessage(text="健豪語錄 : 年薪250之前不養女人"),
             TextSendMessage(text="放線大濕🧵"),
             TextSendMessage(text="玩草男孩🌱")
         ]
