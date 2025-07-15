@@ -1214,7 +1214,7 @@ def handle_message(event):
                 
             if random_value < 0.05:  # 10% 機率
                 
-                random_number_image_urls_2 = random.randint(1,85)
+                random_number_image_urls_2 = random.randint(1,90)
                 image_urls_2 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/SR%20({random_number_image_urls_2}).jpg"
                 
                 if check_image_url_exists(image_urls_2):
@@ -1229,7 +1229,7 @@ def handle_message(event):
                     break  # 找到圖片後退出迴圈
             elif random_value < 0.05 + 0.02: #3% 機率
                 
-                random_number_image_urls_3 = random.randint(1,40)
+                random_number_image_urls_3 = random.randint(1,42)
                 image_urls_3 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/SSR%20({random_number_image_urls_3}).jpg"
                 
                 if check_image_url_exists(image_urls_3):
