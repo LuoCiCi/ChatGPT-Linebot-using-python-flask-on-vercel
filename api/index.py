@@ -1729,7 +1729,7 @@ def handle_message(event):
             TextSendMessage(text="每天準時交功課"),
             TextSendMessage(text="孟柔老公"),
             TextSendMessage(text="精蟲半殘"),
-            TextSendMessage(text="老婆想著荒涼的地方")
+            TextSendMessage(text="老婆想住荒涼的地方")
         ]
         # 回傳訊息
         line_bot_api.reply_message(
