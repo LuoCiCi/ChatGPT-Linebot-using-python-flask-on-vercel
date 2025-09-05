@@ -1760,6 +1760,10 @@ def handle_message(event):
             TextSendMessage(text="POE老玩家"),
             TextSendMessage(text="珮綺老夫老妻"),
             TextSendMessage(text="順其自然"),
+            TextSendMessage(text="我得洋壽又花掉了一些"),
+            TextSendMessage(text="是女的就可以"),
+            TextSendMessage(text="我以前交過長腿妹子"),
+            TextSendMessage(text="看誰想生就誰榨乾誰"),
             TextSendMessage(text="蟀🦗")
         ]
         # 回傳訊息
