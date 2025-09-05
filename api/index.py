@@ -1613,21 +1613,20 @@ def handle_message(event):
     if "珮綺" in event.message.text or "綺綺" in event.message.text:
         working_status = False
         messages = [
-            TextSendMessage(text="好正❤️"),
+            TextSendMessage(text="大正妹"),
             TextSendMessage(text="貪吃的豬豬🐷"),
-            TextSendMessage(text="好可愛❤️"),
-            TextSendMessage(text="好漂亮❤️"),
+            TextSendMessage(text="可愛少女"),
+            TextSendMessage(text="怎麼有這麼漂亮的女人"),
             TextSendMessage(text="貓奴"),
-            TextSendMessage(text="清新脫俗❤️"),
             TextSendMessage(text="腦洞少女"),
             TextSendMessage(text="只會睡覺😴"),
-            TextSendMessage(text="閉月羞花❤️"),
-            TextSendMessage(text="反差系才女"),
+            TextSendMessage(text="輕鬆加班賺加辦費"),
             TextSendMessage(text="玉潔冰清❤️"),
             TextSendMessage(text="壞壞惹人愛"),
-            TextSendMessage(text="療癒系女友"),
             TextSendMessage(text="永遠的POE新手"),
-            TextSendMessage(text="人間小貓咪")
+            TextSendMessage(text="你自己搖？"),
+            TextSendMessage(text="股票分析大濕"),
+            TextSendMessage(text="洋之呼吸")
         ]
         # 回傳訊息
         line_bot_api.reply_message(
@@ -1692,8 +1691,10 @@ def handle_message(event):
             TextSendMessage(text="健豪語錄 : 海王修煉中"),
             TextSendMessage(text="健豪語錄 : 好女孩別錯過，壞女孩別浪費"),
             TextSendMessage(text="健豪語錄 : 年薪250之前不養女人"),
-            TextSendMessage(text="放線大濕🧵"),
-            TextSendMessage(text="玩草男孩🌱")
+            TextSendMessage(text="健豪語錄 : 我比較愛這種樸素清純型的女生"),
+            TextSendMessage(text="健豪語錄 : 這麼帥怎麼可能單身"),
+            TextSendMessage(text="健豪語錄 : 我只是臉胖而已"),
+            TextSendMessage(text="健豪語錄 : 台股有種嘎到3萬啊"),
         ]
         # 回傳訊息
         line_bot_api.reply_message(
