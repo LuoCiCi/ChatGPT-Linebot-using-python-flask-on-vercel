@@ -1214,7 +1214,7 @@ def handle_message(event):
                 
             if random_value < 0.08:  # 10% 機率
                 
-                random_number_image_urls_2 = random.randint(1,95)
+                random_number_image_urls_2 = random.randint(1,100)
                 image_urls_2 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/SR%20({random_number_image_urls_2}).jpg"
                 
                 if check_image_url_exists(image_urls_2):
@@ -1284,7 +1284,7 @@ def handle_message(event):
                     
                     # 抽取機率
                     if random_value < 0.05:  # 5% 機率
-                        random_number_image_urls_2 = random.randint(1, 85)
+                        random_number_image_urls_2 = random.randint(1, 100)
                         image_urls_2 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/SR%20({random_number_image_urls_2}).jpg"
                         
                         if check_image_url_exists(image_urls_2):
@@ -1299,8 +1299,8 @@ def handle_message(event):
                                 p3 = ImageSendMessage(original_content_url=image_urls_2, preview_image_url=image_urls_2)
                             break
         
-                    elif random_value < 0.07:  # 2% 機率
-                        random_number_image_urls_3 = random.randint(1, 40)
+                    elif random_value < 0.05:  # 2% 機率
+                        random_number_image_urls_3 = random.randint(1, 100)
                         image_urls_3 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/SSR%20({random_number_image_urls_3}).jpg"
                         
                         if check_image_url_exists(image_urls_3):
@@ -1316,7 +1316,7 @@ def handle_message(event):
                             break
         
                     else:  # 普通圖片
-                        random_number_image_urls_1 = random.randint(1, 360)
+                        random_number_image_urls_1 = random.randint(1, 400)
                         image_urls_1 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/Draw%20({random_number_image_urls_1}).jpg"
                         
                         if check_image_url_exists(image_urls_1):
@@ -1328,7 +1328,7 @@ def handle_message(event):
                                 p3 = ImageSendMessage(original_content_url=image_urls_1, preview_image_url=image_urls_1)
                             break
                 else:  # 普通圖片
-                    random_number_image_urls_1 = random.randint(1, 330)
+                    random_number_image_urls_1 = random.randint(1, 400)
                     image_urls_1 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/Draw%20({random_number_image_urls_1}).jpg"
                     
                     if check_image_url_exists(image_urls_1):
