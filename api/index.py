@@ -1216,7 +1216,7 @@ def handle_message(event):
             if random_value < 0.08:  # 10% 機率
                 
                 random_number_image_urls_2 = random.randint(1,100)
-                image_urls_2 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/SR%20({random_number_image_urls_2}).jpg"
+                image_urls_2 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/SR%20({random_number_image_urls_2}).jpg?t={timestamp}"
                 
                 if check_image_url_exists(image_urls_2):
                 # 如果圖片存在，回傳訊息
@@ -1231,7 +1231,7 @@ def handle_message(event):
             elif random_value < 0.08 + 0.02: #3% 機率
                 
                 random_number_image_urls_3 = random.randint(1,55)
-                image_urls_3 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/SSR%20({random_number_image_urls_3}).jpg"
+                image_urls_3 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/SSR%20({random_number_image_urls_3}).jpg?t={timestamp}"
                 
                 if check_image_url_exists(image_urls_3):
                 # 如果圖片存在，回傳訊息
@@ -1269,7 +1269,7 @@ def handle_message(event):
     if event.message.text == "三連抽":
         working_status = False
         max_attempts = 5  # 設定最多嘗試的次數
-    
+        timestamp = int(time.time() * 1000)
         t1 = None
         t2 = None
         t3 = None
@@ -1286,7 +1286,7 @@ def handle_message(event):
                     # 抽取機率
                     if random_value < 0.05:  # 5% 機率
                         random_number_image_urls_2 = random.randint(1, 100)
-                        image_urls_2 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/SR%20({random_number_image_urls_2}).jpg"
+                        image_urls_2 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/SR%20({random_number_image_urls_2}).jpg?t={timestamp}"
                         
                         if check_image_url_exists(image_urls_2):
                             if not p1:
@@ -1302,7 +1302,7 @@ def handle_message(event):
         
                     elif random_value < 0.05:  # 2% 機率
                         random_number_image_urls_3 = random.randint(1, 100)
-                        image_urls_3 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/SSR%20({random_number_image_urls_3}).jpg"
+                        image_urls_3 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Drawing/SSR%20({random_number_image_urls_3}).jpg?t={timestamp}"
                         
                         if check_image_url_exists(image_urls_3):
                             if not p1:
@@ -1318,7 +1318,7 @@ def handle_message(event):
         
                     else:  # 普通圖片
                         random_number_image_urls_1 = random.randint(1, 400)
-                        image_urls_1 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/Draw%20({random_number_image_urls_1}).jpg"
+                        image_urls_1 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/Draw%20({random_number_image_urls_1}).jpg?t={timestamp}"
                         
                         if check_image_url_exists(image_urls_1):
                             if not p1:
@@ -1330,7 +1330,7 @@ def handle_message(event):
                             break
                 else:  # 普通圖片
                     random_number_image_urls_1 = random.randint(1, 400)
-                    image_urls_1 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/Draw%20({random_number_image_urls_1}).jpg"
+                    image_urls_1 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/Draw%20({random_number_image_urls_1}).jpg?t={timestamp}"
                     
                     if check_image_url_exists(image_urls_1):
                         if not p1:
@@ -1362,7 +1362,7 @@ def handle_message(event):
         # 進行圖片URL檢查
         while attempts < max_attempts:
             random_number = random.randint(1, 120)
-            image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/BigBusted/bigbusted%20({random_number}).jpg"
+            image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/BigBusted/bigbusted%20({random_number}).jpg?t={timestamp}"
             
             # 檢查圖片是否存在
             if check_image_url_exists(image_url):
