@@ -10,6 +10,7 @@ import random
 import pytz
 import textwrap
 import re
+import time
 
 #Function
 #from instruction import handle_instruction_message
@@ -1204,8 +1205,8 @@ def handle_message(event):
         
         working_status = False
         max_attempts = 5  # 設定最多嘗試的次數
-        attempts = 0        
-   
+        attempts = 0 
+        timestamp = int(time.time() * 1000)       
         # 進行圖片URL檢查
         while attempts < max_attempts:    
             random_value = random.random()
@@ -1245,7 +1246,7 @@ def handle_message(event):
             else:
                 
                 random_number_image_urls_1 = random.randint(1,400)
-                image_urls_1 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/Draw%20({random_number_image_urls_1}).jpg"
+                image_urls_1 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/OtherDrawing/Draw%20({random_number_image_urls_1}).jpg?t={timestamp}"
                 
                 if check_image_url_exists(image_urls_1):
                 # 如果圖片存在，回傳訊息
