@@ -369,8 +369,8 @@ def handle_message(event):
         limit = "false"    #非特定群組不可使用的功能
     #     # group_id = "C4ee96dad094278d3f2b530a8e0aef6ed"    #鏟屎官
     #     # group_id = "Cd627ff8b5c500044e9fc51609cfd4887"    #羊綺機器人測試
-    # 回傳訊息示例
-    line_bot_api.push_message("U86fd4e0cce57a1b2d5ec119c8f9d6d7e", TextSendMessage(text=f"group_id:{group_id} + limit:{limit}"))
+    # # 回傳訊息示例
+    # line_bot_api.push_message("U86fd4e0cce57a1b2d5ec119c8f9d6d7e", TextSendMessage(text=f"group_id:{group_id} + limit:{limit}"))
     
     
     if event.message.text == "text":
@@ -1210,8 +1210,8 @@ def handle_message(event):
         # 進行圖片URL檢查
         while attempts < max_attempts:    
             random_value = random.random()
-            if limit == 'true':
-                random_value = 0.1
+            if limit == "true":
+                random_value = 0.4
                 
             if random_value < 0.08:  # 10% 機率
                 
