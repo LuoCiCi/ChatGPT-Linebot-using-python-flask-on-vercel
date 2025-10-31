@@ -1210,8 +1210,8 @@ def handle_message(event):
         # 進行圖片URL檢查
         while attempts < max_attempts:    
             random_value = random.random()
-            if limit == "true":
-                random_value = 0.4
+            if limit !== "true":
+                random_value = 0.1
                 
             if random_value < 0.08:  # 10% 機率
                 
@@ -1280,7 +1280,7 @@ def handle_message(event):
         for i in range(3):
             attempts = 0  # 每次抽取重置計數
             while attempts < max_attempts:
-                if limit == 'true':
+                if limit == "true":
                     random_value = random.random()
                     
                     # 抽取機率
