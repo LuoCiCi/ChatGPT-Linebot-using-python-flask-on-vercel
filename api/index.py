@@ -1212,7 +1212,7 @@ def handle_message(event):
             random_value = random.random()
             if limit == "false":
                 random_value = 0.1
-                line_bot_api.push_message("U86fd4e0cce57a1b2d5ec119c8f9d6d7e", TextSendMessage(text=f"random_value:{random_value} + limit:{limit}"))
+                # line_bot_api.push_message("U86fd4e0cce57a1b2d5ec119c8f9d6d7e", TextSendMessage(text=f"random_value:{random_value} + limit:{limit}"))
                 
             if random_value < 0.08:  # 10% 機率
                 
