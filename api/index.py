@@ -369,8 +369,8 @@ def handle_message(event):
         limit = "false"    #非特定群組不可使用的功能
     #     # group_id = "C4ee96dad094278d3f2b530a8e0aef6ed"    #鏟屎官
     #     # group_id = "Cd627ff8b5c500044e9fc51609cfd4887"    #羊綺機器人測試
-    #     # 回傳訊息示例
-    #     line_bot_api.push_message("U86fd4e0cce57a1b2d5ec119c8f9d6d7e", TextSendMessage(text=f"group_id:{group_id}"))
+        # 回傳訊息示例
+        line_bot_api.push_message("U86fd4e0cce57a1b2d5ec119c8f9d6d7e", TextSendMessage(text=f"group_id:{group_id} + limit:{limit}"))
     
     
     if event.message.text == "text":
@@ -1095,7 +1095,7 @@ def handle_message(event):
             return
   
     if "彩蛋抽" in event.message.text:
-        # 限定綺可使用功能
+        # 限定綺可使用功能 限定洋可使用功能
         if user_id == "U86fd4e0cce57a1b2d5ec119c8f9d6d7e" or user_id == "U4188c86fdcb702ced35ff9af8eb5b0bd":
 
             if event.message.text == "彩蛋抽" :
