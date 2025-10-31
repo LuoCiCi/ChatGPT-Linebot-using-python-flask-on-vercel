@@ -1210,7 +1210,7 @@ def handle_message(event):
         # 進行圖片URL檢查
         while attempts < max_attempts:    
             random_value = random.random()
-            if limit !== "true":
+            if limit == "false":
                 random_value = 0.1
                 
             if random_value < 0.08:  # 10% 機率
