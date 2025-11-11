@@ -580,9 +580,8 @@ def handle_message(event):
         typhoon_pic = None  # 初始化 typhoon_pic
 
         # 迴圈找最新的圖
-        # hour_ary = ["120", "96", "72", "48", "24"]
-        hour_ary = ["72"]
-        time_ary = ["06", "00"]
+        hour_ary = ["120", "96", "72", "48", "24"]
+        time_ary = ["00", "06"]
         for t in time_ary:
             for h in hour_ary:
                 url = f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{nowdate}{t}00-{h}_zhtw.png"
