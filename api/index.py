@@ -603,6 +603,7 @@ def handle_message(event):
                 event.reply_token,
                 [
                     TextSendMessage(text=f"{typhoon_url}"),
+                    TextSendMessage(text=f"{typhoon_pic}"),
                     ImageSendMessage(original_content_url=typhoon_pic, preview_image_url=typhoon_pic)
                 ]
             )
