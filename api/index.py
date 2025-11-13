@@ -760,6 +760,8 @@ def handle_message(event):
         records = data.get("records", {})
         locations = records.get("Locations", [])  # 注意這裡是大寫 L，根據實際資料而定
 
+        text_message = None  # 初始化 text_message
+
         for loc in locations:
             # 取得縣市名稱
             city_name = loc.get("LocationsName")
