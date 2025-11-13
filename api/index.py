@@ -732,7 +732,7 @@ def handle_message(event):
                     ]) # 傳送文字
         return
 
-    if event.message.text == "宜蘭縣預報":
+    if "預報" in event.message.text:
         working_status = True
     
         # 使用新的 36 小時天氣預報 API
