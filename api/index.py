@@ -751,31 +751,31 @@ def handle_message(event):
          #     "format": "JSON"
          # }
 
-         # 1. 發送請求
-         req = requests.get(future_url)  # 爬取資料
-         # response.raise_for_status()
-         data = req.json()
+        # 1. 發送請求
+        req = requests.get(future_url)  # 爬取資料
+        # response.raise_for_status()
+        data = req.json()
 
-         # 2. 解析資料
-         records = data.get("records", {})
-         locations = records.get("Locations", [])  # 注意這裡是大寫 L，根據實際資料而定
+        # 2. 解析資料
+        records = data.get("records", {})
+        locations = records.get("Locations", [])  # 注意這裡是大寫 L，根據實際資料而定
 
-         for loc in locations:
-             # 取得縣市名稱
-             city_name = loc.get("LocationsName")
-    
-             # 內層地區列表
-             for area in loc.get("Location", []):
-                 town_name = area.get("LocationName")  # 鄉鎮名稱
-        
-                 # 尋找「溫度」欄位
-                 for element in area.get("WeatherElement", []):
-                     if element.get("ElementName") == "溫度":
-                         text_message = f"===== {city_name} {town_name} ====="
-                         for t in element.get("Time", []):
-                             time_str = t.get("DataTime")
-                             temp_value = t.get("ElementValue", [{}])[0].get("Temperature")
-                             text_message = f"時間：{time_str} | 溫度：{temp_value}°C"
+        for loc in locations:
+            # 取得縣市名稱
+            city_name = loc.get("LocationsName")
+            
+            # 內層地區列表
+            for area in loc.get("Location", []):
+                town_name = area.get("LocationName")  # 鄉鎮名稱
+
+                # 尋找「溫度」欄位
+                for element in area.get("WeatherElement", []):
+                    if element.get("ElementName") == "溫度":
+                        text_message = f"{text_message}===== {city_name} {town_name} ====="
+                        for t in element.get("Time", []):
+                            time_str = t.get("DataTime")
+                            temp_value = t.get("ElementValue", [{}])[0].get("Temperature")
+                            text_message = f"{text_message}時間：{time_str} | 溫度：{temp_value}°C"
                          
 
 
