@@ -747,9 +747,7 @@ def handle_message(event):
         text_message_decoded = text_message  # 這裡的 text_message 應該是正常的字串
         
         line_bot_api.reply_message(event.reply_token,
-                [
-                    TextSendMessage(f"{text_message_decoded} 預報資料")
-                ]) # 傳送文字
+                TextSendMessage(f"{text_message_decoded} 預報資料"))
         
 
         return
