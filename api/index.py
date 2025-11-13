@@ -2369,10 +2369,17 @@ def handle_message(event):
             data = res.json()
 
             if target_coin in data:
-                price = data[target_coin]["usd"]
+                usd_price = data[target_coin]["usd"]
+                twd_price = data[target_coin]["twd"]
                 change = data[target_coin].get("usd_24h_change", 0)
                 arrow = "📈" if change >= 0 else "📉"
-                text_message = f"{arrow} {display_name} 現價：{price:.2f} USD\n24小時變化：{change:+.2f}%"
+
+                text_message = (
+                    f"{arrow} {display_name} 價格：\n"
+                    f"💵 美金：{usd_price:,.2f} USD\n"
+                    f"🇹🇼 台幣：約 {twd_price:,.0f} TWD\n"
+                    f"📊 24小時變化：{change:+.2f}%"
+                )
             else:
                 text_message = f"查不到 {display_name} 的資料。"
         else:
