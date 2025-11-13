@@ -735,8 +735,8 @@ def handle_message(event):
     if event.message.text == "宜蘭縣預報":
         working_status = True
 
-        # code = 'CWA-84D9233C-12BC-4CD7-B744-7C7F35F7AE48'
-        # future_url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-001?Authorization={code}'
+        code = 'CWA-84D9233C-12BC-4CD7-B744-7C7F35F7AE48'
+        future_url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-001?Authorization={code}'
 
         # req = requests.get(future_url)  # 爬取資料
         # data = req.json()       # 轉換成 json
@@ -745,14 +745,14 @@ def handle_message(event):
 
          # 中央氣象署未來天氣預報 API（全台縣市）
         
-         url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-001'
-         params = {
-             "Authorization": "CWA-84D9233C-12BC-4CD7-B744-7C7F35F7AE48",
-             "format": "JSON"
-         }
+         # url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-001'
+         # params = {
+         #     "Authorization": "CWA-84D9233C-12BC-4CD7-B744-7C7F35F7AE48",
+         #     "format": "JSON"
+         # }
 
          # 1. 發送請求
-         response = requests.get(future_url, params=params)
+         response = requests.get(future_url)
          response.raise_for_status()
          data = response.json()
 
