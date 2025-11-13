@@ -794,7 +794,7 @@ def handle_message(event):
             locationName = ""
 
         if locationName == "":
-            future_url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-089?Authorization={code}'
+            future_url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization={code}'
         else:
             future_url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization={code}&locationName={locationName}'
 
@@ -854,7 +854,7 @@ def handle_message(event):
             text_message = text_message[MAX_LEN:]
     
         # LINE 最多允許 5 則訊息
-        if len(messages) > 5:
+        if len(messages) > 15:
             messages = messages[:5]
     
         line_bot_api.reply_message(event.reply_token, messages)
