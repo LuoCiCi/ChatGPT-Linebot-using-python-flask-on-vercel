@@ -773,7 +773,7 @@ def handle_message(event):
                     if element.get("ElementName") == "溫度":
                         if text_message == "":
                             text_message = f"===== {city_name} {town_name} ====="
-                        else
+                        else:
                             text_message = f"{text_message}===== {city_name} {town_name} ====="
                         for t in element.get("Time", []):
                             time_str = t.get("DataTime")
