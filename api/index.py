@@ -758,8 +758,7 @@ def handle_message(event):
     
         for loc in locations:
             city_name = loc.get("locationName")
-            if city_name != "宜蘭縣":  # 只取宜蘭縣
-                continue
+
     
             text_message += f"===== {city_name}未來36小時天氣預報 =====\n"
     
