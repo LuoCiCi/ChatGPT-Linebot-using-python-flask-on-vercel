@@ -2362,10 +2362,7 @@ def handle_message(event):
             )
         else:
             text_message = f"查不到 {display_name} 的資料。"
-
-    else:
-        text_message = "請輸入像『BTC價格』或『比特幣價格』來查詢。"
-
+            
     # 回覆訊息
     line_bot_api.reply_message(
         event.reply_token,
