@@ -789,6 +789,8 @@ def handle_message(event):
             locationName = "%E5%98%89%E7%BE%A9%E5%B8%82"
         elif "屏東" in event.message.text:
             locationName = "%E5%B1%8F%E6%9D%B1%E7%B8%A3"
+        else:
+            continue
 
 
         future_url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization={code}&locationName={locationName}'
@@ -853,7 +855,7 @@ def handle_message(event):
             messages = messages[:5]
     
         line_bot_api.reply_message(event.reply_token, messages)
-    return
+        return
         
     if event.message.text == "說話":
         working_status = True
