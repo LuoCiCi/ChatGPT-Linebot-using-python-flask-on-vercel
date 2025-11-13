@@ -796,13 +796,17 @@ def handle_message(event):
                     f"溫度：{min_t}°C - {max_t}°C\n\n"
                 )
     
-        # 分段傳送，避免超過 5000 字
+        # 分段處理，避免超過限制
         MAX_LEN = 4800
         messages = []
         while len(text_message) > 0:
             part = text_message[:MAX_LEN]
             messages.append(TextSendMessage(text=part))
             text_message = text_message[MAX_LEN:]
+    
+        # LINE 最多允許 5 則訊息
+        if len(messages) > 5:
+            messages = messages[:5]
     
         line_bot_api.reply_message(event.reply_token, messages)
     return
