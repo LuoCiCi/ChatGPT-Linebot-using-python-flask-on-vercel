@@ -771,7 +771,7 @@ def handle_message(event):
                 # 尋找「溫度」欄位
                 for element in area.get("WeatherElement", []):
                     if element.get("ElementName") == "溫度":
-                        if text_message == ""
+                        if text_message == "":
                             text_message = f"===== {city_name} {town_name} ====="
                         else
                             text_message = f"{text_message}===== {city_name} {town_name} ====="
