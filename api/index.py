@@ -745,16 +745,12 @@ def handle_message(event):
         text_message = TextSendMessage(text=eq1)        # 取得文字內容
 
         text_message_decoded = text_message  # 這裡的 text_message 應該是正常的字串
-        if (check_image_url_exists(reply[1])):
-            line_bot_api.reply_message(event.reply_token,
-                    [
-                        TextSendMessage(f"{text_message} 預報資料")
-                    ]) # 傳送文字
-        else:
-            line_bot_api.reply_message(event.reply_token,
-                    [
-                        TextSendMessage(f"抓不到預報資訊")  # 傳送解碼後的文字
-                    ]) # 傳送文字
+        
+        line_bot_api.reply_message(event.reply_token,
+                [
+                    TextSendMessage(f"{text_message} 預報資料")
+                ]) # 傳送文字
+        
 
         return
         
