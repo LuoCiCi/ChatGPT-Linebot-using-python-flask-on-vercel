@@ -734,65 +734,39 @@ def handle_message(event):
 
     if event.message.text == "宜蘭縣預報":
         working_status = True
-
+    
         code = 'CWA-84D9233C-12BC-4CD7-B744-7C7F35F7AE48'
         future_url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-001?Authorization={code}'
-
-        # req = requests.get(future_url)  # 爬取資料
-        # data = req.json()       # 轉換成 json
-        # eq1 = data['records']['Locations'][0]['LocationsName']           # 取得縣市名
-
-
-         # 中央氣象署未來天氣預報 API（全台縣市）
-        
-         # url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-001'
-         # params = {
-         #     "Authorization": "CWA-84D9233C-12BC-4CD7-B744-7C7F35F7AE48",
-         #     "format": "JSON"
-         # }
-
+    
         # 1. 發送請求
         req = requests.get(future_url)  # 爬取資料
-        # response.raise_for_status()
         data = req.json()
-
+    
         # 2. 解析資料
         records = data.get("records", {})
-        locations = records.get("Locations", [])  # 注意這裡是大寫 L，根據實際資料而定
-
-        text_message = None  # 初始化 text_message
-
+        locations = records.get("Locations", [])
+    
+        text_message = ""  # 初始化空字串
+    
         for loc in locations:
-            # 取得縣市名稱
             city_name = loc.get("LocationsName")
-            
-            # 內層地區列表
             for area in loc.get("Location", []):
-                town_name = area.get("LocationName")  # 鄉鎮名稱
-
-                # 尋找「溫度」欄位
+                town_name = area.get("LocationName")
+    
                 for element in area.get("WeatherElement", []):
                     if element.get("ElementName") == "溫度":
-                        if text_message == "":
-                            text_message = f"===== {city_name} {town_name} ====="
-                        else:
-                            text_message = f"{text_message}===== {city_name} {town_name} ====="
+                        text_message += f"===== {city_name} {town_name} =====\n"
                         for t in element.get("Time", []):
                             time_str = t.get("DataTime")
                             temp_value = t.get("ElementValue", [{}])[0].get("Temperature")
-                            text_message = f"{text_message}時間：{time_str} | 溫度：{temp_value}°C"
-                         
+                            text_message += f"時間：{time_str} | 溫度：{temp_value}°C\n"
+    
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(f"{text_message}\n--- 預報資料 ---")
+        )
 
-
-        # text_message = TextSendMessage(text=eq1)        # 取得文字內容
-
-        # text_message_decoded = text_message  # 這裡的 text_message 應該是正常的字串
-        
-        line_bot_api.reply_message(event.reply_token,
-                TextSendMessage(f"{text_message} 預報資料1"))
-        
-
-        return
+    return
         
     if event.message.text == "說話":
         working_status = True
