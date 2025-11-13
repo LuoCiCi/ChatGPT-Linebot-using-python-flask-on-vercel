@@ -2452,7 +2452,7 @@ def handle_message(event):
 
     # ✅ 如果有找到對應幣名才觸發 API
     if target_coin:
-        import requests
+        # import requests
         url = "https://api.coingecko.com/api/v3/simple/price"
         params = {
             "ids": target_coin,
