@@ -737,14 +737,23 @@ def handle_message(event):
     
         # 使用新的 36 小時天氣預報 API
         code = 'CWA-84D9233C-12BC-4CD7-B744-7C7F35F7AE48'
-        future_url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization={code}'
-    
+        
+        # 取得地點
+        if "臺北市" in event.message.text:
+            locationName = "%E8%87%BA%E5%8C%97%E5%B8%82"
+        if "台北市" in event.message.text:
+            locationName = "%E8%87%BA%E5%8C%97%E5%B8%82"
+        elif "新北市" in event.message.text:
+            locationName = "%E6%96%B0%E5%8C%97%E5%B8%82"
+
+        future_url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization={code}&locationName={locationName}'
+
         req = requests.get(future_url)
         data = req.json()
     
         records = data.get("records", {})
         locations = records.get("location", [])
-    
+
         text_message = ""
     
         for loc in locations:
