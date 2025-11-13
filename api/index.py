@@ -2337,14 +2337,92 @@ def handle_message(event):
 #2025/11/13 羊新增幣圈功能=============================================
     user_text = event.message.text.strip().lower()
 
-    # 幣名對照表
+    # 幣名對照表# 主流幣
     coin_map = {
         "比特幣": "bitcoin",
         "btc": "bitcoin",
+        "bitcoin": "bitcoin",
+
         "以太幣": "ethereum",
         "eth": "ethereum",
+        "ethereum": "ethereum",
+
+        "泰達幣": "tether",
+        "usdt": "tether",
+        "tether": "tether",
+
+        "幣安幣": "binancecoin",
+        "bnb": "binancecoin",
+        "binance": "binancecoin",
+
+        "瑞波幣": "ripple",
+        "xrp": "ripple",
+        "ripple": "ripple",
+
+        "卡爾達諾": "cardano",
+        "ada": "cardano",
+
         "狗狗幣": "dogecoin",
         "doge": "dogecoin",
+        "dogecoin": "dogecoin",
+
+        "波卡": "polkadot",
+        "dot": "polkadot",
+
+        "索拉納": "solana",
+        "sol": "solana",
+        "solana": "solana",
+
+        "鏈鏈": "chainlink",
+        "link": "chainlink",
+        "chainlink": "chainlink",
+
+        "柴犬幣": "shiba-inu",
+        "shib": "shiba-inu",
+        "shiba": "shiba-inu",
+
+        "萊特幣": "litecoin",
+        "ltc": "litecoin",
+        "litecoin": "litecoin",
+
+        "雪崩幣": "avalanche-2",
+        "avax": "avalanche-2",
+
+        "polygon": "matic-network",
+        "matic": "matic-network",
+        "瑪蒂克": "matic-network",
+
+        "tron": "tron",
+        "trx": "tron",
+        "波場幣": "tron",
+
+        "uniswap": "uniswap",
+        "uni": "uniswap",
+
+        "stellar": "stellar",
+        "xlm": "stellar",
+        "恆星幣": "stellar",
+
+        "arbitrum": "arbitrum",
+        "arb": "arbitrum",
+
+        "aptos": "aptos",
+        "apt": "aptos",
+
+        "internet computer": "internet-computer",
+        "icp": "internet-computer",
+
+        "filecoin": "filecoin",
+        "fil": "filecoin",
+        "檔案幣": "filecoin",
+
+        "vechain": "vechain",
+        "vet": "vechain",
+        "唯鏈": "vechain",
+
+        "monero": "monero",
+        "xmr": "monero",
+        "門羅幣": "monero",
     }
 
     target_coin = None
