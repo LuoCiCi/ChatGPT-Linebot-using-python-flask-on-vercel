@@ -2333,6 +2333,60 @@ def handle_message(event):
             TextSendMessage(text=instruction_message)
         )
         return
+ 
+#2025/11/13 羊新增幣圈功能=============================================
+    user_text = event.message.text.strip().lower()
+    # 🪙 幣名對照表（可自行增加）
+    coin_map = {
+        "比特幣": "bitcoin",
+        "btc": "bitcoin",
+        "以太幣": "ethereum",
+        "eth": "ethereum",
+        "狗狗幣": "dogecoin",
+        "doge": "dogecoin",
+    }
+
+    # 🔍 如果輸入包含「價格」
+    if "價格" in user_text:
+        # 找出是哪一種幣
+        target_coin = None
+        display_name = None
+        for keyword, coin_id in coin_map.items():
+            if keyword in user_text:
+                target_coin = coin_id
+                display_name = keyword
+                break
+
+        if target_coin:
+            import requests
+            url = "https://api.coingecko.com/api/v3/simple/price"
+            params = {
+                "ids": target_coin,
+                "vs_currencies": "usd",
+                "include_24hr_change": "true"
+            }
+            res = requests.get(url, params=params)
+            data = res.json()
+
+            if target_coin in data:
+                price = data[target_coin]["usd"]
+                change = data[target_coin].get("usd_24h_change", 0)
+                arrow = "📈" if change >= 0 else "📉"
+                text_message = f"{arrow} {display_name} 現價：{price:.2f} USD\n24小時變化：{change:+.2f}%"
+            else:
+                text_message = f"查不到 {display_name} 的資料。"
+        else:
+            text_message = "請輸入要查詢的幣種，例如：BTC 價格、以太幣價格。"
+    else:
+        text_message = "請輸入像『BTC 價格』或『比特幣價格』來查詢。"
+
+    # 回覆給使用者
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=text_message)
+    )
+
+#======================================================================
     
     if working_status:
         chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
