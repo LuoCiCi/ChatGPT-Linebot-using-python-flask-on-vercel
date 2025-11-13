@@ -752,9 +752,9 @@ def handle_message(event):
          # }
 
          # 1. 發送請求
-         response = requests.get(future_url)
-         response.raise_for_status()
-         data = response.json()
+         req = requests.get(future_url)  # 爬取資料
+         # response.raise_for_status()
+         data = req.json()
 
          # 2. 解析資料
          records = data.get("records", {})
