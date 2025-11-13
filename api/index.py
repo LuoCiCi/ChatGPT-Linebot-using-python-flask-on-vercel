@@ -790,7 +790,9 @@ def handle_message(event):
         elif "屏東" in event.message.text:
             locationName = "%E5%B1%8F%E6%9D%B1%E7%B8%A3"
         else:
-            continue
+            line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="請輸入正確縣市！"))
 
 
         future_url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization={code}&locationName={locationName}'
