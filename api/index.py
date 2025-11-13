@@ -854,7 +854,7 @@ def handle_message(event):
             text_message = text_message[MAX_LEN:]
     
         # LINE 最多允許 5 則訊息
-        if len(messages) > 15:
+        if len(messages) > 5:
             messages = messages[:5]
     
         line_bot_api.reply_message(event.reply_token, messages)
