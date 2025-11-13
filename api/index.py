@@ -2335,10 +2335,94 @@ def handle_message(event):
         return
  
 #2025/11/13 羊新增幣圈功能=============================================
-    if event.message.text in ["比特幣價格", "BTC價格", "bitcoin價格"]:
-        target_coin = "bitcoin"
-        display_name = "比特幣"
+    user_text = event.message.text.strip()
+    user_text_lower = user_text.lower()  # ⚡ 修正：英文小寫匹配用
 
+    # 幣名對照表# 主流幣
+    coin_map = {
+        "比特幣": "bitcoin",
+        "btc": "bitcoin",
+        "bitcoin": "bitcoin",
+        "以太幣": "ethereum",
+        "eth": "ethereum",
+        "ethereum": "ethereum",
+        "泰達幣": "tether",
+        "usdt": "tether",
+        "tether": "tether",
+        "幣安幣": "binancecoin",
+        "bnb": "binancecoin",
+        "binance": "binancecoin",
+        "瑞波幣": "ripple",
+        "xrp": "ripple",
+        "ripple": "ripple",
+        "卡爾達諾": "cardano",
+        "ada": "cardano",
+        "狗狗幣": "dogecoin",
+        "doge": "dogecoin",
+        "dogecoin": "dogecoin",
+        "波卡": "polkadot",
+        "dot": "polkadot",
+        "索拉納": "solana",
+        "sol": "solana",
+        "solana": "solana",
+        "鏈鏈": "chainlink",
+        "link": "chainlink",
+        "chainlink": "chainlink",
+        "柴犬幣": "shiba-inu",
+        "shib": "shiba-inu",
+        "shiba": "shiba-inu",
+        "萊特幣": "litecoin",
+        "ltc": "litecoin",
+        "litecoin": "litecoin",
+        "雪崩幣": "avalanche-2",
+        "avax": "avalanche-2",
+        "polygon": "matic-network",
+        "matic": "matic-network",
+        "瑪蒂克": "matic-network",
+        "tron": "tron",
+        "trx": "tron",
+        "波場幣": "tron",
+        "uniswap": "uniswap",
+        "uni": "uniswap",
+        "stellar": "stellar",
+        "xlm": "stellar",
+        "恆星幣": "stellar",
+        "arbitrum": "arbitrum",
+        "arb": "arbitrum",
+        "aptos": "aptos",
+        "apt": "aptos",
+        "internet computer": "internet-computer",
+        "icp": "internet-computer",
+        "filecoin": "filecoin",
+        "fil": "filecoin",
+        "檔案幣": "filecoin",
+        "vechain": "vechain",
+        "vet": "vechain",
+        "唯鏈": "vechain",
+        "monero": "monero",
+        "xmr": "monero",
+        "門羅幣": "monero",
+    }
+
+    target_coin = None
+    display_name = None
+
+    # 🔍 ⚡ 修正：先判斷使用者輸入中有沒有幣名
+    for keyword, coin_id in coin_map.items():
+        if keyword.isascii():  # 英文匹配
+            if keyword.lower() in user_text_lower.replace(" ", ""):
+                target_coin = coin_id
+                display_name = keyword
+                break
+        else:  # 中文匹配
+            if keyword in user_text.replace(" ", ""):
+                target_coin = coin_id
+                display_name = keyword
+                break
+
+    # ✅ 如果有找到對應幣名才觸發 API
+    if target_coin:
+        import requests
         url = "https://api.coingecko.com/api/v3/simple/price"
         params = {
             "ids": target_coin,
@@ -2362,7 +2446,7 @@ def handle_message(event):
             )
         else:
             text_message = f"查不到 {display_name} 的資料。"
-            
+
     # 回覆訊息
     line_bot_api.reply_message(
         event.reply_token,
