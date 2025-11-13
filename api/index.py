@@ -732,83 +732,128 @@ def handle_message(event):
                     ]) # 傳送文字
         return
 
-    # if "預報" in event.message.text:
-    #     working_status = True
+    if "預報" in event.message.text:
+        working_status = True
     
-    #     # 使用新的 36 小時天氣預報 API
-    #     code = 'CWA-84D9233C-12BC-4CD7-B744-7C7F35F7AE48'
+        # 使用新的 36 小時天氣預報 API
+        code = 'CWA-84D9233C-12BC-4CD7-B744-7C7F35F7AE48'
         
-    #     # 取得地點
-    #     if "臺北市" in event.message.text:
-    #         locationName = "%E8%87%BA%E5%8C%97%E5%B8%82"
-    #     if "台北市" in event.message.text:
-    #         locationName = "%E8%87%BA%E5%8C%97%E5%B8%82"
-    #     elif "新北市" in event.message.text:
-    #         locationName = "%E6%96%B0%E5%8C%97%E5%B8%82"
+        # 取得地點
+        if "臺北" in event.message.text:
+            locationName = "%E8%87%BA%E5%8C%97%E5%B8%82"
+        if "台北" in event.message.text:
+            locationName = "%E8%87%BA%E5%8C%97%E5%B8%82"
+        elif "新北" in event.message.text:
+            locationName = "%E6%96%B0%E5%8C%97%E5%B8%82"
+        elif "宜蘭" in event.message.text:
+            locationName = "%E5%AE%9C%E8%98%AD%E7%B8%A3"
+        elif "花蓮" in event.message.text:
+            locationName = "%E8%8A%B1%E8%93%AE%E7%B8%A3"
+        elif "台東" in event.message.text:
+            locationName = "%E8%87%BA%E6%9D%B1%E7%B8%A3"
+        elif "澎湖" in event.message.text:
+            locationName = "%E6%BE%8E%E6%B9%96%E7%B8%A3"
+        elif "金門" in event.message.text:
+            locationName = "%E9%87%91%E9%96%80%E7%B8%A3"
+        elif "連江" in event.message.text:
+            locationName = "%E9%80%A3%E6%B1%9F%E7%B8%A3"
+        elif "桃園" in event.message.text:
+            locationName = "%E6%A1%83%E5%9C%92%E5%B8%82"
+        elif "台中" in event.message.text:
+            locationName = "%E8%87%BA%E4%B8%AD%E5%B8%82"
+        elif "台南" in event.message.text:
+            locationName = "%E8%87%BA%E5%8D%97%E5%B8%82"
+        elif "高雄" in event.message.text:
+            locationName = "%E9%AB%98%E9%9B%84%E5%B8%82"
+        elif "基隆" in event.message.text:
+            locationName = "%E5%9F%BA%E9%9A%86%E5%B8%82"
+        elif "新竹縣" in event.message.text:
+            locationName = "%E6%96%B0%E7%AB%B9%E7%B8%A3"
+        elif "新竹" in event.message.text:
+            locationName = "%E6%96%B0%E7%AB%B9%E5%B8%82"
+        elif "新竹市" in event.message.text:
+            locationName = "%E8%8A%B1%E8%93%AE%E7%B8%A3"
+        elif "苗栗" in event.message.text:
+            locationName = "%E8%8B%97%E6%A0%97%E7%B8%A3"
+        elif "彰化" in event.message.text:
+            locationName = "%E5%BD%B0%E5%8C%96%E7%B8%A3"
+        elif "南投" in event.message.text:
+            locationName = "%E5%8D%97%E6%8A%95%E7%B8%A3"
+        elif "雲林" in event.message.text:
+            locationName = "%E9%9B%B2%E6%9E%97%E7%B8%A3"
+        elif "嘉義縣" in event.message.text:
+            locationName = "%E5%98%89%E7%BE%A9%E7%B8%A3"
+        elif "嘉義" in event.message.text:
+            locationName = "%E5%98%89%E7%BE%A9%E5%B8%82"
+        elif "嘉義市" in event.message.text:
+            locationName = "%E5%98%89%E7%BE%A9%E5%B8%82"
+        elif "屏東" in event.message.text:
+            locationName = "%E5%B1%8F%E6%9D%B1%E7%B8%A3"
 
-    #     future_url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization={code}&locationName={locationName}'
 
-    #     req = requests.get(future_url)
-    #     data = req.json()
-    
-    #     records = data.get("records", {})
-    #     locations = records.get("location", [])
+        future_url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization={code}&locationName={locationName}'
 
-    #     text_message = ""
+        req = requests.get(future_url)
+        data = req.json()
     
-    #     for loc in locations:
-    #         city_name = loc.get("locationName")
+        records = data.get("records", {})
+        locations = records.get("location", [])
+
+        text_message = ""
+    
+        for loc in locations:
+            city_name = loc.get("locationName")
 
     
-    #         text_message += f"=== {city_name}未來36小時天氣預報 ===\n"
+            text_message += f"=== {city_name}未來36小時天氣預報 ===\n"
     
-    #         # 各氣象要素（MinT=最低溫, MaxT=最高溫, Wx=天氣現象）
-    #         elements = loc.get("weatherElement", [])
+            # 各氣象要素（MinT=最低溫, MaxT=最高溫, Wx=天氣現象）
+            elements = loc.get("weatherElement", [])
     
-    #         # 先取出各要素時間資料
-    #         for i in range(3):  # 每個縣市通常有 3 個時段
-    #             start_time = elements[0]["time"][i]["startTime"]
-    #             end_time = elements[0]["time"][i]["endTime"]
+            # 先取出各要素時間資料
+            for i in range(3):  # 每個縣市通常有 3 個時段
+                start_time = elements[0]["time"][i]["startTime"]
+                end_time = elements[0]["time"][i]["endTime"]
     
-    #             # 預設文字
-    #             min_t = max_t = wx = pop = None
+                # 預設文字
+                min_t = max_t = wx = pop = None
     
-    #             # 逐項取出對應資料
-    #             for element in elements:
-    #                 name = element.get("elementName")
-    #                 value = element["time"][i]["parameter"]["parameterName"]
+                # 逐項取出對應資料
+                for element in elements:
+                    name = element.get("elementName")
+                    value = element["time"][i]["parameter"]["parameterName"]
     
-    #                 if name == "MinT":
-    #                     min_t = value
-    #                 elif name == "MaxT":
-    #                     max_t = value
-    #                 elif name == "Wx":
-    #                     wx = value
-    #                 elif name == "PoP":
-    #                     pop = value
+                    if name == "MinT":
+                        min_t = value
+                    elif name == "MaxT":
+                        max_t = value
+                    elif name == "Wx":
+                        wx = value
+                    elif name == "PoP":
+                        pop = value
     
-    #             # 組合成一段文字
-    #             text_message += (
-    #                 f"時間：{start_time} ~ {end_time}\n"
-    #                 f"天氣：{wx}\n"
-    #                 f"降雨機率：{pop}%\n"
-    #                 f"溫度：{min_t}°C - {max_t}°C\n\n"
-    #             )
+                # 組合成一段文字
+                text_message += (
+                    f"時間：{start_time} ~ {end_time}\n"
+                    f"天氣：{wx}\n"
+                    f"降雨機率：{pop}%\n"
+                    f"溫度：{min_t}°C - {max_t}°C\n\n"
+                )
     
-    #     # 分段處理，避免超過限制
-    #     MAX_LEN = 4800
-    #     messages = []
-    #     while len(text_message) > 0:
-    #         part = text_message[:MAX_LEN]
-    #         messages.append(TextSendMessage(text=part))
-    #         text_message = text_message[MAX_LEN:]
+        # 分段處理，避免超過限制
+        MAX_LEN = 4800
+        messages = []
+        while len(text_message) > 0:
+            part = text_message[:MAX_LEN]
+            messages.append(TextSendMessage(text=part))
+            text_message = text_message[MAX_LEN:]
     
-    #     # LINE 最多允許 5 則訊息
-    #     if len(messages) > 5:
-    #         messages = messages[:5]
+        # LINE 最多允許 5 則訊息
+        if len(messages) > 5:
+            messages = messages[:5]
     
-    #     line_bot_api.reply_message(event.reply_token, messages)
-    # return
+        line_bot_api.reply_message(event.reply_token, messages)
+    return
         
     if event.message.text == "說話":
         working_status = True
