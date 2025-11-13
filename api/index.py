@@ -748,7 +748,7 @@ def handle_message(event):
         
         line_bot_api.reply_message(event.reply_token,
                 [
-                    TextSendMessage(f"{text_message} 預報資料")
+                    TextSendMessage(f"{text_message_decoded} 預報資料")
                 ]) # 傳送文字
         
 
