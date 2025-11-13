@@ -735,34 +735,57 @@ def handle_message(event):
     if event.message.text == "宜蘭縣預報":
         working_status = True
     
+        # 使用新的 36 小時天氣預報 API
         code = 'CWA-84D9233C-12BC-4CD7-B744-7C7F35F7AE48'
-        future_url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-001?Authorization={code}'
+        future_url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization={code}'
+    
         req = requests.get(future_url)
         data = req.json()
     
         records = data.get("records", {})
-        locations = records.get("Locations", [])
+        locations = records.get("location", [])
     
         text_message = ""
+    
         for loc in locations:
-            city_name = loc.get("LocationsName")
+            city_name = loc.get("locationName")
             if city_name != "宜蘭縣":  # 只取宜蘭縣
                 continue
     
-            for area in loc.get("Location", []):
-                town_name = area.get("LocationName")
+            text_message += f"===== {city_name}未來36小時天氣預報 =====\n"
     
-                for element in area.get("WeatherElement", []):
-                    if element.get("ElementName") == "溫度":
-                        text_message += f"===== {city_name} {town_name} =====\n"
-                        count = 0
-                        for t in element.get("Time", []):
-                            if count >= 6:  # 只取前 6 筆資料
-                                break
-                            time_str = t.get("DataTime")
-                            temp_value = t.get("ElementValue", [{}])[0].get("Temperature")
-                            text_message += f"時間：{time_str} | 溫度：{temp_value}°C\n"
-                            count += 1
+            # 各氣象要素（MinT=最低溫, MaxT=最高溫, Wx=天氣現象）
+            elements = loc.get("weatherElement", [])
+    
+            # 先取出各要素時間資料
+            for i in range(3):  # 每個縣市通常有 3 個時段
+                start_time = elements[0]["time"][i]["startTime"]
+                end_time = elements[0]["time"][i]["endTime"]
+    
+                # 預設文字
+                min_t = max_t = wx = pop = None
+    
+                # 逐項取出對應資料
+                for element in elements:
+                    name = element.get("elementName")
+                    value = element["time"][i]["parameter"]["parameterName"]
+    
+                    if name == "MinT":
+                        min_t = value
+                    elif name == "MaxT":
+                        max_t = value
+                    elif name == "Wx":
+                        wx = value
+                    elif name == "PoP":
+                        pop = value
+    
+                # 組合成一段文字
+                text_message += (
+                    f"時間：{start_time} ~ {end_time}\n"
+                    f"天氣：{wx}\n"
+                    f"降雨機率：{pop}%\n"
+                    f"溫度：{min_t}°C - {max_t}°C\n\n"
+                )
     
         # 分段傳送，避免超過 5000 字
         MAX_LEN = 4800
