@@ -22,8 +22,8 @@ working_status = os.getenv("DEFAULT_TALKING", default = "true").lower() == "true
 app = Flask(__name__)
 chatgpt = ChatGPT()
 
-moneymany_groupid = "C4ee96dad094278d3f2b530a8e0aef6ed"    #鏟屎官
-mytest_groupid = "Cd627ff8b5c500044e9fc51609cfd4887"    #羊綺機器人測試
+moneymany_groupid = "C4ee96dad094278d3f2b530a8e0aef6ed"    #鏟屎官line id
+mytest_groupid = "Cd627ff8b5c500044e9fc51609cfd4887"    #羊綺機器人測試line id
 
 
 # 計算出前一個10分倍數的時間以及前前一個10分倍數的時間以及前前前一個10分倍數的時間
@@ -373,8 +373,9 @@ def handle_message(event):
     # line_bot_api.push_message("U86fd4e0cce57a1b2d5ec119c8f9d6d7e", TextSendMessage(text=f"group_id:{group_id} + limit:{limit}"))
     
     
-    if event.message.text == "text":
+    if event.message.text == "test":
         # line_bot_api.push_message(user_id, TextSendMessage(text='test....'))
+        # 傳送line id 給綺
         line_bot_api.push_message(
                 "U86fd4e0cce57a1b2d5ec119c8f9d6d7e",
                 TextSendMessage(text=f"user_id:{user_id}"))
@@ -386,6 +387,8 @@ def handle_message(event):
                 event.reply_token,
                 TextSendMessage(text=f"@user_id:@{user_id}"))
         return
+
+
 
     if event.message.text == "雨量" or event.message.text == "濕度":
         working_status = True
@@ -729,6 +732,32 @@ def handle_message(event):
                     ]) # 傳送文字
         return
 
+    if event.message.text == "宜蘭縣預報":
+        working_status = True
+
+        code = 'CWA-84D9233C-12BC-4CD7-B744-7C7F35F7AE48'
+        future_url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-001?Authorization={code}'
+
+        req = requests.get(future_url)  # 爬取資料
+        data = req.json()       # 轉換成 json
+        eq1 = data['records']['Locations'][0]['LocationsName']           # 取得縣市名
+
+        text_message = TextSendMessage(text=eq1)        # 取得文字內容
+
+        text_message_decoded = text_message  # 這裡的 text_message 應該是正常的字串
+        if (check_image_url_exists(reply[1])):
+            line_bot_api.reply_message(event.reply_token,
+                    [
+                        TextSendMessage(f"{text_message} 預報資料")
+                    ]) # 傳送文字
+        else:
+            line_bot_api.reply_message(event.reply_token,
+                    [
+                        TextSendMessage(f"抓不到預報資訊")  # 傳送解碼後的文字
+                    ]) # 傳送文字
+
+        return
+        
     if event.message.text == "說話":
         working_status = True
         line_bot_api.reply_message(
