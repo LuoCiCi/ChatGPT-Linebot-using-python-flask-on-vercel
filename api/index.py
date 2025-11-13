@@ -2472,7 +2472,7 @@ def handle_message(event):
                 f"📊 24小時變化：{change:+.2f}%"
             )
         else:
-            text_message = f"查不到 {display_name} 的資料。"
+            text_message = f"查不到 {display_name} 的資料，或是API流量爆炸了0.0"
 
     # 回覆訊息
     line_bot_api.reply_message(
