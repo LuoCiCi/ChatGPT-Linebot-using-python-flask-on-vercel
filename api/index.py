@@ -2339,14 +2339,12 @@ def handle_message(event):
 
         stock_id = event.message.text
 
-        # 計算今天與昨天日期
+        # 取得今天日期
         today = datetime.now()
-        yesterday = today - timedelta(days=1)
-        start_date = yesterday.strftime("%Y-%m-%d")
-        end_date = today.strftime("%Y-%m-%d")
+        today_str = today.strftime("%Y-%m-%d")
 
-        # FinMind API: dataset=TaiwanStockPrice, 不帶 token
-        url = f"https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockPrice&data_id={stock_id}&start_date={start_date}&end_date={end_date}"
+        # FinMind API: 只抓今天日期，不帶 token
+        url = f"https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockPrice&data_id={stock_id}&start_date={today_str}&end_date={today_str}"
 
         data_list = []
         try:
