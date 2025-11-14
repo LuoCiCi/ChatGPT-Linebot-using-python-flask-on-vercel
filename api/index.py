@@ -2449,6 +2449,10 @@ def handle_message(event):
             if stock_code:
                 reply = f"🔍 找到股票：{keyword}\n📈 代號：{stock_code}"
                 text = stock_code
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text=f"❗ {text}")
+                )
             else:
                 reply = f"❗ 查無此公司名稱：「{keyword}」"
                 line_bot_api.reply_message(
