@@ -327,8 +327,8 @@ def get_stock_code_by_name(name: str) -> str:
             f = io.StringIO(resp.text)
             reader = csv.DictReader(f)
 
-            company = ""
-            code = ""
+            company = None
+            code = None
 
             for row in reader:
                 company = row.get("公司名稱", "").strip()
