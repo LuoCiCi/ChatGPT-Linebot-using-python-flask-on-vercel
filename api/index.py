@@ -2339,14 +2339,14 @@ def handle_message(event):
 
         stock_id = event.message.text
 
-        # 計算昨天日期（用於漲跌計算）
+        # 計算今天與昨天日期
         today = datetime.now()
         yesterday = today - timedelta(days=1)
         start_date = yesterday.strftime("%Y-%m-%d")
         end_date = today.strftime("%Y-%m-%d")
 
-        # FinMind API 抓取今日及昨日股價
-        url = f"https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockPrice&data_id={stock_id}&start_date={start_date}&end_date={end_date}&token={FINMIND_API_KEY}"
+        # FinMind API: dataset=TaiwanStockPrice, 不帶 token
+        url = f"https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockPrice&data_id={stock_id}&start_date={start_date}&end_date={end_date}"
 
         data_list = []
         try:
@@ -2364,9 +2364,8 @@ def handle_message(event):
             )
             return
 
-        # 取今日資料
-        data_today = data_list[-1]  # 假設最後一筆是今天
-        # 取昨日收盤價
+        # 取今日資料（最後一筆）和昨日資料（倒數第二筆）
+        data_today = data_list[-1]
         data_yesterday = data_list[-2] if len(data_list) > 1 else data_today
 
         # 安全取值
@@ -2384,6 +2383,7 @@ def handle_message(event):
             change_percent = round((price - yclose) / yclose * 100, 2)
             change_percent_str = f"+{change_percent}%" if change_percent >= 0 else f"{change_percent}%"
 
+        # 組成訊息
         text_message = (
             f"{name}（{stock_id}）今日資訊：\n"
             f"💰 目前現價：{price if price != 0 else '尚無成交'}\n"
@@ -2398,6 +2398,7 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text=text_message)
         )
+        return
 
     # if event.message.text.isdigit() and len(event.message.text) == 4:
 
