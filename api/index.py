@@ -2336,35 +2336,33 @@ def handle_message(event):
         return
  
     if event.message.text.isdigit() and len(event.message.text) == 4:
-        
+
         stock_id = event.message.text
-        url = f"https://api.twse.com.tw/v1/exchangeReport/STOCK_DAY?response=json&stockNo={stock_id}"
+        url = f"https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_{stock_id}.tw"
+
         data = requests.get(url).json()
 
-        if "data" not in data or len(data["data"]) == 0:
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text="查無股票資料"))
+        # 檢查資料是否合法
+        if "msgArray" not in data or len(data["msgArray"]) == 0:
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text="查無此股票"))
             return
 
-        # 取得今日資料（最後一筆）
-        day_data = data["data"][-1]
+        info = data["msgArray"][0]
 
-        # TWSE API 欄位對應
-        date   = day_data[0]
-        volume = day_data[1]
-        yclose = float(day_data[5])
-        price  = float(day_data[6])
-        high   = float(day_data[4])
-        low    = float(day_data[3])
+        # 取欄位
+        name = info.get("n", "未知名稱")
+        price = float(info.get("z", 0))     # 成交價
+        yclose = float(info.get("y", 0))    # 昨收
+        high = float(info.get("h", 0))      # 最高
+        low = float(info.get("l", 0))       # 最低
+        volume = info.get("v", "0")         # 成交量
 
-        # 計算漲跌%
-        change_percent = ((price - yclose) / yclose) * 100 if yclose != 0 else 0
-        change_percent = round(change_percent, 2)
+        # 漲跌幅
+        change_percent = 0
+        if yclose > 0:
+            change_percent = round(((price - yclose) / yclose) * 100, 2)
 
-        # 股票名稱 API（證交所提供）
-        name_url = f"https://api.twse.com.tw/v1/stock/info?stockNo={stock_id}"
-        name_json = requests.get(name_url).json()
-        name = name_json["data"][0]["name"] if "data" in name_json else "未知名稱"
-
+        # 組合訊息
         text_message = (
             f"{name}（{stock_id}）今日資訊：\n"
             f"💰 成交價：{price}\n"
