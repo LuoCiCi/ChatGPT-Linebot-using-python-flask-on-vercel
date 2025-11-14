@@ -2482,77 +2482,77 @@ def handle_message(event):
     )
 
 
-# ================================
-# 判斷是否為股票代號（4碼數字）
-# ================================
-    if user_text.isdigit() and len(user_text) == 4:
-        stock_id = user_text
+# # ================================
+# # 判斷是否為股票代號（4碼數字）
+# # ================================
+#     if user_text.isdigit() and len(user_text) == 4:
+#         stock_id = user_text
 
-        import requests
+#         import requests
 
-        # 嘗試查上市（tse）
-        url = f"https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_{stock_id}.tw"
-        res = requests.get(url)
-        data = res.json()
+#         # 嘗試查上市（tse）
+#         url = f"https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_{stock_id}.tw"
+#         res = requests.get(url)
+#         data = res.json()
 
-        # 如果上市查不到 → 改查上櫃（otc）
-        if not data["msgArray"]:
-            url = f"https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=otc_{stock_id}.tw"
-            res = requests.get(url)
-            data = res.json()
+#         # 如果上市查不到 → 改查上櫃（otc）
+#         if not data["msgArray"]:
+#             url = f"https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=otc_{stock_id}.tw"
+#             res = requests.get(url)
+#             data = res.json()
 
-        # 若還是查不到回應錯誤
-        if not data["msgArray"]:
-            text_message = f"查不到股票代號 {stock_id}。"
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text=text_message)
-            )
-            return  # 停止後續執行
+#         # 若還是查不到回應錯誤
+#         if not data["msgArray"]:
+#             text_message = f"查不到股票代號 {stock_id}。"
+#             line_bot_api.reply_message(
+#                 event.reply_token,
+#                 TextSendMessage(text=text_message)
+#             )
+#             return  # 停止後續執行
 
-        # ================================
-        # 解析資料
-        # ================================
-        info = data["msgArray"][0]
+#         # ================================
+#         # 解析資料
+#         # ================================
+#         info = data["msgArray"][0]
 
-        name = info["n"]            # 股票名稱
-        price = info["z"]           # 成交價
-        yclose = info["y"]          # 昨收
-        high = info["h"]            # 最高
-        low = info["l"]             # 最低
-        volume = info["v"]          # 成交量
+#         name = info["n"]            # 股票名稱
+#         price = info["z"]           # 成交價
+#         yclose = info["y"]          # 昨收
+#         high = info["h"]            # 最高
+#         low = info["l"]             # 最低
+#         volume = info["v"]          # 成交量
 
-        # ================================
-        # 計算漲跌與百分比
-        # ================================
-        if price != "-" and yclose != "-":
-            try:
-                diff = float(price) - float(yclose)
-                diff_percent = (diff / float(yclose)) * 100
-                arrow = "📈" if diff >= 0 else "📉"
-                diff_text = f"{arrow} 漲跌：{diff:+.2f}（{diff_percent:+.2f}%）"
-            except:
-                diff_text = "📉 漲跌：資料異常"
-        else:
-            diff_text = "📉 漲跌：無資料"
+#         # ================================
+#         # 計算漲跌與百分比
+#         # ================================
+#         if price != "-" and yclose != "-":
+#             try:
+#                 diff = float(price) - float(yclose)
+#                 diff_percent = (diff / float(yclose)) * 100
+#                 arrow = "📈" if diff >= 0 else "📉"
+#                 diff_text = f"{arrow} 漲跌：{diff:+.2f}（{diff_percent:+.2f}%）"
+#             except:
+#                 diff_text = "📉 漲跌：資料異常"
+#         else:
+#             diff_text = "📉 漲跌：無資料"
 
-        # ================================
-        # 回覆文字
-        # ================================
-        text_message = (
-            f"{name}（{stock_id}）今日資訊：\n"
-            f"💰 成交價：{price}\n"
-            f"⬆ 昨收：{yclose}\n"
-            f"🔺 最高：{high}\n"
-            f"🔻 最低：{low}\n"
-            f"{diff_text}\n"
-            f"📊 成交量：{volume}"
-        )
+#         # ================================
+#         # 回覆文字
+#         # ================================
+#         text_message = (
+#             f"{name}（{stock_id}）今日資訊：\n"
+#             f"💰 成交價：{price}\n"
+#             f"⬆ 昨收：{yclose}\n"
+#             f"🔺 最高：{high}\n"
+#             f"🔻 最低：{low}\n"
+#             f"{diff_text}\n"
+#             f"📊 成交量：{volume}"
+#         )
 
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=text_message)
-        )
+#         line_bot_api.reply_message(
+#             event.reply_token,
+#             TextSendMessage(text=text_message)
+#         )
 #======================================================================
     
     if working_status:
