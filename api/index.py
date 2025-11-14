@@ -2484,9 +2484,8 @@ def handle_message(event):
             
             if stock_code:
                 reply = f"🔍 找到股票：{keyword}\n📈 代號：{stock_code}"
-                stock_id = text[1:5]
 
-                data = get_stock_info(stock_id)
+                data = get_stock_info(stock_code)
                 
                 # 安全取值
                 name = data.get("n", "未知名稱")
