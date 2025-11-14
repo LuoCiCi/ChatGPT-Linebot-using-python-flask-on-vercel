@@ -2552,9 +2552,9 @@ def handle_message(event):
             return 
             
         # 已股票代號查詢
-        if len(text) >= 5 and text[1:5].isdigit():
+        if len(text) >= 5 and text[1:].isdigit():
 
-            stock_id = text[1:5]
+            stock_id = text[1:]  # 去掉 "/"
 
             text_message = get_stock_info(stock_id)
 
