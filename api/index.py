@@ -185,13 +185,13 @@ def callback():
         abort(400)
     return 'OK'
 
-@line_handler.add(MessageEvent, message=TextMessage)
-def handle_message(event):
+@line_handler.add(Message, message=TextMessage)
+def handle_message():
     # 回應訊息，自動已讀
     reply_message = "test OK~"
     
     line_bot_api.reply_message(
-        event.reply_token,
+        .reply_token,
         TextSendMessage(text=f"{reply_message}")
     )
     
@@ -397,15 +397,15 @@ def get_stock_info(stock_id):
                         f"📊 成交量：{volume:,}"
                     )
             
-                    line_bot_api.reply_message(
-                        event.reply_token,
-                        TextSendMessage(text=text_message)
-                    )
-                    return
+                    # line_bot_api.reply_message(
+                    #     event.reply_token,
+                    #     TextSendMessage(text=text_message)
+                    # )
+                    return text_message
         except Exception as e:
             print(f"取得 {url} 資料失敗: {e}")
             continue
-    return
+    return none
 
     # 如果兩個網址都沒有有效資料，回傳錯誤訊息
     if not data:
@@ -2527,7 +2527,7 @@ def handle_message(event):
             if stock_id:
                 reply = f"🔍 找到股票：{keyword}\n📈 代號：{stock_id}"
 
-                get_stock_info(stock_id)
+                text_message = get_stock_info(stock_id)
                 
                 # data = get_stock_info(stock_id)
                 
@@ -2567,10 +2567,10 @@ def handle_message(event):
                 #     f"📊 成交量：{volume:,}"
                 # )
         
-                # line_bot_api.reply_message(
-                #     event.reply_token,
-                #     TextSendMessage(text=text_message)
-                # )
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text=text_message)
+                )
                 return
             
             else:
@@ -2593,7 +2593,7 @@ def handle_message(event):
 
             stock_id = text[1:5]
 
-            get_stock_info(stock_id)
+            text_message = get_stock_info(stock_id)
 
         #     data = get_stock_info(stock_id)
     
@@ -2665,10 +2665,10 @@ def handle_message(event):
         #         f"📊 成交量：{volume:,}"
         #     )
     
-        #     line_bot_api.reply_message(
-        #         event.reply_token,
-        #         TextSendMessage(text=text_message)
-        #     )
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=text_message)
+            )
         return
         
 #2025/11/13 羊新增幣圈功能=============================================
