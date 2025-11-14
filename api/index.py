@@ -2345,16 +2345,13 @@ def handle_message(event):
 
         # 檢查資料是否合法
         if "msgArray" not in data or len(data["msgArray"]) == 0:
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text="查無此股票"))
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="查無此股票")
+            )
             return
 
         info = data["msgArray"][0]
-
-
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text="節點1")
-        )
         
         # 取欄位
         name = info.get("n", "未知名稱")
@@ -2378,11 +2375,6 @@ def handle_message(event):
             f"🔺 最高：{high}\n"
             f"🔻 最低：{low}\n"
             f"📊 成交量：{volume}"
-        )
-
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text="節點2")
         )
         
         line_bot_api.reply_message(
