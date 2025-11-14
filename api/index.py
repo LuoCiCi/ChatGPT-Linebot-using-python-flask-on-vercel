@@ -2414,14 +2414,18 @@ def handle_message(event):
                 resp = requests.get(url, timeout=5)
                 json_data = resp.json()
                 
-                # 確認 msgArray 存在且不為空，且第一筆資料不為空字典
-                if "msgArray" in json_data and len(json_data["msgArray"]) > 0 and json_data["msgArray"][0]:
-                    data = json_data["msgArray"][0]
-                    break  # 有資料就停止迴圈
+                if "msgArray" in json_data and len(json_data["msgArray"]) > 0:
+                    candidate = json_data["msgArray"][0]
+                    
+                    # 判斷是否為有效資料，若所有主要欄位都是空值或 "-" 就視為空
+                    if candidate.get("z") not in [None, "", "-"] or candidate.get("c") not in [None, "", "-"]:
+                        data = candidate
+                        break  # 有效資料就使用
             except Exception as e:
                 print(f"取得 {url} 資料失敗: {e}")
                 continue
-        # 如果兩個網址都沒有資料，回傳錯誤訊息
+
+        # 如果兩個網址都沒有有效資料，回傳錯誤訊息
         if not data:
             line_bot_api.reply_message(
                 event.reply_token,
