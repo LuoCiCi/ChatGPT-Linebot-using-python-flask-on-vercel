@@ -2516,10 +2516,11 @@ def handle_message(event):
         if not content:  # 空字串
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text=f"請輸入股票代號")
+                TextSendMessage(text=f"請輸入股票代號或名稱")
             )
             return
-            
+
+        # 已股票名稱查詢
         if not content.isdigit():
             keyword = text[1:]  # 去掉 "/"
             keyword, stock_id = get_stock_code_by_name(keyword)
@@ -2529,44 +2530,6 @@ def handle_message(event):
 
                 text_message = get_stock_info(stock_id)
                 
-                # data = get_stock_info(stock_id)
-                
-                # # 安全取值
-                # name = data.get("n", "未知名稱")
-                # try: price = float(data.get("z", 0))
-                # except: price = 0
-                # try: yclose = float(data.get("y", 0))
-                # except: yclose = 0
-                # try: high = float(data.get("h", 0))
-                # except: high = 0
-                # try: low = float(data.get("l", 0))
-                # except: low = 0
-                # volume = int(data.get("v", "0"))
-                
-                # # 如果現價沒資料，改用昨收價，沒有就顯示尚無成交
-                # if price is None:
-                #     if yclose is not None:
-                #         price = yclose
-                #     else:
-                #         price = 0
-        
-                # # 計算漲跌百分比，保留兩位小數
-                # if price == 0 or yclose == 0:
-                #     change_percent_str = "－"
-                # else:
-                #     change_percent = round((price - yclose) / yclose * 100, 2)
-                #     change_percent_str = f"+{change_percent}%" if change_percent >= 0 else f"{change_percent}%"
-        
-                # text_message = (
-                #     f"{keyword}（{stock_id}）今日資訊：\n"
-                #     f"💰 目前現價：{price if price != 0 else '尚無成交'}\n"
-                #     f"⬆ 昨收：{yclose if yclose is not None else '－'}\n"
-                #     f"📈 漲跌：{round((price - yclose), 2)}  {change_percent_str}\n"
-                #     f"🔺 最高：{high if high is not None else '－'}\n"
-                #     f"🔻 最低：{low if low is not None else '－'}\n"
-                #     f"📊 成交量：{volume:,}"
-                # )
-        
                 line_bot_api.reply_message(
                     event.reply_token,
                     TextSendMessage(text=text_message)
@@ -2581,14 +2544,14 @@ def handle_message(event):
                 )
                 return
             
-            # # 6. 如果還找不到
-            # line_bot_api.reply_message(
-            #     event.reply_token,
-            #     TextSendMessage(text=f"找不到對應的台股代號")
-            # )
-            # return 
+            # 6. 如果還找不到
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=f"找不到對應的股票代號")
+            )
+            return 
             
-        
+        # 已股票代號查詢
         if len(text) >= 5 and text[1:5].isdigit():
 
             stock_id = text[1:5]
