@@ -2370,11 +2370,11 @@ def handle_message(event):
         except: low = 0
         volume = data.get("Trading_Volume", 0)
 
-        # 計算漲跌百分比
+        # 算漲跌百分比，保留小數點第二計位
         if price == 0 or yclose == 0:
             change_percent_str = "－"
         else:
-            change_percent = round((price - yclose) / yclose * 100)
+            change_percent = round((price - yclose) / yclose * 100, 2)  # 保留兩位小數
             change_percent_str = f"+{change_percent}%" if change_percent >= 0 else f"{change_percent}%"
 
         text_message = (
