@@ -2400,7 +2400,7 @@ def handle_message(event):
     # if event.message.text.isdigit() and len(event.message.text) == 4:
     if event.message.text.startswith("/") and len(event.message.text) >= 4 and event.message.text[1:4].isdigit():
 
-        stock_id = event.message.text
+        stock_id = event.message.text[1:4]
 
         # 嘗試上市 (tse) 與上櫃 (otc)
         urls = [
