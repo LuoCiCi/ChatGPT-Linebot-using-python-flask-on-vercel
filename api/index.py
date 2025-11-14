@@ -2444,17 +2444,17 @@ def handle_message(event):
             
         if not content.isdigit():
             keyword = text[1:]  # 去掉 "/"
-                stock_code = get_stock_code_by_name(keyword)
+            stock_code = get_stock_code_by_name(keyword)
             
-                if stock_code:
-                    reply = f"🔍 找到股票：{keyword}\n📈 代號：{stock_code}"
-                    text = stock_code
-                else:
-                    reply = f"❗ 查無此公司名稱：「{keyword}」"
-                    line_bot_api.reply_message(
-                        event.reply_token,
-                        TextSendMessage(text=f"❗ 查無此公司名稱：「{keyword}」")
-                    )
+            if stock_code:
+                reply = f"🔍 找到股票：{keyword}\n📈 代號：{stock_code}"
+                text = stock_code
+            else:
+                reply = f"❗ 查無此公司名稱：「{keyword}」"
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text=f"❗ 查無此公司名稱：「{keyword}」")
+                )
             
             # 6. 如果還找不到
             line_bot_api.reply_message(
