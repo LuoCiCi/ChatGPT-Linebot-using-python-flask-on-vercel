@@ -2464,10 +2464,10 @@ def handle_message(event):
             f"{name}（{stock_id}）今日資訊：\n"
             f"💰 目前現價：{price if price != 0 else '尚無成交'}\n"
             f"⬆ 昨收：{yclose if yclose is not None else '－'}\n"
-            f"📈 漲跌：{change_percent_str}\n"
+            f"📈 漲跌：{(price - yclose)}  {change_percent_str}\n"
             f"🔺 最高：{high if high is not None else '－'}\n"
             f"🔻 最低：{low if low is not None else '－'}\n"
-            f"📊 成交量：{volume}"
+            f"📊 成交量：f{volume:,}"
         )
 
         line_bot_api.reply_message(
