@@ -11,6 +11,7 @@ import pytz
 import textwrap
 import re
 import time
+import pandas as pd
 
 #Function
 #from instruction import handle_instruction_message
@@ -2397,83 +2398,126 @@ def handle_message(event):
     #     )
     #     return
     
-    # if event.message.text.isdigit() and len(event.message.text) == 4:
-    if event.message.text.startswith("/") and len(event.message.text) >= 5 and event.message.text[1:5].isdigit():
 
-        stock_id = event.message.text[1:5]
+    if event.message.text.startswith("/"):
+        text = event.message.text
 
-        # 嘗試上市 (tse) 與上櫃 (otc)
-        urls = [
-            f"https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_{stock_id}.tw",
-            f"https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=otc_{stock_id}.tw"
-        ]
-
-        data = None
-
-        for url in urls:
-            try:
-                resp = requests.get(url, timeout=5)
-                json_data = resp.json()
-                
-                if "msgArray" in json_data and len(json_data["msgArray"]) > 0:
-                    candidate = json_data["msgArray"][0]
-                    
-                    # 判斷是否為有效資料，若所有主要欄位都是空值或 "-" 就視為空
-                    if candidate.get("z") not in [None, "", "-"] or candidate.get("c") not in [None, "", "-"]:
-                        data = candidate
-                        break  # 有效資料就使用
-            except Exception as e:
-                print(f"取得 {url} 資料失敗: {e}")
-                continue
-
-        # 如果兩個網址都沒有有效資料，回傳錯誤訊息
-        if not data:
+        content = text[1:]  # 去掉開頭 "/"
+        if not content:  # 空字串
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text=f"查無股票代號 {stock_id} 或 是你呆呆記錯號碼")
+                TextSendMessage(text=f"請輸入股票代號")
             )
             return
+            
+        if not content.isdigit():
+            # 1. 載入公司名稱與代號對應清單
+            # 從政府資料開放平台下載「上市公司基本資料 CSV」資料集。:contentReference[oaicite:1]{index=1}
+            url = "https://data.gov.tw/dataset/18419/…(實際CSV下載地址)…"
+            df = pd.read_csv(url, dtype=str)
+
+            # 假設 df 有欄位 '公司代號' 和 '公司名稱'
+            stock_dict = dict(zip(df['公司名稱'], df['公司代號']))
+
+            # 4. 公司名稱查找
+            # 可能公司名稱不會完全吻合，你可先試使用 dictionary 直接查找
+            code = stock_dict.get(content)
+            if code:
+                return f"{content} 的代號是 {code}"
+
+            # 5. 若直接查不到，可試模糊匹配，例如只取前兩個字
+            for name, c in stock_dict.items():
+                if content in name:  # 包含詞比對
+                    line_bot_api.reply_message(
+                        event.reply_token,
+                        TextSendMessage(text=f"找到可能公司：{name} → 代號 {c}")
+                    )
+                    return
+            
+            # 6. 如果還找不到
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=f"找不到 {content} 對應的台股代號")
+            )
+            return 
+            
         
-        # 安全取值
-        name = data.get("n", "未知名稱")
-        try: price = float(data.get("z", 0))
-        except: price = 0
-        try: yclose = float(data.get("y", 0))
-        except: yclose = 0
-        try: high = float(data.get("h", 0))
-        except: high = 0
-        try: low = float(data.get("l", 0))
-        except: low = 0
-        volume = int(data.get("v", "0"))
-        
-        # 如果現價沒資料，改用昨收價，沒有就顯示尚無成交
-        if price is None:
-            if yclose is not None:
-                price = yclose
+        if len(text) >= 5 and text[1:5].isdigit():
+
+            stock_id = event.message.text[1:5]
+    
+            # 嘗試上市 (tse) 與上櫃 (otc)
+            urls = [
+                f"https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_{stock_id}.tw",
+                f"https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=otc_{stock_id}.tw"
+            ]
+    
+            data = None
+    
+            for url in urls:
+                try:
+                    resp = requests.get(url, timeout=5)
+                    json_data = resp.json()
+                    
+                    if "msgArray" in json_data and len(json_data["msgArray"]) > 0:
+                        candidate = json_data["msgArray"][0]
+                        
+                        # 判斷是否為有效資料，若所有主要欄位都是空值或 "-" 就視為空
+                        if candidate.get("z") not in [None, "", "-"] or candidate.get("c") not in [None, "", "-"]:
+                            data = candidate
+                            break  # 有效資料就使用
+                except Exception as e:
+                    print(f"取得 {url} 資料失敗: {e}")
+                    continue
+    
+            # 如果兩個網址都沒有有效資料，回傳錯誤訊息
+            if not data:
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text=f"查無股票代號 {stock_id} 或 是你呆呆記錯號碼")
+                )
+                return
+            
+            # 安全取值
+            name = data.get("n", "未知名稱")
+            try: price = float(data.get("z", 0))
+            except: price = 0
+            try: yclose = float(data.get("y", 0))
+            except: yclose = 0
+            try: high = float(data.get("h", 0))
+            except: high = 0
+            try: low = float(data.get("l", 0))
+            except: low = 0
+            volume = int(data.get("v", "0"))
+            
+            # 如果現價沒資料，改用昨收價，沒有就顯示尚無成交
+            if price is None:
+                if yclose is not None:
+                    price = yclose
+                else:
+                    price = 0
+    
+            # 計算漲跌百分比，保留兩位小數
+            if price == 0 or yclose == 0:
+                change_percent_str = "－"
             else:
-                price = 0
-
-        # 計算漲跌百分比，保留兩位小數
-        if price == 0 or yclose == 0:
-            change_percent_str = "－"
-        else:
-            change_percent = round((price - yclose) / yclose * 100, 2)
-            change_percent_str = f"+{change_percent}%" if change_percent >= 0 else f"{change_percent}%"
-
-        text_message = (
-            f"{name}（{stock_id}）今日資訊：\n"
-            f"💰 目前現價：{price if price != 0 else '尚無成交'}\n"
-            f"⬆ 昨收：{yclose if yclose is not None else '－'}\n"
-            f"📈 漲跌：{(price - yclose)}  {change_percent_str}\n"
-            f"🔺 最高：{high if high is not None else '－'}\n"
-            f"🔻 最低：{low if low is not None else '－'}\n"
-            f"📊 成交量：{volume:,}"
-        )
-
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=text_message)
-        )
+                change_percent = round((price - yclose) / yclose * 100, 2)
+                change_percent_str = f"+{change_percent}%" if change_percent >= 0 else f"{change_percent}%"
+    
+            text_message = (
+                f"{name}（{stock_id}）今日資訊：\n"
+                f"💰 目前現價：{price if price != 0 else '尚無成交'}\n"
+                f"⬆ 昨收：{yclose if yclose is not None else '－'}\n"
+                f"📈 漲跌：{(price - yclose)}  {change_percent_str}\n"
+                f"🔺 最高：{high if high is not None else '－'}\n"
+                f"🔻 最低：{low if low is not None else '－'}\n"
+                f"📊 成交量：{volume:,}"
+            )
+    
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=text_message)
+            )
         return
         
 #2025/11/13 羊新增幣圈功能=============================================
