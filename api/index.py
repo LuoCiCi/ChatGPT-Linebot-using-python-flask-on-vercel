@@ -332,7 +332,7 @@ def get_stock_code_by_name(name: str) -> str:
                 code = row.get("公司代號", "").strip()
 
                 if name in company:  # 支援部分比對，如 "台積" 也找得到
-                    return name,code
+                    return company, code
 
         except Exception as e:
             print(f"讀取 {url} 時發生錯誤：{e}")
@@ -2480,7 +2480,7 @@ def handle_message(event):
             
         if not content.isdigit():
             keyword = text[1:]  # 去掉 "/"
-            keyword, stock_id = get_stock_code_by_name(name, keyword)
+            keyword, stock_id = get_stock_code_by_name(keyword)
             
             if stock_id:
                 reply = f"🔍 找到股票：{keyword}\n📈 代號：{stock_id}"
