@@ -2334,45 +2334,41 @@ def handle_message(event):
             TextSendMessage(text=instruction_message)
         )
         return
-
+    
     if event.message.text.isdigit() and len(event.message.text) == 4:
 
         stock_id = event.message.text
 
-        # 取得今天日期
-        today = datetime.now()
-        today_str = today.strftime("%Y-%m-%d")
+        # 使用 FinMind API 抓當日股價
+        url = f"https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockPrice&data_id={stock_id}&start_date=2025-11-14&end_date=2025-11-14&token={FINMIND_API_KEY}"
 
-        # FinMind API: 只抓今天日期，不帶 token
-        url = f"https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockPrice&data_id={stock_id}&start_date={today_str}&end_date={today_str}"
-
-        data_list = []
+        data = None
         try:
             resp = requests.get(url)
             json_data = resp.json()
             if "data" in json_data and len(json_data["data"]) > 0:
-                data_list = json_data["data"]
+                data = json_data["data"][0]
         except Exception as e:
             print("FinMind API error:", e)
 
-        if not data_list:
+        if not data:
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(text=f"查無股票代號 {stock_id} 或今日資料尚未更新")
             )
             return
 
-        # 取今日資料（最後一筆）和昨日資料（倒數第二筆）
-        data_today = data_list[-1]
-        data_yesterday = data_list[-2] if len(data_list) > 1 else data_today
-
         # 安全取值
-        name = stock_id  # 若要中文名稱，可額外抓 TaiwanStockInfo dataset
-        price = float(data_today.get("close", 0))
-        yclose = float(data_yesterday.get("close", 0))
-        high = float(data_today.get("max", 0))
-        low = float(data_today.get("min", 0))
-        volume = data_today.get("Trading_Volume", 0)
+        name = stock_id  # FinMind 沒有提供中文名稱，需要另外對照
+        try: price = float(data.get("close", 0))
+        except: price = 0
+        try: yclose = float(data.get("Trading_Volume", 0))  # 昨收沒直接提供，需要自己算
+        except: yclose = 0
+        try: high = float(data.get("max", 0))
+        except: high = 0
+        try: low = float(data.get("min", 0))
+        except: low = 0
+        volume = data.get("Trading_Volume", 0)
 
         # 計算漲跌百分比，保留兩位小數
         if price == 0 or yclose == 0:
@@ -2381,7 +2377,6 @@ def handle_message(event):
             change_percent = round((price - yclose) / yclose * 100, 2)
             change_percent_str = f"+{change_percent}%" if change_percent >= 0 else f"{change_percent}%"
 
-        # 組成訊息
         text_message = (
             f"{name}（{stock_id}）今日資訊：\n"
             f"💰 目前現價：{price if price != 0 else '尚無成交'}\n"
@@ -2397,7 +2392,6 @@ def handle_message(event):
             TextSendMessage(text=text_message)
         )
         return
-
     # if event.message.text.isdigit() and len(event.message.text) == 4:
 
     #     stock_id = event.message.text
