@@ -2444,7 +2444,7 @@ def handle_message(event):
         except: high = 0
         try: low = float(data.get("l", 0))
         except: low = 0
-        volume = data.get("v", "0")
+        volume = int(data.get("v", "0"))
         
         # 如果現價沒資料，改用昨收價，沒有就顯示尚無成交
         if price is None:
