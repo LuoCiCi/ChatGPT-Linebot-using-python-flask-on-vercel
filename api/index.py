@@ -306,6 +306,37 @@ def get_radar_pic():
     prev_4_url = "https://www.cwa.gov.tw/Data/radar/CV1_3600_" + prev_4_date_str + prev_4_time_str + ".png"
     
     return prev_url, prev_prev_url, prev_3_url, prev_4_url
+
+def get_stock_code_by_name(name: str) -> str:
+    # """
+    # 傳入公司名稱（中文），回傳對應的台股代號（字串）。
+    # 若找不到，回傳 None。
+    # """
+
+    urls = [
+        "https://mopsfin.twse.com.tw/opendata/t187ap03_L.csv",  # 上市
+        "https://mopsfin.twse.com.tw/opendata/t187ap03_O.csv",  # 上櫃
+    ]
+
+    for url in urls:
+        try:
+            resp = requests.get(url, timeout=10)
+            resp.encoding = "utf-8"
+
+            f = io.StringIO(resp.text)
+            reader = csv.DictReader(f)
+
+            for row in reader:
+                company = row.get("公司名稱", "").strip()
+                code = row.get("公司代號", "").strip()
+
+                if name in company:  # 支援部分比對，如 "台積" 也找得到
+                    return code
+
+        except Exception as e:
+            print(f"讀取 {url} 時發生錯誤：{e}")
+
+    return None
         
 @line_handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
