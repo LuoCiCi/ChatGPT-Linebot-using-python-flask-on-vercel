@@ -2336,7 +2336,9 @@ def handle_message(event):
         return
  
     if event.message.text.isdigit() and len(event.message.text) == 4:
-        instruction_message = "測試有進入"
+        stock_id = event.message.text    # 取得使用者輸入的 4 位數字
+        instruction_message = f"已收到股票代碼：{stock_id}"
+
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=instruction_message)
