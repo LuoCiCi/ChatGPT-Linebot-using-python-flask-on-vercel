@@ -2385,9 +2385,11 @@ def handle_message(event):
         # 計算漲跌百分比
         if price == 0 or yclose is None:
             change_percent_str = "－"
+            change_color = "#000000"  # 黑色
         else:
             change_percent = round((price - yclose) / yclose * 100)
             change_percent_str = f"+{change_percent}%" if change_percent >= 0 else f"{change_percent}%"
+            change_color = "#FF0000" if change_percent >= 0 else "#00AA00"  # 紅色/綠色
 
 
         text_message = (
