@@ -11,7 +11,8 @@ import pytz
 import textwrap
 import re
 import time
-import pandas as pd
+import csv
+import io
 
 #Function
 #from instruction import handle_instruction_message
@@ -2411,34 +2412,23 @@ def handle_message(event):
             return
             
         if not content.isdigit():
-            # 1. 載入公司名稱與代號對應清單
-            # 從政府資料開放平台下載「上市公司基本資料 CSV」資料集。:contentReference[oaicite:1]{index=1}
-            url = "https://data.gov.tw/dataset/18419/…(實際CSV下載地址)…"
-            df = pd.read_csv(url, dtype=str)
-
-            # 假設 df 有欄位 '公司代號' 和 '公司名稱'
-            stock_dict = dict(zip(df['公司名稱'], df['公司代號']))
-
-            # 4. 公司名稱查找
-            # 可能公司名稱不會完全吻合，你可先試使用 dictionary 直接查找
-            code = stock_dict.get(content)
-            if code:
-                return f"{content} 的代號是 {code}"
-
-            # 5. 若直接查不到，可試模糊匹配，例如只取前兩個字
-            for name, c in stock_dict.items():
-                if content in name:  # 包含詞比對
+            keyword = text[1:]  # 去掉 "/"
+                stock_code = get_stock_code_by_name(keyword)
+            
+                if stock_code:
+                    reply = f"🔍 找到股票：{keyword}\n📈 代號：{stock_code}"
+                    text = stock_code
+                else:
+                    reply = f"❗ 查無此公司名稱：「{keyword}」"
                     line_bot_api.reply_message(
                         event.reply_token,
-                        TextSendMessage(text=f"找到可能公司：{name} → 代號 {c}")
+                        TextSendMessage(text=f"❗ 查無此公司名稱：「{keyword}」")
                     )
-                    text = "/" + c
-                    # return
             
             # 6. 如果還找不到
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text=f"找不到 {content} 對應的台股代號")
+                TextSendMessage(text=f"找不到對應的台股代號")
             )
             return 
             
