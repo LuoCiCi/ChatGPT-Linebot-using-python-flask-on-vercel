@@ -2339,8 +2339,12 @@ def handle_message(event):
 
         stock_id = event.message.text
 
-        # 使用 FinMind API 抓當日股價
-        url = f"https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockPrice&data_id={stock_id}&start_date=2025-11-14&end_date=2025-11-14&token={FINMIND_API_KEY}"
+       # 取得今天日期
+        today = datetime.now()
+        today_str = today.strftime("%Y-%m-%d")
+
+        # FinMind API: 只抓今天日期，不帶 token
+        url = f"https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockPrice&data_id={stock_id}&start_date={today_str}&end_date={today_str}"
 
         data = None
         try:
