@@ -2343,13 +2343,13 @@ def handle_message(event):
 
         data = requests.get(url).json()
 
-        # 檢查資料是否合法
-        if "msgArray" not in data or len(data["msgArray"]) == 0:
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text="查無此股票")
-            )
-            return
+        # # 檢查資料是否合法
+        # if "msgArray" not in data or len(data["msgArray"]) == 0:
+        #     line_bot_api.reply_message(
+        #         event.reply_token,
+        #         TextSendMessage(text="查無此股票")
+        #     )
+        #     return
 
         info = data["msgArray"][0]
         
