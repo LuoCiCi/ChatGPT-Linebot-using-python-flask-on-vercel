@@ -307,6 +307,7 @@ def get_radar_pic():
     
     return prev_url, prev_prev_url, prev_3_url, prev_4_url
 
+# 台股名稱取得台股代號
 def get_stock_code_by_name(name: str) -> str:
     # """
     # 傳入公司名稱（中文），回傳對應的台股代號（字串）。
@@ -337,6 +338,41 @@ def get_stock_code_by_name(name: str) -> str:
             print(f"讀取 {url} 時發生錯誤：{e}")
 
     return None
+
+# 台股代號取得目前股價資訊
+def get_stock_info(stock_id):
+     # 嘗試上市 (tse) 與上櫃 (otc)
+    urls = [
+        f"https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_{stock_id}.tw",
+        f"https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=otc_{stock_id}.tw"
+    ]
+
+    data = None
+
+    for url in urls:
+        try:
+            resp = requests.get(url, timeout=5)
+            json_data = resp.json()
+            
+            if "msgArray" in json_data and len(json_data["msgArray"]) > 0:
+                candidate = json_data["msgArray"][0]
+                
+                # 判斷是否為有效資料，若所有主要欄位都是空值或 "-" 就視為空
+                if candidate.get("z") not in [None, "", "-"] or candidate.get("c") not in [None, "", "-"]:
+                    data = candidate
+                    break  # 有效資料就使用
+        except Exception as e:
+            print(f"取得 {url} 資料失敗: {e}")
+            continue
+
+    # 如果兩個網址都沒有有效資料，回傳錯誤訊息
+    if not data:
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=f"查無股票代號 {stock_id} 或 是你呆呆記錯號碼")
+        )
+        return
+    return data
         
 @line_handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -2448,11 +2484,52 @@ def handle_message(event):
             
             if stock_code:
                 reply = f"🔍 找到股票：{keyword}\n📈 代號：{stock_code}"
-                text = stock_code
-                # line_bot_api.reply_message(
-                #     event.reply_token,
-                #     TextSendMessage(text=f"❗ {text}")
-                # )
+                stock_id = text[1:5]
+
+                data = get_stock_info(stock_id)
+                
+                # 安全取值
+                name = data.get("n", "未知名稱")
+                try: price = float(data.get("z", 0))
+                except: price = 0
+                try: yclose = float(data.get("y", 0))
+                except: yclose = 0
+                try: high = float(data.get("h", 0))
+                except: high = 0
+                try: low = float(data.get("l", 0))
+                except: low = 0
+                volume = int(data.get("v", "0"))
+                
+                # 如果現價沒資料，改用昨收價，沒有就顯示尚無成交
+                if price is None:
+                    if yclose is not None:
+                        price = yclose
+                    else:
+                        price = 0
+        
+                # 計算漲跌百分比，保留兩位小數
+                if price == 0 or yclose == 0:
+                    change_percent_str = "－"
+                else:
+                    change_percent = round((price - yclose) / yclose * 100, 2)
+                    change_percent_str = f"+{change_percent}%" if change_percent >= 0 else f"{change_percent}%"
+        
+                text_message = (
+                    f"{name}（{stock_id}）今日資訊：\n"
+                    f"💰 目前現價：{price if price != 0 else '尚無成交'}\n"
+                    f"⬆ 昨收：{yclose if yclose is not None else '－'}\n"
+                    f"📈 漲跌：{(price - yclose)}  {change_percent_str}\n"
+                    f"🔺 最高：{high if high is not None else '－'}\n"
+                    f"🔻 最低：{low if low is not None else '－'}\n"
+                    f"📊 成交量：{volume:,}"
+                )
+        
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text=text_message)
+                )
+                return
+            
             else:
                 reply = f"❗ 查無此公司名稱：「{keyword}」"
                 line_bot_api.reply_message(
@@ -2472,38 +2549,40 @@ def handle_message(event):
         if len(text) >= 5 and text[1:5].isdigit():
 
             stock_id = text[1:5]
+
+            data = get_stock_info(stock_id)
     
-            # 嘗試上市 (tse) 與上櫃 (otc)
-            urls = [
-                f"https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_{stock_id}.tw",
-                f"https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=otc_{stock_id}.tw"
-            ]
+            # # 嘗試上市 (tse) 與上櫃 (otc)
+            # urls = [
+            #     f"https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_{stock_id}.tw",
+            #     f"https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=otc_{stock_id}.tw"
+            # ]
     
-            data = None
+            # data = None
     
-            for url in urls:
-                try:
-                    resp = requests.get(url, timeout=5)
-                    json_data = resp.json()
+            # for url in urls:
+            #     try:
+            #         resp = requests.get(url, timeout=5)
+            #         json_data = resp.json()
                     
-                    if "msgArray" in json_data and len(json_data["msgArray"]) > 0:
-                        candidate = json_data["msgArray"][0]
+            #         if "msgArray" in json_data and len(json_data["msgArray"]) > 0:
+            #             candidate = json_data["msgArray"][0]
                         
-                        # 判斷是否為有效資料，若所有主要欄位都是空值或 "-" 就視為空
-                        if candidate.get("z") not in [None, "", "-"] or candidate.get("c") not in [None, "", "-"]:
-                            data = candidate
-                            break  # 有效資料就使用
-                except Exception as e:
-                    print(f"取得 {url} 資料失敗: {e}")
-                    continue
+            #             # 判斷是否為有效資料，若所有主要欄位都是空值或 "-" 就視為空
+            #             if candidate.get("z") not in [None, "", "-"] or candidate.get("c") not in [None, "", "-"]:
+            #                 data = candidate
+            #                 break  # 有效資料就使用
+            #     except Exception as e:
+            #         print(f"取得 {url} 資料失敗: {e}")
+            #         continue
     
-            # 如果兩個網址都沒有有效資料，回傳錯誤訊息
-            if not data:
-                line_bot_api.reply_message(
-                    event.reply_token,
-                    TextSendMessage(text=f"查無股票代號 {stock_id} 或 是你呆呆記錯號碼")
-                )
-                return
+            # # 如果兩個網址都沒有有效資料，回傳錯誤訊息
+            # if not data:
+            #     line_bot_api.reply_message(
+            #         event.reply_token,
+            #         TextSendMessage(text=f"查無股票代號 {stock_id} 或 是你呆呆記錯號碼")
+            #     )
+            #     return
             
             # 安全取值
             name = data.get("n", "未知名稱")
