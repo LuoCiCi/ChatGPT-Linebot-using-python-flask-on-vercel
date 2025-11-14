@@ -2432,7 +2432,8 @@ def handle_message(event):
                         event.reply_token,
                         TextSendMessage(text=f"找到可能公司：{name} → 代號 {c}")
                     )
-                    return
+                    text = "/" + c
+                    # return
             
             # 6. 如果還找不到
             line_bot_api.reply_message(
