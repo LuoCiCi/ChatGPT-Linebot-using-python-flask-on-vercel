@@ -2482,7 +2482,7 @@ def handle_message(event):
             keyword = text[1:]  # 去掉 "/"
             stock_id = get_stock_code_by_name(keyword)
             
-            if stock_code:
+            if stock_id:
                 reply = f"🔍 找到股票：{keyword}\n📈 代號：{stock_id}"
 
                 data = get_stock_info(stock_id)
