@@ -2397,7 +2397,8 @@ def handle_message(event):
     #     )
     #     return
     
-    if event.message.text.isdigit() and len(event.message.text) == 4:
+    # if event.message.text.isdigit() and len(event.message.text) == 4:
+    if text.startswith("/") and len(text) >= 4 and text[1:4].isdigit():
 
         stock_id = event.message.text
 
