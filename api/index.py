@@ -2480,12 +2480,12 @@ def handle_message(event):
             
         if not content.isdigit():
             keyword = text[1:]  # 去掉 "/"
-            stock_code = get_stock_code_by_name(keyword)
+            stock_id = get_stock_code_by_name(keyword)
             
             if stock_code:
-                reply = f"🔍 找到股票：{keyword}\n📈 代號：{stock_code}"
+                reply = f"🔍 找到股票：{keyword}\n📈 代號：{stock_id}"
 
-                data = get_stock_info(stock_code)
+                data = get_stock_info(stock_id)
                 
                 # 安全取值
                 name = data.get("n", "未知名稱")
@@ -2514,7 +2514,7 @@ def handle_message(event):
                     change_percent_str = f"+{change_percent}%" if change_percent >= 0 else f"{change_percent}%"
         
                 text_message = (
-                    f"{name}（{stock_id}）今日資訊：\n"
+                    f"{keyword}（{stock_id}）今日資訊：\n"
                     f"💰 目前現價：{price if price != 0 else '尚無成交'}\n"
                     f"⬆ 昨收：{yclose if yclose is not None else '－'}\n"
                     f"📈 漲跌：{(price - yclose)}  {change_percent_str}\n"
