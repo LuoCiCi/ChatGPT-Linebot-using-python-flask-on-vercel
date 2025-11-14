@@ -2482,78 +2482,53 @@ def handle_message(event):
     )
 
 
-# # ================================
-# # 判斷是否為股票代號（4碼數字）
-# # ================================
-#     if user_text.isdigit() and len(user_text) == 4:
-#         stock_id = user_text
+    msg = event.message.text.strip()
 
-#         import requests
+    # --- 判斷是否為四位數的台股代號 ---
+    if msg.isdigit() and len(msg) == 4:
+        stock_id = msg
 
-#         # 嘗試查上市（tse）
-#         url = f"https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_{stock_id}.tw"
-#         res = requests.get(url)
-#         data = res.json()
+        url = f"https://api.twse.com.tw/v1/exchangeReport/STOCK_DAY?response=json&stockNo={stock_id}"
+        data = requests.get(url).json()
 
-#         # 如果上市查不到 → 改查上櫃（otc）
-#         if not data["msgArray"]:
-#             url = f"https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=otc_{stock_id}.tw"
-#             res = requests.get(url)
-#             data = res.json()
+        if "data" not in data or len(data["data"]) == 0:
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text="查無股票資料"))
+            return
 
-#         # 若還是查不到回應錯誤
-#         if not data["msgArray"]:
-#             text_message = f"查不到股票代號 {stock_id}。"
-#             line_bot_api.reply_message(
-#                 event.reply_token,
-#                 TextSendMessage(text=text_message)
-#             )
-#             return  # 停止後續執行
+        # 取得今日資料（最後一筆）
+        day_data = data["data"][-1]
 
-#         # ================================
-#         # 解析資料
-#         # ================================
-#         info = data["msgArray"][0]
+        # TWSE API 欄位對應
+        date   = day_data[0]
+        volume = day_data[1]
+        yclose = float(day_data[5])
+        price  = float(day_data[6])
+        high   = float(day_data[4])
+        low    = float(day_data[3])
 
-#         name = info["n"]            # 股票名稱
-#         price = info["z"]           # 成交價
-#         yclose = info["y"]          # 昨收
-#         high = info["h"]            # 最高
-#         low = info["l"]             # 最低
-#         volume = info["v"]          # 成交量
+        # 計算漲跌%
+        change_percent = ((price - yclose) / yclose) * 100 if yclose != 0 else 0
+        change_percent = round(change_percent, 2)
 
-#         # ================================
-#         # 計算漲跌與百分比
-#         # ================================
-#         if price != "-" and yclose != "-":
-#             try:
-#                 diff = float(price) - float(yclose)
-#                 diff_percent = (diff / float(yclose)) * 100
-#                 arrow = "📈" if diff >= 0 else "📉"
-#                 diff_text = f"{arrow} 漲跌：{diff:+.2f}（{diff_percent:+.2f}%）"
-#             except:
-#                 diff_text = "📉 漲跌：資料異常"
-#         else:
-#             diff_text = "📉 漲跌：無資料"
+        # 股票名稱 API（證交所提供）
+        name_url = f"https://api.twse.com.tw/v1/stock/info?stockNo={stock_id}"
+        name_json = requests.get(name_url).json()
+        name = name_json["data"][0]["name"] if "data" in name_json else "未知名稱"
 
-#         # ================================
-#         # 回覆文字
-#         # ================================
-#         text_message = (
-#             f"{name}（{stock_id}）今日資訊：\n"
-#             f"💰 成交價：{price}\n"
-#             f"⬆ 昨收：{yclose}\n"
-#             f"🔺 最高：{high}\n"
-#             f"🔻 最低：{low}\n"
-#             f"{diff_text}\n"
-#             f"📊 成交量：{volume}"
-#         )
+        text_message = (
+            f"{name}（{stock_id}）今日資訊：\n"
+            f"💰 成交價：{price}\n"
+            f"⬆ 昨收：{yclose}\n"
+            f"📈 漲跌：{change_percent}%\n"
+            f"🔺 最高：{high}\n"
+            f"🔻 最低：{low}\n"
+            f"📊 成交量：{volume}"
+        )
 
-#         line_bot_api.reply_message(
-#             event.reply_token,
-#             TextSendMessage(text=text_message)
-#         )
-#======================================================================
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=text_message)
+        )
     
     if working_status:
         chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
