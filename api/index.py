@@ -2338,6 +2338,12 @@ def handle_message(event):
     if event.message.text.isdigit() and len(event.message.text) == 4:
     
         stock_id = event.message.text
+        instruction_message = f"已收到股票代碼：{stock_id}"
+
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=instruction_message)
+        )
         url = f"https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_{stock_id}.tw"
 
         data = requests.get(url).json()
@@ -2349,6 +2355,12 @@ def handle_message(event):
 
         info = data["msgArray"][0]
 
+
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="節點1")
+        )
+        
         # 取欄位
         name = info.get("n", "未知名稱")
         price = float(info.get("z", 0))     # 成交價
@@ -2373,6 +2385,11 @@ def handle_message(event):
             f"📊 成交量：{volume}"
         )
 
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="節點2")
+        )
+        
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=text_message)
