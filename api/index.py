@@ -388,7 +388,7 @@ def get_stock_info(stock_id):
                         change_percent_str = f"+{change_percent}%" if change_percent >= 0 else f"{change_percent}%"
             
                     text_message = (
-                        f"{keyword}（{stock_id}）今日資訊：\n"
+                        f"{name}（{stock_id}）今日資訊：\n"
                         f"💰 目前現價：{price if price != 0 else '尚無成交'}\n"
                         f"⬆ 昨收：{yclose if yclose is not None else '－'}\n"
                         f"📈 漲跌：{round((price - yclose), 2)}  {change_percent_str}\n"
