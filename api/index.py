@@ -2455,13 +2455,14 @@ def handle_message(event):
                     event.reply_token,
                     TextSendMessage(text=f"❗ 查無此公司名稱：「{keyword}」")
                 )
+                return
             
-            # 6. 如果還找不到
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text=f"找不到對應的台股代號")
-            )
-            return 
+            # # 6. 如果還找不到
+            # line_bot_api.reply_message(
+            #     event.reply_token,
+            #     TextSendMessage(text=f"找不到對應的台股代號")
+            # )
+            # return 
             
         
         if len(text) >= 5 and text[1:5].isdigit():
