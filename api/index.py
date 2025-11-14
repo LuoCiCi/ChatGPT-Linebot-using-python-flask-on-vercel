@@ -2336,7 +2336,13 @@ def handle_message(event):
         return
  
     if event.message.text.isdigit() and len(event.message.text) == 4:
-
+        instruction_message = "測試有進入"
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=instruction_message)
+        )
+        return
+    
         stock_id = event.message.text
         url = f"https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_{stock_id}.tw"
 
