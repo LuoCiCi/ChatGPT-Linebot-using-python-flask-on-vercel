@@ -734,6 +734,7 @@ def handle_message(event):
 
     if "預報" in event.message.text:
         working_status = True
+        locationName = ""
     
         # 使用新的 36 小時天氣預報 API
         code = 'CWA-84D9233C-12BC-4CD7-B744-7C7F35F7AE48'
@@ -790,12 +791,12 @@ def handle_message(event):
         elif "屏東" in event.message.text:
             locationName = "%E5%B1%8F%E6%9D%B1%E7%B8%A3"
         else:
-            line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text="請輸入正確縣市！"))
+            locationName = ""
 
-
-        future_url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization={code}&locationName={locationName}'
+        if locationName == "":
+            future_url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization={code}'
+        else:
+            future_url = f'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization={code}&locationName={locationName}'
 
         req = requests.get(future_url)
         data = req.json()
@@ -2449,7 +2450,7 @@ def handle_message(event):
 
     # ✅ 如果有找到對應幣名才觸發 API
     if target_coin:
-        import requests
+        # import requests
         url = "https://api.coingecko.com/api/v3/simple/price"
         params = {
             "ids": target_coin,
