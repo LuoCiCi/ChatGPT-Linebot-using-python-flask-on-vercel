@@ -333,6 +333,8 @@ def get_stock_code_by_name(name: str) -> str:
 
                 if name in company:  # 支援部分比對，如 "台積" 也找得到
                     return company, code
+                else:
+                    return name, None  # 回傳兩個值
 
         except Exception as e:
             print(f"讀取 {url} 時發生錯誤：{e}")
