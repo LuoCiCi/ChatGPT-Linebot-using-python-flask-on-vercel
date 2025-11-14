@@ -2377,6 +2377,7 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text=text_message)
         )
+        return
         
 #2025/11/13 羊新增幣圈功能=============================================
     user_text = event.message.text.strip()
@@ -2518,11 +2519,13 @@ def handle_message(event):
         else:
             text_message = f"查不到 {display_name} 的資料，或是API流量爆炸了0.0"
 
-    # 回覆訊息
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=text_message)
-    )
+        # 回覆訊息
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=text_message)
+        )
+        return
+    
     
     if working_status:
         chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
