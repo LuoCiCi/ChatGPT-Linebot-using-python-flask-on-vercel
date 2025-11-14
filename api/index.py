@@ -2336,47 +2336,59 @@ def handle_message(event):
         return
  
     if event.message.text.isdigit() and len(event.message.text) == 4:
-    
+
         stock_id = event.message.text
 
-        url = f"https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_{stock_id}.tw"
+        # 嘗試上市 (tse) 與上櫃 (otc)
+        urls = [
+            f"https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_{stock_id}.tw",
+            f"https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=otc_{stock_id}.tw"
+        ]
 
-        data = requests.get(url).json()
+        data = None
+        for url in urls:
+            try:
+                resp = requests.get(url)
+                json_data = resp.json()
+                if "msgArray" in json_data and len(json_data["msgArray"]) > 0:
+                    data = json_data["msgArray"][0]
+                    break
+            except:
+                continue
 
-        # # 檢查資料是否合法
-        # if "msgArray" not in data or len(data["msgArray"]) == 0:
-        #     line_bot_api.reply_message(
-        #         event.reply_token,
-        #         TextSendMessage(text="查無此股票")
-        #     )
-        #     return
+        if not data:
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=f"查無股票代號 {stock_id} 或資料異常")
+            )
+            return
 
-        info = data["msgArray"][0]
-        
-        # 取欄位
-        name = info.get("n", "未知名稱")
-        price = float(info.get("z", 0))     # 成交價
-        yclose = float(info.get("y", 0))    # 昨收
-        high = float(info.get("h", 0))      # 最高
-        low = float(info.get("l", 0))       # 最低
-        volume = info.get("v", "0")         # 成交量
+        # 安全取值
+        name = data.get("n", "未知名稱")
+        try: price = float(data.get("z", 0))
+        except: price = 0
+        try: yclose = float(data.get("y", 0))
+        except: yclose = 0
+        try: high = float(data.get("h", 0))
+        except: high = 0
+        try: low = float(data.get("l", 0))
+        except: low = 0
+        volume = data.get("v", "0")
 
-        # 漲跌幅
-        change_percent = 0
-        if yclose > 0:
-            change_percent = round(((price - yclose) / yclose) * 100, 2)
+        # 計算漲跌與百分比
+        change_percent = round(((price - yclose) / yclose) * 100, 2) if yclose != 0 else 0
+        arrow = "📈" if price - yclose >= 0 else "📉"
 
-        # 組合訊息
         text_message = (
             f"{name}（{stock_id}）今日資訊：\n"
             f"💰 成交價：{price}\n"
             f"⬆ 昨收：{yclose}\n"
-            f"📈 漲跌：{change_percent}%\n"
+            f"{arrow} 漲跌：{price - yclose:+.2f} ({change_percent:+.2f}%)\n"
             f"🔺 最高：{high}\n"
             f"🔻 最低：{low}\n"
             f"📊 成交量：{volume}"
         )
-        
+
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=text_message)
