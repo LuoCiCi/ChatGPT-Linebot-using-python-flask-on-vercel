@@ -2398,9 +2398,9 @@ def handle_message(event):
     #     return
     
     # if event.message.text.isdigit() and len(event.message.text) == 4:
-    if event.message.text.startswith("/") and len(event.message.text) >= 4 and event.message.text[1:4].isdigit():
+    if event.message.text.startswith("/") and len(event.message.text) >= 5 and event.message.text[1:5].isdigit():
 
-        stock_id = event.message.text[1:4]
+        stock_id = event.message.text[1:5]
 
         # 嘗試上市 (tse) 與上櫃 (otc)
         urls = [
