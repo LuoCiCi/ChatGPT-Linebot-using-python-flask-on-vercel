@@ -2471,7 +2471,7 @@ def handle_message(event):
         
         if len(text) >= 5 and text[1:5].isdigit():
 
-            stock_id = event.message.text[1:5]
+            stock_id = text[1:5]
     
             # 嘗試上市 (tse) 與上櫃 (otc)
             urls = [
