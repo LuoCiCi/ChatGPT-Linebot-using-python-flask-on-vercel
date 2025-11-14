@@ -2335,6 +2335,51 @@ def handle_message(event):
         )
         return
  
+    if event.message.text.isdigit() and len(event.message.text) == 4:
+        
+        stock_id = event.message.text
+        url = f"https://api.twse.com.tw/v1/exchangeReport/STOCK_DAY?response=json&stockNo={stock_id}"
+        data = requests.get(url).json()
+
+        if "data" not in data or len(data["data"]) == 0:
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text="查無股票資料"))
+            return
+
+        # 取得今日資料（最後一筆）
+        day_data = data["data"][-1]
+
+        # TWSE API 欄位對應
+        date   = day_data[0]
+        volume = day_data[1]
+        yclose = float(day_data[5])
+        price  = float(day_data[6])
+        high   = float(day_data[4])
+        low    = float(day_data[3])
+
+        # 計算漲跌%
+        change_percent = ((price - yclose) / yclose) * 100 if yclose != 0 else 0
+        change_percent = round(change_percent, 2)
+
+        # 股票名稱 API（證交所提供）
+        name_url = f"https://api.twse.com.tw/v1/stock/info?stockNo={stock_id}"
+        name_json = requests.get(name_url).json()
+        name = name_json["data"][0]["name"] if "data" in name_json else "未知名稱"
+
+        text_message = (
+            f"{name}（{stock_id}）今日資訊：\n"
+            f"💰 成交價：{price}\n"
+            f"⬆ 昨收：{yclose}\n"
+            f"📈 漲跌：{change_percent}%\n"
+            f"🔺 最高：{high}\n"
+            f"🔻 最低：{low}\n"
+            f"📊 成交量：{volume}"
+        )
+
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=text_message)
+        )
+        
 #2025/11/13 羊新增幣圈功能=============================================
     user_text = event.message.text.strip()
     user_text_lower = user_text.lower()  # ⚡ 修正：英文小寫匹配用
@@ -2480,55 +2525,6 @@ def handle_message(event):
         event.reply_token,
         TextSendMessage(text=text_message)
     )
-
-
-    msg = event.message.text.strip()
-
-    # --- 判斷是否為四位數的台股代號 ---
-    if msg.isdigit() and len(msg) == 4:
-        stock_id = msg
-
-        url = f"https://api.twse.com.tw/v1/exchangeReport/STOCK_DAY?response=json&stockNo={stock_id}"
-        data = requests.get(url).json()
-
-        if "data" not in data or len(data["data"]) == 0:
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text="查無股票資料"))
-            return
-
-        # 取得今日資料（最後一筆）
-        day_data = data["data"][-1]
-
-        # TWSE API 欄位對應
-        date   = day_data[0]
-        volume = day_data[1]
-        yclose = float(day_data[5])
-        price  = float(day_data[6])
-        high   = float(day_data[4])
-        low    = float(day_data[3])
-
-        # 計算漲跌%
-        change_percent = ((price - yclose) / yclose) * 100 if yclose != 0 else 0
-        change_percent = round(change_percent, 2)
-
-        # 股票名稱 API（證交所提供）
-        name_url = f"https://api.twse.com.tw/v1/stock/info?stockNo={stock_id}"
-        name_json = requests.get(name_url).json()
-        name = name_json["data"][0]["name"] if "data" in name_json else "未知名稱"
-
-        text_message = (
-            f"{name}（{stock_id}）今日資訊：\n"
-            f"💰 成交價：{price}\n"
-            f"⬆ 昨收：{yclose}\n"
-            f"📈 漲跌：{change_percent}%\n"
-            f"🔺 最高：{high}\n"
-            f"🔻 最低：{low}\n"
-            f"📊 成交量：{volume}"
-        )
-
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=text_message)
-        )
     
     if working_status:
         chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
