@@ -2338,12 +2338,7 @@ def handle_message(event):
     if event.message.text.isdigit() and len(event.message.text) == 4:
     
         stock_id = event.message.text
-        instruction_message = f"已收到股票代碼：{stock_id}"
 
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=instruction_message)
-        )
         url = f"https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_{stock_id}.tw"
 
         data = requests.get(url).json()
