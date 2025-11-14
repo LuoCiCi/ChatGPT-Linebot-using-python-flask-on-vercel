@@ -191,7 +191,7 @@ def handle_message():
     reply_message = "test OK~"
     
     line_bot_api.reply_message(
-        .reply_token,
+        event.reply_token,
         TextSendMessage(text=f"{reply_message}")
     )
     
