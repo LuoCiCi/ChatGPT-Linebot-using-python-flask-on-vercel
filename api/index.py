@@ -2467,7 +2467,7 @@ def handle_message(event):
             f"📈 漲跌：{(price - yclose)}  {change_percent_str}\n"
             f"🔺 最高：{high if high is not None else '－'}\n"
             f"🔻 最低：{low if low is not None else '－'}\n"
-            f"📊 成交量：f{volume:,}"
+            f"📊 成交量：{volume:,}"
         )
 
         line_bot_api.reply_message(
