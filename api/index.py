@@ -405,7 +405,7 @@ def get_stock_info(stock_id):
         except Exception as e:
             print(f"取得 {url} 資料失敗: {e}")
             continue
-    return none
+    return
 
     # 如果兩個網址都沒有有效資料，回傳錯誤訊息
     if not data:
