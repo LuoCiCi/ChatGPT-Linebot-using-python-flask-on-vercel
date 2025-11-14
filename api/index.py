@@ -2375,9 +2375,15 @@ def handle_message(event):
         except: low = 0
         volume = data.get("v", "0")
 
-        # 計算漲跌與百分比
-        change_percent = round(((price - yclose) / yclose) * 100, 2) if yclose != 0 else 0
-        arrow = "📈" if price - yclose >= 0 else "📉"
+        # 修正漲跌計算
+        if price == 0:
+            change_value = 0
+            change_percent = 0
+            arrow = "－"  # 尚無成交
+        else:
+            change_value = price - yclose
+            change_percent = round((change_value / yclose) * 100, 2) if yclose != 0 else 0
+            arrow = "📈" if change_value >= 0 else "📉"
 
         text_message = (
             f"{name}（{stock_id}）今日資訊：\n"
