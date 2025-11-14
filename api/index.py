@@ -2429,7 +2429,7 @@ def handle_message(event):
         if not data:
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text=f"查無股票代號 {stock_id} 或是你呆呆寄錯號碼")
+                TextSendMessage(text=f"查無股票代號 {stock_id} 或 是你呆呆記錯號碼")
             )
             return
         
