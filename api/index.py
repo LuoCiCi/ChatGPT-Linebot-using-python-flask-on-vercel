@@ -405,6 +405,7 @@ def get_stock_info(stock_id):
         except Exception as e:
             print(f"取得 {url} 資料失敗: {e}")
             continue
+    return
 
     # 如果兩個網址都沒有有效資料，回傳錯誤訊息
     if not data:
@@ -2570,7 +2571,7 @@ def handle_message(event):
                 #     event.reply_token,
                 #     TextSendMessage(text=text_message)
                 # )
-                # return
+                return
             
             else:
                 reply = f"❗ 查無此公司名稱：「{keyword}」"
@@ -2668,7 +2669,7 @@ def handle_message(event):
         #         event.reply_token,
         #         TextSendMessage(text=text_message)
         #     )
-        # return
+        return
         
 #2025/11/13 羊新增幣圈功能=============================================
     user_text = event.message.text.strip()
