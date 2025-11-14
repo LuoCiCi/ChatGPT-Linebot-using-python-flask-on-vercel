@@ -2375,21 +2375,18 @@ def handle_message(event):
         except: low = 0
         volume = data.get("v", "0")
 
-        # 修正漲跌計算
-        if price == 0:
-            change_value = 0
-            change_percent = 0
-            arrow = "－"  # 尚無成交
+        # 計算漲跌百分比，只顯示 +/-%
+        if price == 0 or yclose == 0:
+            change_percent_str = "－"  # 尚無成交或昨日收盤為0
         else:
-            change_value = price - yclose
-            change_percent = round((change_value / yclose) * 100, 2) if yclose != 0 else 0
-            arrow = "📈" if change_value >= 0 else "📉"
+            change_percent = round((price - yclose) / yclose * 100)
+            change_percent_str = f"+{change_percent}%" if change_percent >= 0 else f"{change_percent}%"
 
         text_message = (
             f"{name}（{stock_id}）今日資訊：\n"
-            f"💰 成交價：{price}\n"
+            f"💰 目前現價：{price}\n"
             f"⬆ 昨收：{yclose}\n"
-            f"{arrow} 漲跌：{price - yclose:+.2f} ({change_percent:+.2f}%)\n"
+            f"📈 漲跌：{change_percent_str}\n"
             f"🔺 最高：{high}\n"
             f"🔻 最低：{low}\n"
             f"📊 成交量：{volume}"
