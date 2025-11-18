@@ -2526,15 +2526,15 @@ def handle_message(event):
             return
 
         # 已股票名稱查詢
-        if not content.isdigit():
-            keyword = text[1:]  # 去掉 "/"
-            keyword, stock_id = get_stock_code_by_name(keyword)
-            
-            if stock_id:
-                reply = f"🔍 找到股票：{keyword}\n📈 代號：{stock_id}"
-
+        if not text[1:].isdigit():   # /後面不是數字 → 視為股票名稱
+            keyword = text[1:]  # 去掉前面的斜線
+        
+            # 修正：一定回傳兩個值
+            stock_name, stock_id = get_stock_code_by_name(keyword)
+        
+            if stock_id is not None:
+                # 找到股票
                 text_message = get_stock_info(stock_id)
-                
                 line_bot_api.reply_message(
                     event.reply_token,
                     TextSendMessage(text=text_message)
@@ -2542,19 +2542,43 @@ def handle_message(event):
                 return
             
             else:
-                reply = f"❗ 查無此公司名稱：「{keyword}」"
+                # 找不到
                 line_bot_api.reply_message(
                     event.reply_token,
                     TextSendMessage(text=f"❗ 查無此公司名稱：「{keyword}」")
                 )
                 return
+        
+        # # 已股票名稱查詢
+        # if not content.isdigit():
+        #     keyword = text[1:]  # 去掉 "/"
+        #     keyword, stock_id = get_stock_code_by_name(keyword)
             
-            # 6. 如果還找不到
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text=f"找不到對應的股票代號")
-            )
-            return 
+        #     if stock_id:
+        #         reply = f"🔍 找到股票：{keyword}\n📈 代號：{stock_id}"
+
+        #         text_message = get_stock_info(stock_id)
+                
+        #         line_bot_api.reply_message(
+        #             event.reply_token,
+        #             TextSendMessage(text=text_message)
+        #         )
+        #         return
+            
+        #     else:
+        #         reply = f"❗ 查無此公司名稱：「{keyword}」"
+        #         line_bot_api.reply_message(
+        #             event.reply_token,
+        #             TextSendMessage(text=f"❗ 查無此公司名稱：「{keyword}」")
+        #         )
+        #         return
+            
+        #     # 6. 如果還找不到
+        #     line_bot_api.reply_message(
+        #         event.reply_token,
+        #         TextSendMessage(text=f"找不到對應的股票代號")
+        #     )
+        #     return 
             
         # 已股票代號查詢
         if len(text) >= 5 and text[1:].isdigit():
