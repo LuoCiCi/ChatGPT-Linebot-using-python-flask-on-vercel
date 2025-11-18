@@ -308,12 +308,7 @@ def get_radar_pic():
     return prev_url, prev_prev_url, prev_3_url, prev_4_url
 
 # 台股名稱取得台股代號
-def get_stock_code_by_name(name: str) -> str:
-    # """
-    # 傳入公司名稱（中文），回傳對應的台股代號（字串）。
-    # 若找不到，回傳 None。
-    # """
-
+def get_stock_code_by_name(name: str):
     urls = [
         "https://mopsfin.twse.com.tw/opendata/t187ap03_L.csv",  # 上市
         "https://mopsfin.twse.com.tw/opendata/t187ap03_O.csv",  # 上櫃
@@ -327,22 +322,55 @@ def get_stock_code_by_name(name: str) -> str:
             f = io.StringIO(resp.text)
             reader = csv.DictReader(f)
 
-            # company = None
-            # code = None
-
             for row in reader:
                 company = row.get("公司名稱", "").strip()
                 code = row.get("公司代號", "").strip()
 
-                if name == company:  # 支援部分比對，如 "台積" 也找得到
+                # 部分比對，如 "台積" 找到 "台積電"
+                if name in company:
                     return company, code
-                # else:
-                #     return name, None  # 回傳兩個值
 
         except Exception as e:
             print(f"讀取 {url} 時發生錯誤：{e}")
 
-    return None
+    return None, None  # ← 保證永遠回傳 2 個值
+
+# # 台股名稱取得台股代號
+# def get_stock_code_by_name(name: str) -> str:
+#     # """
+#     # 傳入公司名稱（中文），回傳對應的台股代號（字串）。
+#     # 若找不到，回傳 None。
+#     # """
+
+#     urls = [
+#         "https://mopsfin.twse.com.tw/opendata/t187ap03_L.csv",  # 上市
+#         "https://mopsfin.twse.com.tw/opendata/t187ap03_O.csv",  # 上櫃
+#     ]
+
+#     for url in urls:
+#         try:
+#             resp = requests.get(url, timeout=10)
+#             resp.encoding = "utf-8"
+
+#             f = io.StringIO(resp.text)
+#             reader = csv.DictReader(f)
+
+#             # company = None
+#             # code = None
+
+#             for row in reader:
+#                 company = row.get("公司名稱", "").strip()
+#                 code = row.get("公司代號", "").strip()
+
+#                 if name == company:  # 支援部分比對，如 "台積" 也找得到
+#                     return company, code
+#                 # else:
+#                 #     return name, None  # 回傳兩個值
+
+#         except Exception as e:
+#             print(f"讀取 {url} 時發生錯誤：{e}")
+
+#     return None
 
 # 台股代號取得目前股價資訊
 def get_stock_info(stock_id):
