@@ -2,7 +2,7 @@ from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage, ImageSendMessage, VideoSendMessage
-from api.chatgpt import ChatGPT
+# from api.chatgpt import ChatGPT
 import os
 from datetime import datetime, timedelta
 import requests, json
@@ -22,7 +22,7 @@ line_handler = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
 working_status = os.getenv("DEFAULT_TALKING", default = "true").lower() == "true"
 
 app = Flask(__name__)
-chatgpt = ChatGPT()
+# chatgpt = ChatGPT()
 
 moneymany_groupid = "C4ee96dad094278d3f2b530a8e0aef6ed"    #鏟屎官line id
 mytest_groupid = "Cd627ff8b5c500044e9fc51609cfd4887"    #羊綺機器人測試line id
@@ -2787,13 +2787,13 @@ def handle_message(event):
         return
     
     
-    if working_status:
-        chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
-        reply_msg = chatgpt.get_response().replace("AI:", "", 1)
-        chatgpt.add_msg(f"AI:{reply_msg}\n")
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=reply_msg))
+    # if working_status:
+    #     chatgpt.add_msg(f"HUMAN:{event.message.text}?\n")
+    #     reply_msg = chatgpt.get_response().replace("AI:", "", 1)
+    #     chatgpt.add_msg(f"AI:{reply_msg}\n")
+    #     line_bot_api.reply_message(
+    #         event.reply_token,
+    #         TextSendMessage(text=reply_msg))
 
 if __name__ == "__main__":
     app.run()
