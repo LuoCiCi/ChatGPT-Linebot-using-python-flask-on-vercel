@@ -327,14 +327,14 @@ def get_stock_code_by_name(name: str) -> str:
             f = io.StringIO(resp.text)
             reader = csv.DictReader(f)
 
-            company = None
-            code = None
+            # company = None
+            # code = None
 
             for row in reader:
                 company = row.get("公司名稱", "").strip()
                 code = row.get("公司代號", "").strip()
 
-                if name in company:  # 支援部分比對，如 "台積" 也找得到
+                if name == company:  # 支援部分比對，如 "台積" 也找得到
                     return company, code
                 # else:
                 #     return name, None  # 回傳兩個值
