@@ -331,12 +331,12 @@ def get_stock_code_by_name(name: str):
                     return company, code
 
             for row in reader:
-                company = row.get("公司簡稱", "").strip()
-                code = row.get("公司代號", "").strip()
+                company1 = row.get("公司簡稱", "").strip()
+                code1 = row.get("公司代號", "").strip()
 
                 # 部分比對，如 "台積" 找到 "台積電"
-                if name in company:
-                    return company, code
+                if name in company1:
+                    return company1, code1
         except Exception as e:
             print(f"讀取 {url} 時發生錯誤：{e}")
 
