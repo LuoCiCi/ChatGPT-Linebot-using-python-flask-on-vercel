@@ -320,28 +320,36 @@ def get_stock_code_by_name(name: str):
             resp.encoding = "utf-8"
 
             f = io.StringIO(resp.text)
-            reader = csv.DictReader(f)
+            reader = list(csv.DictReader(f))  # 轉成 list，可多次迭代
 
+            # ① 完整比對：公司名稱
             for row in reader:
                 company = row.get("公司名稱", "").strip()
                 code = row.get("公司代號", "").strip()
-
-                # 部分比對，如 "台積" 找到 "台積電"
                 if name == company:
                     return company, code
 
+            # ② 完整比對：公司簡稱
             for row in reader:
                 company1 = row.get("公司簡稱", "").strip()
                 code1 = row.get("公司代號", "").strip()
-
-                # 部分比對，如 "台積" 找到 "台積電"
                 if name == company1:
                     return company1, code1
+
+            # ③ 部分比對（最好用）
+            for row in reader:
+                company = row.get("公司名稱", "").strip()
+                short = row.get("公司簡稱", "").strip()
+                code = row.get("公司代號", "").strip()
+
+                if name in company or name in short:
+                    return company, code
+
         except Exception as e:
             print(f"讀取 {url} 時發生錯誤：{e}")
 
-    return None, None  # ← 保證永遠回傳 2 個值
-
+    return None, None
+    
 # # 台股名稱取得台股代號
 # def get_stock_code_by_name(name: str) -> str:
 #     # """
