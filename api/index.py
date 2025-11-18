@@ -349,43 +349,6 @@ def get_stock_code_by_name(name: str):
             print(f"讀取 {url} 時發生錯誤：{e}")
 
     return None, None
-    
-# # 台股名稱取得台股代號
-# def get_stock_code_by_name(name: str) -> str:
-#     # """
-#     # 傳入公司名稱（中文），回傳對應的台股代號（字串）。
-#     # 若找不到，回傳 None。
-#     # """
-
-#     urls = [
-#         "https://mopsfin.twse.com.tw/opendata/t187ap03_L.csv",  # 上市
-#         "https://mopsfin.twse.com.tw/opendata/t187ap03_O.csv",  # 上櫃
-#     ]
-
-#     for url in urls:
-#         try:
-#             resp = requests.get(url, timeout=10)
-#             resp.encoding = "utf-8"
-
-#             f = io.StringIO(resp.text)
-#             reader = csv.DictReader(f)
-
-#             # company = None
-#             # code = None
-
-#             for row in reader:
-#                 company = row.get("公司名稱", "").strip()
-#                 code = row.get("公司代號", "").strip()
-
-#                 if name == company:  # 支援部分比對，如 "台積" 也找得到
-#                     return company, code
-#                 # else:
-#                 #     return name, None  # 回傳兩個值
-
-#         except Exception as e:
-#             print(f"讀取 {url} 時發生錯誤：{e}")
-
-#     return None
 
 # 台股代號取得目前股價資訊
 def get_stock_info(stock_id):
@@ -431,15 +394,17 @@ def get_stock_info(stock_id):
                     # 計算漲跌百分比，保留兩位小數
                     if price == 0 or yclose == 0:
                         change_percent_str = "－"
+                        change_price = "－"
                     else:
                         change_percent = round((price - yclose) / yclose * 100, 2)
                         change_percent_str = f"+{change_percent}%" if change_percent >= 0 else f"{change_percent}%"
+                        change_price = round((price - yclose), 2)
             
                     text_message = (
                         f"{name}（{stock_id}）今日資訊：\n"
                         f"💰 目前現價：{price if price != 0 else '尚無成交'}\n"
                         f"⬆ 昨收：{yclose if yclose is not None else '－'}\n"
-                        f"📈 漲跌：{round((price - yclose), 2)}  {change_percent_str}\n"
+                        f"📈 漲跌：{change_price}  {change_percent_str}\n"
                         f"🔺 最高：{high if high is not None else '－'}\n"
                         f"🔻 最低：{low if low is not None else '－'}\n"
                         f"📊 成交量：{volume:,}"
@@ -2486,76 +2451,13 @@ def handle_message(event):
     #handle_instruction_message(event, line_bot_api)
     if event.message.text == "指令"or event.message.text == "選單" or event.message.text == "列表" or event.message.text == "help" or event.message.text == "Help":
         
-        instruction_message = "🚀【一番賞】\n\rReset(A~C)\n\r一番賞(A~C)(1~5)連抽\n\r庫存(A~C)\n\n☀️【問問台灣還好嗎?】\n\r天氣\r\r颱風\r\r地震\r\r雨量\n\r溫度\r\r紫外線\r\r衛星\r\r雷達\n\n🙏🏻【求神問佛】\n\r抽籤\r\r擲筊\n\n🔥【提振精神】\n\r抽\r\r三連抽\r\r抽奶\r\r抽梗圖\n\r錢錢\r\r多多\r\r錢多\n\r多多三連抽\r\r錢錢三連抽\n\r抽寶可夢\r\r抽寶可夢-(1~1025)\n\n🍔【點餐】\n\r抽晚餐\r\r抽午餐\r\r抽美食\n\n🎮 【遊戲】\n\r猜數字\r\r猜數字-(1~100)\r\r小霞丟硬幣"
+        instruction_message = "🚀【一番賞】\n\rReset(A~C)\n\r一番賞(A~C)(1~5)連抽\n\r庫存(A~C)\n\n☀️【問問台灣還好嗎?】\n\r天氣\r\r颱風\r\r地震\r\r雨量\n\r溫度\r\r紫外線\r\r衛星\r\r雷達\n\n🙏🏻【求神問佛】\n\r抽籤\r\r擲筊\n\n🔥【提振精神】\n\r抽\r\r三連抽\r\r抽奶\r\r抽梗圖\n\r錢錢\r\r多多\r\r錢多\n\r多多三連抽\r\r錢錢三連抽\n\r抽寶可夢\r\r抽寶可夢-(1~1025)\n\n🍔【點餐】\n\r抽晚餐\r\r抽午餐\r\r抽美食\n\n🎮 【遊戲】\n\r猜數字\r\r猜數字-(1~100)\r\r小霞丟硬幣\n\n🎮 【股市】\n\r/股票代碼or股票名稱\n\n"
         
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=instruction_message)
         )
         return
-    
-    # if event.message.text.isdigit() and len(event.message.text) == 4:
-
-    #     stock_id = event.message.text
-
-    #    # 取得今天日期
-    #     today = datetime.now()
-    #     today_str = today.strftime("%Y-%m-%d")
-
-    #     # FinMind API: 只抓今天日期，不帶 token
-    #     url = f"https://api.finmindtrade.com/api/v4/data?dataset=TaiwanStockPrice&data_id={stock_id}&start_date={today_str}&end_date={today_str}"
-
-    #     data = None
-    #     try:
-    #         resp = requests.get(url)
-    #         json_data = resp.json()
-    #         if "data" in json_data and len(json_data["data"]) > 0:
-    #             data = json_data["data"][0]
-    #     except Exception as e:
-    #         print("FinMind API error:", e)
-
-    #     if not data:
-    #         line_bot_api.reply_message(
-    #             event.reply_token,
-    #             TextSendMessage(text=f"查無股票代號 {stock_id} 或今日資料尚未更新")
-    #         )
-    #         return
-
-    #     # 安全取值
-    #     name = stock_id  # FinMind 沒有提供中文名稱，需要另外對照
-    #     try: price = float(data.get("close", 0))
-    #     except: price = 0
-    #     try: yclose = float(data.get("Trading_Volume", 0))  # 昨收沒直接提供，需要自己算
-    #     except: yclose = 0
-    #     try: high = float(data.get("max", 0))
-    #     except: high = 0
-    #     try: low = float(data.get("min", 0))
-    #     except: low = 0
-    #     volume = data.get("Trading_Volume", 0)
-
-    #     # 計算漲跌百分比
-    #     if price == 0 or yclose == 0:
-    #         change_percent_str = "－"
-    #     else:
-    #         change_percent = round((price - yclose) / yclose * 100)
-    #         change_percent_str = f"+{change_percent}%" if change_percent >= 0 else f"{change_percent}%"
-
-    #     text_message = (
-    #         f"{name}（{stock_id}）今日資訊：\n"
-    #         f"💰 目前現價：{price if price != 0 else '尚無成交'}\n"
-    #         f"⬆ 昨收：{yclose if yclose != 0 else '－'}\n"
-    #         f"📈 漲跌：{change_percent_str}\n"
-    #         f"🔺 最高：{high if high != 0 else '－'}\n"
-    #         f"🔻 最低：{low if low != 0 else '－'}\n"
-    #         f"📊 成交量：{volume}"
-    #     )
-
-    #     line_bot_api.reply_message(
-    #         event.reply_token,
-    #         TextSendMessage(text=text_message)
-    #     )
-    #     return
-    
 
     if event.message.text.startswith("/"):
         text = event.message.text
