@@ -439,7 +439,7 @@ def get_stock_info(stock_id):
 
             return (
                 f"（Yahoo Finance）\n"
-                f"{stock_id} 今日資訊：\n"
+                f"{name}（{stock_id} 今日資訊：\n"
                 f"💰 目前現價：{price}\n"
                 f"⬆ 昨收：{yclose}\n"
                 f"📈 漲跌：{change}（{change_p}%）"
