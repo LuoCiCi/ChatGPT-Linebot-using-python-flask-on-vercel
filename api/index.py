@@ -356,7 +356,12 @@ def get_stock_info(stock_id):
     # ====================================================
     # ① TWSE 官方 API（即時資料）
     # ====================================================
-    name = None
+    # 用來存 TWSE 抓到的資訊（即使沒成交）
+    twse_name = None
+    twse_high = None
+    twse_low = None
+    twse_volume = None
+    twse_yclose = None
 
     twse_urls = [
         f"https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_{stock_id}.tw",
@@ -373,20 +378,21 @@ def get_stock_info(stock_id):
 
             info = data["msgArray"][0]
 
-            name = info.get("n", "")
+            # 先儲存 TWSE 有的資料（即使沒成交價）
+            twse_name = info.get("n", "")
+            twse_yclose = info.get("y", "-")
+            twse_high = info.get("h", "-")
+            twse_low = info.get("l", "-")
+            twse_volume = info.get("v", "0")
             price = info.get("z", "-")
-            yclose = info.get("y", "-")
-            high = info.get("h", "-")
-            low = info.get("l", "-")
-            volume = info.get("v", "0")
 
             # 若有成交價
             if price not in ["", "-", None]:
                 price = float(price)
-                yclose = float(yclose)
-                high = float(high)
-                low = float(low)
-                volume = int(volume.replace(",", ""))
+                yclose = float(twse_yclose)
+                high = float(twse_high)
+                low = float(twse_low)
+                volume = int(twse_volume.replace(",", ""))
 
                 change = round(price - yclose, 2)
                 change_p = round(change / yclose * 100, 2)
@@ -438,12 +444,16 @@ def get_stock_info(stock_id):
             change = round(price - yclose, 2)
             change_p = round(change / yclose * 100, 2)
 
+            # 回補顯示 TWSE 抓到的資訊
             return (
-                f"（Yahoo Finance）\n"
-                f"{name}（{stock_id}) 今日資訊：\n"
+                f"（Yahoo Finance 資料＋TWSE 補充）\n"
+                f"{twse_name or stock_id}（{stock_id}）今日資訊：\n"
                 f"💰 目前現價：{price}\n"
                 f"⬆ 昨收：{yclose}\n"
-                f"📈 漲跌：{change}（{change_p}%）"
+                f"📈 漲跌：{change}（{change_p}%）\n"
+                f"🔺 最高（TWSE）：{twse_high}\n"
+                f"🔻 最低（TWSE）：{twse_low}\n"
+                f"📊 成交量（TWSE）：{twse_volume}"
             )
 
         except Exception as e:
