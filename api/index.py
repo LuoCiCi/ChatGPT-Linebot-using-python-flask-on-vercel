@@ -456,8 +456,8 @@ def get_stock_info(stock_id):
     #     )
     #     return text_message
 
-    except Exception as e:
-        print("Yahoo Finance API 錯誤：", e)
+    # except Exception as e:
+    #     print("Yahoo Finance API 錯誤：", e)
         
     # # ---------- 3️⃣ 最後還是沒有資料 ----------
     # return "❗ 無法取得此股票的最新資料"
