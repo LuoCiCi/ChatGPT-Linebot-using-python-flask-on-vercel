@@ -351,124 +351,100 @@ def get_stock_code_by_name(name: str):
     return None, None
 
 # 台股代號取得目前股價資訊（TWSE 無資料則改抓 Yahoo Finance）
+# 取得台股股價
 def get_stock_info(stock_id):
-    text_message = "無資料"
-    price = yclose = 0
+    # ====================================================
+    # ① TWSE 官方 API (即時資料)
+    # ====================================================
 
-    stock_id = stock_id.zfill(4)  # 保證四碼代號
-
-    # ---------- 1️⃣ TWSE 官方即時 API ----------
-    urls = [
+    twse_urls = [
         f"https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_{stock_id}.tw",
         f"https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=otc_{stock_id}.tw"
     ]
 
-    for url in urls:
+    for url in twse_urls:
         try:
             resp = requests.get(url, timeout=5)
             data = resp.json()
 
-            if "msgArray" in data and len(data["msgArray"]) > 0:
-                info = data["msgArray"][0]
+            if "msgArray" not in data or len(data["msgArray"]) == 0:
+                continue
 
-                name = info.get("n", "未知名稱")
+            info = data["msgArray"][0]
 
-                try: price = float(info.get("z","0"))
-                except: price = 0
-                try: yclose = float(info.get("y","0"))
-                except: yclose = 0
-                try: high = float(info.get("h","0"))
-                except: high = 0
-                try: low = float(info.get("l","0"))
-                except: low = 0
-                try: volume = int(info.get("v","0").replace(",",""))
-                except: volume = 0
+            name = info.get("n", "")
+            price = info.get("z", "-")
+            yclose = info.get("y", "-")
+            high = info.get("h", "-")
+            low = info.get("l", "-")
+            volume = info.get("v", "0")
 
-                change_price = round(price - yclose, 2) if price and yclose else "－"
-                change_percent = round((price - yclose) / yclose * 100, 2) if price and yclose else "－"
+            # 無成交 → price 為 "-" 或 ""
+            if price not in [None, "", "-"]:
+                price = float(price)
+                yclose_f = float(yclose) if yclose not in ["", "-"] else 0
+                high = float(high) if high not in ["", "-"] else 0
+                low = float(low) if low not in ["", "-"] else 0
+                volume = int(volume.replace(",", ""))
 
-                if price > 0:
-                    text_message = (
-                        f"{name}（{stock_id}）今日資訊（TWSE）：\n"
-                        f"💰 目前現價：{price if price else '尚無成交'}\n"
-                        f"⬆ 昨收：{yclose if yclose else '－'}\n"
-                        f"📈 漲跌：{change_price}  {change_percent}%\n"
-                        f"🔺 最高：{high if high else '－'}\n"
-                        f"🔻 最低：{low if low else '－'}\n"
-                        f"📊 成交量：{volume:,}"
-                    )
-                    return text_message   # TWSE 成功 → 直接回傳
+                # 計算漲跌
+                if yclose_f > 0:
+                    change_price = round(price - yclose_f, 2)
+                    change_percent = round((price - yclose_f) / yclose_f * 100, 2)
                 else:
-                    yahoo_url = f"https://query1.finance.yahoo.com/v8/finance/chart/{stock_id}.TW?interval=1d"
-                    resp = requests.get(yahoo_url, timeout=5)
-                    jd = resp.json()
-            
-                    result = jd["chart"]["result"][0]
-            
-                    ts = result["timestamp"][-1]
-                    indicators = result["indicators"]["quote"][0]
-            
-                    price = indicators["close"][-1]
-                    high = indicators["high"][-1]
-                    low = indicators["low"][-1]
-                    open_price = indicators["open"][-1]
-                    volume = indicators["volume"][-1]
-            
-                    text_message = (
-                        f"{stock_id} 今日資訊（Yahoo）：\n"
-                        f"💰 收盤價：{price}\n"
-                        f"⬆ 開盤：{open_price}\n"
-                        f"🔺 最高：{high}\n"
-                        f"🔻 最低：{low}\n"
-                        f"📊 成交量：{volume:,}\n"
-                        f"⚠ 已改由 Yahoo Finance 取得（TWSE 無資料）"
-                    )
-                    return text_message
+                    change_price = "－"
+                    change_percent = "－"
 
-        except:
-            continue
+                return (
+                    f"{name}（{stock_id}）今日資訊：\n"
+                    f"💰 目前現價：{price}\n"
+                    f"⬆ 昨收：{yclose}\n"
+                    f"📈 漲跌：{change_price}（{change_percent}%）\n"
+                    f"🔺 最高：{high}\n"
+                    f"🔻 最低：{low}\n"
+                    f"📊 成交量：{volume:,}"
+                )
 
-    # # ---------- 2️⃣ Yahoo Finance API（免安裝 yfinance） ----------
-    # try:
-    #     yahoo_url = f"https://query1.finance.yahoo.com/v8/finance/chart/{stock_id}.TW?interval=1d"
-    #     resp = requests.get(yahoo_url, timeout=5)
-    #     jd = resp.json()
+        except Exception:
+            continue  # 換下一個 URL
 
-    #     result = jd["chart"]["result"][0]
+    # ====================================================
+    # ② Yahoo Finance（補救 TWSE 無成交資料）
+    # ====================================================
 
-    #     ts = result["timestamp"][-1]
-    #     indicators = result["indicators"]["quote"][0]
+    yahoo_url = f"https://query1.finance.yahoo.com/v8/finance/chart/{stock_id}.TW"
 
-    #     price = indicators["close"][-1]
-    #     high = indicators["high"][-1]
-    #     low = indicators["low"][-1]
-    #     open_price = indicators["open"][-1]
-    #     volume = indicators["volume"][-1]
+    try:
+        resp = requests.get(yahoo_url, timeout=5)
+        data = resp.json()
 
-    #     text_message = (
-    #         f"{stock_id} 今日資訊（Yahoo）：\n"
-    #         f"💰 收盤價：{price}\n"
-    #         f"⬆ 開盤：{open_price}\n"
-    #         f"🔺 最高：{high}\n"
-    #         f"🔻 最低：{low}\n"
-    #         f"📊 成交量：{volume:,}\n"
-    #         f"⚠ 已改由 Yahoo Finance 取得（TWSE 無資料）"
-    #     )
-    #     return text_message
+        result = data.get("chart", {}).get("result")
+        if not result:
+            return f"❗ 找不到 {stock_id} 替代行情資料"
 
-    # except Exception as e:
-    #     print("Yahoo Finance API 錯誤：", e)
-        
-    # ---------- 3️⃣ 最後還是沒有資料 ----------
-    return "❗ 無法取得此股票的最新資料"
-    # 如果兩個網址都沒有有效資料，回傳錯誤訊息
-    if not data:
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=f"查無股票代號 {stock_id} 或 是你呆呆記錯號碼")
+        meta = result[0].get("meta", {})
+        price = meta.get("regularMarketPrice")
+        yclose = meta.get("chartPreviousClose")
+
+        if price is None:
+            return f"❗ Yahoo Finance 也無法取得 {stock_id} 的行情"
+
+        change_price = round(price - yclose, 2)
+        change_percent = round((price - yclose) / yclose * 100, 2)
+
+        return (
+            f"（Yahoo Finance 資料）\n"
+            f"{stock_id} 今日資訊：\n"
+            f"💰 目前現價：{price}\n"
+            f"⬆ 昨收：{yclose}\n"
+            f"📈 漲跌：{change_price}（{change_percent}%）"
         )
-        return
-    return 
+
+    except Exception:
+        return f"❗ 無法取得 {stock_id} 的行情資料"
+
+    # 萬一全部失敗
+    return f"❗ 找不到 {stock_id} 的股價資訊"
 
 # # 台股代號取得目前股價資訊
 # def get_stock_info(stock_id):
