@@ -381,11 +381,11 @@ def get_stock_info(stock_id):
 
             info = data["msgArray"][0]
 
-            twse_name = info.get("n", "-")
+            twse_name = info.get("n", stock_id)
             twse_yclose = info.get("y", "-")
             twse_high = info.get("h", "-")
             twse_low = info.get("l", "-")
-            twse_volume = int(info.get("v","0").replace(",",""))
+            twse_volume = info.get("v", "0")
 
             price = info.get("z", "-")
 
@@ -445,8 +445,7 @@ def get_stock_info(stock_id):
             # Yahoo 能補 TWSE 缺的欄位
             final_high = twse_high if twse_high not in ["-", None] else day_high
             final_low = twse_low if twse_low not in ["-", None] else day_low
-            # final_volume = twse_volume if twse_volume not in ["0", "-", None] else day_volume
-            volume = int(twse_volume.replace(",", ""))
+            final_volume = twse_volume if twse_volume not in ["0", "-", None] else day_volume
 
             change = round(price - yclose, 2)
             change_p = round(change / yclose * 100, 2)
@@ -459,7 +458,7 @@ def get_stock_info(stock_id):
                 f"📈 漲跌：{change}（{change_p}%）\n"
                 f"🔺 最高：{final_high}\n"
                 f"🔻 最低：{final_low}\n"
-                f"📊 成交量：{volume:,}"
+                f"📊 成交量：{final_volume:,}"
             )
 
         except:
