@@ -387,16 +387,17 @@ def get_stock_info(stock_id):
                 change_price = round(price - yclose, 2) if price and yclose else "－"
                 change_percent = round((price - yclose) / yclose * 100, 2) if price and yclose else "－"
 
-                text_message = (
-                    f"{name}（{stock_id}）今日資訊（TWSE）：\n"
-                    f"💰 目前現價：{price if price else '尚無成交'}\n"
-                    f"⬆ 昨收：{yclose if yclose else '－'}\n"
-                    f"📈 漲跌：{change_price}  {change_percent}%\n"
-                    f"🔺 最高：{high if high else '－'}\n"
-                    f"🔻 最低：{low if low else '－'}\n"
-                    f"📊 成交量：{volume:,}"
-                )
-                return text_message   # TWSE 成功 → 直接回傳
+                if price > 0:
+                    text_message = (
+                        f"{name}（{stock_id}）今日資訊（TWSE）：\n"
+                        f"💰 目前現價：{price if price else '尚無成交'}\n"
+                        f"⬆ 昨收：{yclose if yclose else '－'}\n"
+                        f"📈 漲跌：{change_price}  {change_percent}%\n"
+                        f"🔺 最高：{high if high else '－'}\n"
+                        f"🔻 最低：{low if low else '－'}\n"
+                        f"📊 成交量：{volume:,}"
+                    )
+                    return text_message   # TWSE 成功 → 直接回傳
 
         except:
             continue
