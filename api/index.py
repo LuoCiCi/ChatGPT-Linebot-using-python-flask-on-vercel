@@ -354,7 +354,7 @@ def get_stock_code_by_name(name: str):
 # 取得台股股價
 def get_stock_info(stock_id):
     # ====================================================
-    # ① TWSE 官方 API (即時資料)
+    # ① TWSE 官方 API（即時資料）
     # ====================================================
 
     twse_urls = [
@@ -379,72 +379,77 @@ def get_stock_info(stock_id):
             low = info.get("l", "-")
             volume = info.get("v", "0")
 
-            # 無成交 → price 為 "-" 或 ""
-            if price not in [None, "", "-"]:
+            # 若有成交價
+            if price not in ["", "-", None]:
                 price = float(price)
-                yclose_f = float(yclose) if yclose not in ["", "-"] else 0
-                high = float(high) if high not in ["", "-"] else 0
-                low = float(low) if low not in ["", "-"] else 0
+                yclose = float(yclose)
+                high = float(high)
+                low = float(low)
                 volume = int(volume.replace(",", ""))
 
-                # 計算漲跌
-                if yclose_f > 0:
-                    change_price = round(price - yclose_f, 2)
-                    change_percent = round((price - yclose_f) / yclose_f * 100, 2)
-                else:
-                    change_price = "－"
-                    change_percent = "－"
+                change = round(price - yclose, 2)
+                change_p = round(change / yclose * 100, 2)
 
                 return (
                     f"{name}（{stock_id}）今日資訊：\n"
                     f"💰 目前現價：{price}\n"
                     f"⬆ 昨收：{yclose}\n"
-                    f"📈 漲跌：{change_price}（{change_percent}%）\n"
+                    f"📈 漲跌：{change}（{change_p}%）\n"
                     f"🔺 最高：{high}\n"
                     f"🔻 最低：{low}\n"
                     f"📊 成交量：{volume:,}"
                 )
 
-        except Exception:
+        except:
             continue  # 換下一個 URL
 
     # ====================================================
-    # ② Yahoo Finance（補救 TWSE 無成交資料）
+    # ② Yahoo Finance（補 TWSE 無即時成交）
     # ====================================================
 
-    yahoo_url = f"https://query1.finance.yahoo.com/v8/finance/chart/{stock_id}.TW"
+    # 自動判斷上市/上櫃
+    # 先試 TW（上市）
+    yahoo_urls = [
+        f"https://query1.finance.yahoo.com/v8/finance/chart/{stock_id}.TW",
+        f"https://query1.finance.yahoo.com/v8/finance/chart/{stock_id}.TWO"
+    ]
 
-    try:
-        resp = requests.get(yahoo_url, timeout=5)
-        data = resp.json()
+    headers = {
+        "User-Agent": "Mozilla/5.0"  # Yahoo 不給無 UA 的 request
+    }
 
-        result = data.get("chart", {}).get("result")
-        if not result:
-            return f"❗ 找不到 {stock_id} 替代行情資料"
+    for url in yahoo_urls:
+        try:
+            resp = requests.get(url, headers=headers, timeout=5)
+            data = resp.json()
 
-        meta = result[0].get("meta", {})
-        price = meta.get("regularMarketPrice")
-        yclose = meta.get("chartPreviousClose")
+            result = data.get("chart", {}).get("result")
+            if not result:
+                continue  # 換下一個（可能上市/上櫃不對）
 
-        if price is None:
-            return f"❗ Yahoo Finance 也無法取得 {stock_id} 的行情"
+            meta = result[0].get("meta", {})
+            price = meta.get("regularMarketPrice")
+            yclose = meta.get("chartPreviousClose")
 
-        change_price = round(price - yclose, 2)
-        change_percent = round((price - yclose) / yclose * 100, 2)
+            if price is None:
+                continue
 
-        return (
-            f"（Yahoo Finance 資料）\n"
-            f"{stock_id} 今日資訊：\n"
-            f"💰 目前現價：{price}\n"
-            f"⬆ 昨收：{yclose}\n"
-            f"📈 漲跌：{change_price}（{change_percent}%）"
-        )
+            change = round(price - yclose, 2)
+            change_p = round(change / yclose * 100, 2)
 
-    except Exception:
-        return f"❗ 無法取得 {stock_id} 的行情資料"
+            return (
+                f"（Yahoo Finance）\n"
+                f"{stock_id} 今日資訊：\n"
+                f"💰 目前現價：{price}\n"
+                f"⬆ 昨收：{yclose}\n"
+                f"📈 漲跌：{change}（{change_p}%）"
+            )
 
-    # 萬一全部失敗
-    return f"❗ 找不到 {stock_id} 的股價資訊"
+        except Exception as e:
+            continue
+
+    # Yahoo 也抓不到 → 股票代碼錯 or Yahoo 封鎖 IP
+    return f"❗ 無法取得 {stock_id} 的股價資訊"
 
 # # 台股代號取得目前股價資訊
 # def get_stock_info(stock_id):
