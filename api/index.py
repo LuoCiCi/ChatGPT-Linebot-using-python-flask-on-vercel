@@ -408,40 +408,40 @@ def get_stock_info(stock_id):
         except Exception:
             continue  # 換下一個 URL
 
-    # ====================================================
-    # ② Yahoo Finance（補救 TWSE 無成交資料）
-    # ====================================================
-
-    yahoo_url = f"https://query1.finance.yahoo.com/v8/finance/chart/{stock_id}.TW"
-
-    try:
-        resp = requests.get(yahoo_url, timeout=5)
-        data = resp.json()
-
-        result = data.get("chart", {}).get("result")
-        if not result:
-            return f"❗ 找不到 {stock_id} 替代行情資料"
-
-        meta = result[0].get("meta", {})
-        price = meta.get("regularMarketPrice")
-        yclose = meta.get("chartPreviousClose")
-
-        if price is None:
-            return f"❗ Yahoo Finance 也無法取得 {stock_id} 的行情"
-
-        change_price = round(price - yclose, 2)
-        change_percent = round((price - yclose) / yclose * 100, 2)
-
-        return (
-            f"（Yahoo Finance 資料）\n"
-            f"{stock_id} 今日資訊：\n"
-            f"💰 目前現價：{price}\n"
-            f"⬆ 昨收：{yclose}\n"
-            f"📈 漲跌：{change_price}（{change_percent}%）"
-        )
-
-    except Exception:
-        return f"❗ 無法取得 {stock_id} 的行情資料"
+        # ====================================================
+        # ② Yahoo Finance（補救 TWSE 無成交資料）
+        # ====================================================
+    
+        yahoo_url = f"https://query1.finance.yahoo.com/v8/finance/chart/{stock_id}.TW"
+    
+        try:
+            resp = requests.get(yahoo_url, timeout=5)
+            data = resp.json()
+    
+            result = data.get("chart", {}).get("result")
+            if not result:
+                return f"❗ 找不到 {stock_id} 替代行情資料"
+    
+            meta = result[0].get("meta", {})
+            price = meta.get("regularMarketPrice")
+            yclose = meta.get("chartPreviousClose")
+    
+            if price is None:
+                return f"❗ Yahoo Finance 也無法取得 {stock_id} 的行情"
+    
+            change_price = round(price - yclose, 2)
+            change_percent = round((price - yclose) / yclose * 100, 2)
+    
+            return (
+                f"（Yahoo Finance 資料）\n"
+                f"{stock_id} 今日資訊：\n"
+                f"💰 目前現價：{price}\n"
+                f"⬆ 昨收：{yclose}\n"
+                f"📈 漲跌：{change_price}（{change_percent}%）"
+            )
+    
+        except Exception:
+            return f"❗ 無法取得 {stock_id} 的行情資料"
 
     # 萬一全部失敗
     return f"❗ 找不到 {stock_id} 的股價資訊"
