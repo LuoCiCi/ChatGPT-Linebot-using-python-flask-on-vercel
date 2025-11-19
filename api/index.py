@@ -13,7 +13,6 @@ import re
 import time
 import csv
 import io
-import yfinance as yf
 
 #Function
 #from instruction import handle_instruction_message
@@ -399,38 +398,40 @@ def get_stock_info(stock_id):
                 )
                 return text_message   # TWSE 成功 → 直接回傳
 
-        except Exception:
+        except:
             continue
 
-    # ---------- 2️⃣ 若 TWSE 抓不到 → 改抓 Yahoo Finance ----------
+    # ---------- 2️⃣ Yahoo Finance API（免安裝 yfinance） ----------
     try:
-        yf_id = f"{stock_id}.TW"
-        s = yf.Ticker(yf_id)
-        data = s.history(period="1d")
+        yahoo_url = f"https://query1.finance.yahoo.com/v8/finance/chart/{stock_id}.TW?interval=1d"
+        resp = requests.get(yahoo_url, timeout=5)
+        jd = resp.json()
 
-        if not data.empty:
-            price = round(float(data["Close"].iloc[-1]), 2)
-            open_price = round(float(data["Open"].iloc[-1]), 2)
-            high = round(float(data["High"].iloc[-1]), 2)
-            low = round(float(data["Low"].iloc[-1]), 2)
-            volume = int(data["Volume"].iloc[-1])
+        result = jd["chart"]["result"][0]
 
-            name = s.info.get("shortName", f"{stock_id}")
+        ts = result["timestamp"][-1]
+        indicators = result["indicators"]["quote"][0]
 
-            text_message = (
-                f"{name}（{stock_id}）今日資訊（Yahoo）：\n"
-                f"💰 目前現價：{price}\n"
-                f"⬆ 開盤：{open_price}\n"
-                f"🔺 最高：{high}\n"
-                f"🔻 最低：{low}\n"
-                f"📊 成交量：{volume:,}\n"
-                f"⚠ 已改由 Yahoo Finance 取得（TWSE 無資料）"
-            )
-            return text_message
+        price = indicators["close"][-1]
+        high = indicators["high"][-1]
+        low = indicators["low"][-1]
+        open_price = indicators["open"][-1]
+        volume = indicators["volume"][-1]
+
+        text_message = (
+            f"{stock_id} 今日資訊（Yahoo）：\n"
+            f"💰 收盤價：{price}\n"
+            f"⬆ 開盤：{open_price}\n"
+            f"🔺 最高：{high}\n"
+            f"🔻 最低：{low}\n"
+            f"📊 成交量：{volume:,}\n"
+            f"⚠ 已改由 Yahoo Finance 取得（TWSE 無資料）"
+        )
+        return text_message
 
     except Exception as e:
-        print("Yahoo Finance 錯誤:", e)
-
+        print("Yahoo Finance API 錯誤：", e)
+        
     # # ---------- 3️⃣ 最後還是沒有資料 ----------
     # return "❗ 無法取得此股票的最新資料"
     # 如果兩個網址都沒有有效資料，回傳錯誤訊息
