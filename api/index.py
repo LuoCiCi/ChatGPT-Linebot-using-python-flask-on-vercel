@@ -363,6 +363,9 @@ def get_stock_info(stock_id):
     twse_volume = None
     twse_yclose = None
 
+    # ====================================================
+    # ① TWSE 官方 API
+    # ====================================================
     twse_urls = [
         f"https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_{stock_id}.tw",
         f"https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=otc_{stock_id}.tw"
@@ -378,15 +381,14 @@ def get_stock_info(stock_id):
 
             info = data["msgArray"][0]
 
-            # 先儲存 TWSE 有的資料（即使沒成交價）
-            twse_name = info.get("n", "")
+            twse_name = info.get("n", stock_id)
             twse_yclose = info.get("y", "-")
             twse_high = info.get("h", "-")
             twse_low = info.get("l", "-")
             twse_volume = info.get("v", "0")
+
             price = info.get("z", "-")
 
-            # 若有成交價
             if price not in ["", "-", None]:
                 price = float(price)
                 yclose = float(twse_yclose)
@@ -398,7 +400,7 @@ def get_stock_info(stock_id):
                 change_p = round(change / yclose * 100, 2)
 
                 return (
-                    f"{name}（{stock_id}）今日資訊：\n"
+                    f"{twse_name}（{stock_id}）今日資訊：\n"
                     f"💰 目前現價：{price}\n"
                     f"⬆ 昨收：{yclose}\n"
                     f"📈 漲跌：{change}（{change_p}%）\n"
@@ -408,60 +410,62 @@ def get_stock_info(stock_id):
                 )
 
         except:
-            continue  # 換下一個 URL
+            continue
 
     # ====================================================
-    # ② Yahoo Finance（補 TWSE 無即時成交）
+    # ② Yahoo Finance（補資料）
     # ====================================================
-
-    # 自動判斷上市/上櫃
-    # 先試 TW（上市）
     yahoo_urls = [
         f"https://query1.finance.yahoo.com/v8/finance/chart/{stock_id}.TW",
         f"https://query1.finance.yahoo.com/v8/finance/chart/{stock_id}.TWO"
     ]
 
-    headers = {
-        "User-Agent": "Mozilla/5.0"  # Yahoo 不給無 UA 的 request
-    }
+    headers = {"User-Agent": "Mozilla/5.0"}
 
     for url in yahoo_urls:
         try:
             resp = requests.get(url, headers=headers, timeout=5)
             data = resp.json()
-
             result = data.get("chart", {}).get("result")
-            if not result:
-                continue  # 換下一個（可能上市/上櫃不對）
 
-            meta = result[0].get("meta", {})
+            if not result:
+                continue
+
+            meta = result[0]["meta"]
+
             price = meta.get("regularMarketPrice")
             yclose = meta.get("chartPreviousClose")
+            day_high = meta.get("regularMarketDayHigh")
+            day_low = meta.get("regularMarketDayLow")
+            day_volume = meta.get("regularMarketVolume")
 
             if price is None:
                 continue
 
+            # Yahoo 能補 TWSE 缺的欄位
+            final_high = twse_high if twse_high not in ["-", None] else day_high
+            final_low = twse_low if twse_low not in ["-", None] else day_low
+            final_volume = twse_volume if twse_volume not in ["0", "-", None] else day_volume
+
             change = round(price - yclose, 2)
             change_p = round(change / yclose * 100, 2)
 
-            # 回補顯示 TWSE 抓到的資訊
             return (
-                f"（Yahoo Finance 資料＋TWSE 補充）\n"
+                f"（Yahoo Finance 資料＋TWSE & Yahoo 補充）\n"
                 f"{twse_name or stock_id}（{stock_id}）今日資訊：\n"
                 f"💰 目前現價：{price}\n"
                 f"⬆ 昨收：{yclose}\n"
                 f"📈 漲跌：{change}（{change_p}%）\n"
-                f"🔺 最高（TWSE）：{twse_high}\n"
-                f"🔻 最低（TWSE）：{twse_low}\n"
-                f"📊 成交量（TWSE）：{twse_volume}"
+                f"🔺 最高：{final_high}\n"
+                f"🔻 最低：{final_low}\n"
+                f"📊 成交量：{final_volume:,}"
             )
 
-        except Exception as e:
+        except:
             continue
 
-    # Yahoo 也抓不到 → 股票代碼錯 or Yahoo 封鎖 IP
     return f"❗ 無法取得 {stock_id} 的股價資訊"
-
+    
 # # 台股代號取得目前股價資訊
 # def get_stock_info(stock_id):
 #     text_message = "無資料"
