@@ -398,37 +398,63 @@ def get_stock_info(stock_id):
                         f"📊 成交量：{volume:,}"
                     )
                     return text_message   # TWSE 成功 → 直接回傳
+                else:
+                    yahoo_url = f"https://query1.finance.yahoo.com/v8/finance/chart/{stock_id}.TW?interval=1d"
+                    resp = requests.get(yahoo_url, timeout=5)
+                    jd = resp.json()
+            
+                    result = jd["chart"]["result"][0]
+            
+                    ts = result["timestamp"][-1]
+                    indicators = result["indicators"]["quote"][0]
+            
+                    price = indicators["close"][-1]
+                    high = indicators["high"][-1]
+                    low = indicators["low"][-1]
+                    open_price = indicators["open"][-1]
+                    volume = indicators["volume"][-1]
+            
+                    text_message = (
+                        f"{stock_id} 今日資訊（Yahoo）：\n"
+                        f"💰 收盤價：{price}\n"
+                        f"⬆ 開盤：{open_price}\n"
+                        f"🔺 最高：{high}\n"
+                        f"🔻 最低：{low}\n"
+                        f"📊 成交量：{volume:,}\n"
+                        f"⚠ 已改由 Yahoo Finance 取得（TWSE 無資料）"
+                    )
+                    return text_message
 
         except:
             continue
 
-    # ---------- 2️⃣ Yahoo Finance API（免安裝 yfinance） ----------
-    try:
-        yahoo_url = f"https://query1.finance.yahoo.com/v8/finance/chart/{stock_id}.TW?interval=1d"
-        resp = requests.get(yahoo_url, timeout=5)
-        jd = resp.json()
+    # # ---------- 2️⃣ Yahoo Finance API（免安裝 yfinance） ----------
+    # try:
+    #     yahoo_url = f"https://query1.finance.yahoo.com/v8/finance/chart/{stock_id}.TW?interval=1d"
+    #     resp = requests.get(yahoo_url, timeout=5)
+    #     jd = resp.json()
 
-        result = jd["chart"]["result"][0]
+    #     result = jd["chart"]["result"][0]
 
-        ts = result["timestamp"][-1]
-        indicators = result["indicators"]["quote"][0]
+    #     ts = result["timestamp"][-1]
+    #     indicators = result["indicators"]["quote"][0]
 
-        price = indicators["close"][-1]
-        high = indicators["high"][-1]
-        low = indicators["low"][-1]
-        open_price = indicators["open"][-1]
-        volume = indicators["volume"][-1]
+    #     price = indicators["close"][-1]
+    #     high = indicators["high"][-1]
+    #     low = indicators["low"][-1]
+    #     open_price = indicators["open"][-1]
+    #     volume = indicators["volume"][-1]
 
-        text_message = (
-            f"{stock_id} 今日資訊（Yahoo）：\n"
-            f"💰 收盤價：{price}\n"
-            f"⬆ 開盤：{open_price}\n"
-            f"🔺 最高：{high}\n"
-            f"🔻 最低：{low}\n"
-            f"📊 成交量：{volume:,}\n"
-            f"⚠ 已改由 Yahoo Finance 取得（TWSE 無資料）"
-        )
-        return text_message
+    #     text_message = (
+    #         f"{stock_id} 今日資訊（Yahoo）：\n"
+    #         f"💰 收盤價：{price}\n"
+    #         f"⬆ 開盤：{open_price}\n"
+    #         f"🔺 最高：{high}\n"
+    #         f"🔻 最低：{low}\n"
+    #         f"📊 成交量：{volume:,}\n"
+    #         f"⚠ 已改由 Yahoo Finance 取得（TWSE 無資料）"
+    #     )
+    #     return text_message
 
     except Exception as e:
         print("Yahoo Finance API 錯誤：", e)
