@@ -356,6 +356,7 @@ def get_stock_info(stock_id):
     # ====================================================
     # ① TWSE 官方 API（即時資料）
     # ====================================================
+    name = None
 
     twse_urls = [
         f"https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_{stock_id}.tw",
@@ -439,7 +440,7 @@ def get_stock_info(stock_id):
 
             return (
                 f"（Yahoo Finance）\n"
-                f"{name}（{stock_id} 今日資訊：\n"
+                f"{name}（{stock_id}) 今日資訊：\n"
                 f"💰 目前現價：{price}\n"
                 f"⬆ 昨收：{yclose}\n"
                 f"📈 漲跌：{change}（{change_p}%）"
