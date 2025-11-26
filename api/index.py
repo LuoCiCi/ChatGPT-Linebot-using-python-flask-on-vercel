@@ -20,6 +20,7 @@ import google.generativeai as genai
 line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
 line_handler = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
 working_status = os.getenv("DEFAULT_TALKING", default = "true").lower() == "true"
+GEMINI_API_KEY = 'AIzaSyBwnE6GRfKYIJrsaq-OVvV_Eu_y3QI-4g8'
 
 app = Flask(__name__)
 # chatgpt = ChatGPT()
@@ -28,9 +29,12 @@ moneymany_groupid = "C4ee96dad094278d3f2b530a8e0aef6ed"    #鏟屎官line id
 mytest_groupid = "Cd627ff8b5c500044e9fc51609cfd4887"    #羊綺機器人測試line id
 
 # # --- 🎯 新增 Gemini API 設定 ---
-
-genai.configure(api_key="AIzaSyBwnE6GRfKYIJrsaq-OVvV_Eu_y3QI-4g8")
+# 設定 Gemini
+genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel('gemini-1.5-flash') # 使用輕量快速的模型
+
+# genai.configure(api_key="AIzaSyBwnE6GRfKYIJrsaq-OVvV_Eu_y3QI-4g8")
+# model = genai.GenerativeModel('gemini-1.5-flash') # 使用輕量快速的模型
 
 # GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
