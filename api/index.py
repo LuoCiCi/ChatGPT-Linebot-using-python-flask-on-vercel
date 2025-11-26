@@ -13,6 +13,13 @@ import re
 import time
 import csv
 import io
+import google.generativeai as genai
+
+
+genai.configure(api_key="AIzaSyBgPsobNSREznMHlhV1k-z-DthaAyq2Nyg") 
+# 設定模型 (建議使用 Flash 模型，速度較快，適合 Chatbot)
+model = genai.GenerativeModel('gemini-1.5-flash')
+
 
 #Function
 #from instruction import handle_instruction_message
