@@ -12,8 +12,9 @@ import re
 import time
 import csv
 import io
-import google.generativeai as genai
+# import google.generativeai as genai
 import logging  # <--- 關鍵！一定要加上這行
+from google.generativeai import GenerativeModel, configure
 
 #Function
 #from instruction import handle_instruction_message
@@ -32,7 +33,8 @@ mytest_groupid = "Cd627ff8b5c500044e9fc51609cfd4887"    #羊綺機器人測試li
 # 設定 Gemini
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 # model = genai.GenerativeModel('gemini-1.5-flash')
-model = genai.GenerativeModel('gemini-pro')          # <-- 改用這個舊版模型試試
+# model = genai.GenerativeModel('gemini-pro')          # <-- 改用這個舊版模型試試
+model = GenerativeModel("gemini-1.5-flash")    # gpt提供
 
 # --- 設定 Logging (讓 Vercel Logs 看得到錯誤) ---
 logging.basicConfig(level=logging.INFO)
