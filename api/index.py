@@ -12,7 +12,7 @@ import re
 import time
 import csv
 import io
-# import google.generativeai as genai
+import google.generativeai as genai
 import logging  # <--- 關鍵！一定要加上這行
 from google.generativeai import GenerativeModel, configure
 
