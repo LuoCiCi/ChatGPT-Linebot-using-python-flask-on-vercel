@@ -28,6 +28,11 @@ moneymany_groupid = "C4ee96dad094278d3f2b530a8e0aef6ed"    #鏟屎官line id
 mytest_groupid = "Cd627ff8b5c500044e9fc51609cfd4887"    #羊綺機器人測試line id
 
 # # --- 🎯 新增 Gemini API 設定 ---
+
+genai.configure(api_key="AIzaSyBgPsobNSREznMHlhV1k-z-DthaAyq2Nyg") 
+#(建議使用 Flash 模型，速度較快，適合 Chatbot)
+model = genai.GenerativeModel('gemini-1.5-flash')
+
 # GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 # if GEMINI_API_KEY:
@@ -2567,6 +2572,36 @@ def handle_message(event):
             TextSendMessage(text=instruction_message)
         )
         return
+
+
+    if event.message.text.startswith("G-"):
+        line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="測試收到訊息G")
+            ) 
+        # 2. 提取問題 (去掉前面的 "G-")
+        user_question = event.message.text[2:] 
+        
+        try:
+            # 呼叫 Gemini API
+            response = model.generate_content(user_question)
+            gemini_reply = response.text
+            
+            # 3. 回傳 Gemini 的結果
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=gemini_reply)
+            )
+            return # 處理完畢，直接結束
+            
+        except Exception as e:
+            # 發生錯誤時的回報 (例如 API 額度滿了或網路問題)
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=f"Gemini 暫時無法回應：{str(e)}")
+            )
+            return
+
 
     if event.message.text.startswith("/"):
         text = event.message.text
