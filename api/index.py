@@ -16,15 +16,11 @@ import logging
 import google.generativeai as genai
 from google.generativeai import GenerativeModel
 
-#Function
-#from instruction import handle_instruction_message
-
 line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
 line_handler = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
 working_status = os.getenv("DEFAULT_TALKING", default = "true").lower() == "true"
 
 app = Flask(__name__)
-# chatgpt = ChatGPT()
 
 moneymany_groupid = "C4ee96dad094278d3f2b530a8e0aef6ed"    #鏟屎官line id
 mytest_groupid = "Cd627ff8b5c500044e9fc51609cfd4887"    #羊綺機器人測試line id
@@ -213,15 +209,15 @@ def callback():
         abort(400)
     return 'OK'
 
-@line_handler.add(MessageEvent, message=TextMessage)
-def handle_message(event):
-    # 回應訊息，自動已讀
-    reply_message = "test OK~"
+# @line_handler.add(MessageEvent, message=TextMessage)
+# def handle_message(event):
+#     # 回應訊息，自動已讀
+#     reply_message = "test OK~"
     
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=f"{reply_message}")
-    )
+#     line_bot_api.reply_message(
+#         event.reply_token,
+#         TextSendMessage(text=f"{reply_message}")
+#     )
     
 # 確認 URL 是否有效
 def check_image_url_exists(url):
@@ -493,64 +489,8 @@ def get_stock_info(stock_id):
             continue
 
     return f"❗ 無法取得 {stock_id} 的股價資訊"
-    
-# # 台股代號取得目前股價資訊
-# def get_stock_info(stock_id):
-#     text_message = "無資料"
-#     price = yclose = 0
 
-#     # TWSE 官方即時 API
-#     urls = [
-#         f"https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_{stock_id}.tw",
-#         f"https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=otc_{stock_id}.tw"
-#     ]
 
-#     for url in urls:
-#         try:
-#             resp = requests.get(url, timeout=5)
-#             data = resp.json()
-#             if "msgArray" in data and len(data["msgArray"]) > 0:
-#                 info = data["msgArray"][0]
-#                 name = info.get("n", "未知名稱")
-#                 try: price = float(info.get("z","0"))
-#                 except: price = 0
-#                 try: yclose = float(info.get("y","0"))
-#                 except: yclose = 0
-#                 try: high = float(info.get("h","0"))
-#                 except: high = 0
-#                 try: low = float(info.get("l","0"))
-#                 except: low = 0
-#                 try: volume = int(info.get("v","0").replace(",",""))
-#                 except: volume = 0
-
-#                 change_price = round(price - yclose,2) if price and yclose else "－"
-#                 change_percent = round((price-yclose)/yclose*100,2) if price and yclose else "－"
-
-#                 text_message = (
-#                     f"{name}（{stock_id}）今日資訊：\n"
-#                     f"💰 目前現價：{price if price else '尚無成交'}\n"
-#                     f"⬆ 昨收：{yclose if yclose else '－'}\n"
-#                     f"📈 漲跌：{change_price}  {change_percent}%\n"
-#                     f"🔺 最高：{high if high else '－'}\n"
-#                     f"🔻 最低：{low if low else '－'}\n"
-#                     f"📊 成交量：{volume:,}"
-#                 )
-#                 return text_message
-#         except:
-#             continue
-
-#     # 如果 TWSE API 沒資料，可改抓 FinMind 或 Yahoo Finance
-#     return text_message
-
-    # # 如果兩個網址都沒有有效資料，回傳錯誤訊息
-    # if not data:
-    #     line_bot_api.reply_message(
-    #         event.reply_token,
-    #         TextSendMessage(text=f"查無股票代號 {stock_id} 或 是你呆呆記錯號碼")
-    #     )
-    #     return
-    # return 
-        
 @line_handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     global working_status
@@ -2583,6 +2523,7 @@ def handle_message(event):
 
 
     if event.message.text.startswith("G-"):
+        msg = event.message.text
         user_question = msg[2:]
 
         try:
@@ -2597,15 +2538,7 @@ def handle_message(event):
             event.reply_token,
             TextSendMessage(text=reply_text)
         )
-        except Exception as e:
-            # 將錯誤印出來，這樣您去 Vercel 的 Logs 頁面才看得到原因
-            logging.error(f"Error calling Gemini: {e}") 
-            
-            reply_text = "抱歉，系統發生錯誤，請稍後再試。"
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text=reply_text)
-            )
+        return
         # # 2. 提取問題 (去掉前面的 "G-")
         # user_question = event.message.text[2:] 
         
