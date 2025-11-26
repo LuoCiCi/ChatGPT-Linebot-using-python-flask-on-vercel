@@ -2575,28 +2575,58 @@ def handle_message(event):
 
 
     if event.message.text.startswith("G-"):
-        # 2. 提取問題 (去掉前面的 "G-")
-        user_question = event.message.text[2:] 
         
-        try:
-            # 呼叫 Gemini API
-            response = model.generate_content(user_question)
-            gemini_reply = response.text
-            
-            # 3. 回傳 Gemini 的結果
+        my_key = os.getenv("GEMINI_API_KEY") # 或是您程式裡用的變數名稱
+        if not my_key:
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text=gemini_reply)
-            )
-            return # 處理完畢，直接結束
-            
-        except Exception as e:
-            # 發生錯誤時的回報 (例如 API 額度滿了或網路問題)
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text=f"Gemini 暫時無法回應：{str(e)}")
+                TextSendMessage(text="❌ 嚴重錯誤：找不到 API Key！請檢查 Vercel 環境變數。")
             )
             return
+        else:
+            #print(f"✅ API Key 已讀取 (前五碼): {my_key[:5]}...")
+            genai.configure(api_key=my_key)
+            
+            try:
+                #print("🔍 正在查詢可用模型...")
+                # 列出所有可用模型
+                for m in genai.list_models():
+                    if 'generateContent' in m.supported_generation_methods:
+                        line_bot_api.reply_message(
+                            event.reply_token,
+                            TextSendMessage(text=f"🌟 可用模型: {m.name}")
+                        )
+                        return
+                        #print(f"🌟 可用模型: {m.name}")
+            except Exception as e:
+                #print(f"❌ 連線測試失敗: {e}")
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text=f"❌ 連線測試失敗: {e}")
+                )
+                return
+        # # 2. 提取問題 (去掉前面的 "G-")
+        # user_question = event.message.text[2:] 
+        
+        # try:
+        #     # 呼叫 Gemini API
+        #     response = model.generate_content(user_question)
+        #     gemini_reply = response.text
+            
+        #     # 3. 回傳 Gemini 的結果
+        #     line_bot_api.reply_message(
+        #         event.reply_token,
+        #         TextSendMessage(text=gemini_reply)
+        #     )
+        #     return # 處理完畢，直接結束
+            
+        # except Exception as e:
+        #     # 發生錯誤時的回報 (例如 API 額度滿了或網路問題)
+        #     line_bot_api.reply_message(
+        #         event.reply_token,
+        #         TextSendMessage(text=f"Gemini 暫時無法回應：{str(e)}")
+        #     )
+        #     return
 
 
     if event.message.text.startswith("/"):
