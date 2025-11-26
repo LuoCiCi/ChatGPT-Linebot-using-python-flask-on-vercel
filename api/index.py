@@ -35,7 +35,7 @@ configure(api_key=os.getenv("GEMINI_API_KEY"))
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 # model = genai.GenerativeModel('gemini-1.5-flash')
 # model = genai.GenerativeModel('gemini-pro')          # <-- 改用這個舊版模型試試
-model = GenerativeModel("gemini-1.5-flash")    # gpt提供
+model = GenerativeModel("gemini-1.5-flash-001")    # gpt提供 增加版號
 
 # --- 設定 Logging (讓 Vercel Logs 看得到錯誤) ---
 logging.basicConfig(level=logging.INFO)
