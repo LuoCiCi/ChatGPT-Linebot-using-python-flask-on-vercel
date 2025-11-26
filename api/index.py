@@ -2582,20 +2582,31 @@ def handle_message(event):
         try:
             # 1. 呼叫 Gemini API
             user_question = event.message.text[2:] 
+            # 呼叫 Gemini
             response = model.generate_content(user_question)
-            reply_text = response.text
+            
+            # --- 修改重點：檢查是否被安全過濾 ---
+            try:
+                reply_text = response.text
+            except ValueError:
+                # 如果 response.text 報錯，通常是因為被安全設定擋下來了
+                reply_text = "抱歉，Gemini 認為這個話題可能違反安全規範，拒絕回答。"
+                logging.error(f"Gemini Safety Filter Triggered: {response.prompt_feedback}")
+            # ----------------------------------
+
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(text=reply_text)
             )
-            return
         except Exception as e:
-            reply_text = "抱歉，我目前無法思考，請稍後再試。"
+            # 將錯誤印出來，這樣您去 Vercel 的 Logs 頁面才看得到原因
+            logging.error(f"Error calling Gemini: {e}") 
+            
+            reply_text = "抱歉，系統發生錯誤，請稍後再試。"
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(text=reply_text)
             )
-            return
         # # 2. 提取問題 (去掉前面的 "G-")
         # user_question = event.message.text[2:] 
         
