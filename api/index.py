@@ -2581,7 +2581,7 @@ def handle_message(event):
         
         try:
             # 1. 呼叫 Gemini API
-            user_question = event.message.text[2:] 
+            user_question = event.message.text[2:]
             # 呼叫 Gemini
             response = model.generate_content(user_question)
             
