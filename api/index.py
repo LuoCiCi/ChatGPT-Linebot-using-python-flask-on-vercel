@@ -31,9 +31,8 @@ mytest_groupid = "Cd627ff8b5c500044e9fc51609cfd4887"    #羊綺機器人測試li
 
 # # --- 🎯 新增 Gemini API 設定 ---
 # 設定 Gemini
-genai.configure(api_key=GEMINI_API_KEY)
-# model = genai.GenerativeModel('gemini-1.5-flash') # 使用輕量快速的模型
-model = genai.GenerativeModel('gemini-pro')          # <-- 改用這個舊版模型試試
+genai.configure(api_key="GEMINI_API_KEY") 
+model = genai.GenerativeModel('gemini-1.5-flash')
 
 # --- 設定 Logging (讓 Vercel Logs 看得到錯誤) ---
 logging.basicConfig(level=logging.INFO)
