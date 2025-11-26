@@ -15,7 +15,7 @@
 	"functions": {
 		"api/**/*": {
 			"runtime": "python3.10",
-			"buildCommand": "pip install -r requirements.txt"
+			"buildCommand": ["requirements.txt"]
 		}
 	}
 }
