@@ -15,6 +15,10 @@ import io
 import logging
 import google.generativeai as genai
 from google.generativeai import GenerativeModel
+from openai import OpenAI
+
+# 初始化 client，請確保已設定 OPENAI_API_KEY 環境變數
+client = OpenAI()
 
 line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
 line_handler = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
@@ -28,6 +32,31 @@ mytest_groupid = "Cd627ff8b5c500044e9fc51609cfd4887"    #羊綺機器人測試li
 # ---------------------------------------------------
 # Gemini 設定（需 google-generativeai >= 0.7.0）
 # ---------------------------------------------------
+# 1️⃣ 列出可用模型
+print("==== 可用模型列表 ====")
+models = client.models.list()
+available_models = []
+for m in models.data:
+    print(f"- {m.id}")
+    available_models.append(m.id)
+
+# 2️⃣ 選擇一個可用模型
+# 這裡假設我們使用 gemini-1.5-turbo，如果有的話
+selected_model = "gemini-1.5-turbo"
+if selected_model not in available_models:
+    # 若沒有，就使用列表第一個模型
+    selected_model = available_models[0]
+
+print(f"\n選擇使用模型: {selected_model}\n")
+
+# 3️⃣ 使用該模型生成文字
+response = client.chat.completions.create(
+    model=selected_model,
+    messages=[
+        {"role": "user", "content": "請幫我用中文寫一句鼓勵的話"}
+    ]
+)
+
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 model = genai.GenerativeModel("gemini-1.5-flash")
 
