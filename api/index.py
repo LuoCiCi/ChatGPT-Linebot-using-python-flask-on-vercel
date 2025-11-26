@@ -2576,7 +2576,7 @@ def handle_message(event):
 
     if event.message.text.startswith("G-"):
         
-        my_key = os.getenv("GEMINI_API_KEY") # 或是您程式裡用的變數名稱
+        my_key = os.getenv("AIzaSyBgPsobNSREznMHlhV1k-z-DthaAyq2Nyg") # 或是您程式裡用的變數名稱
         if not my_key:
             line_bot_api.reply_message(
                 event.reply_token,
