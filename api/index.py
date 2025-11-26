@@ -12,7 +12,7 @@ import re
 import time
 import csv
 import io
-#import google.generativeai as genai
+import google.generativeai as genai
 
 #Function
 #from instruction import handle_instruction_message
@@ -27,6 +27,21 @@ app = Flask(__name__)
 moneymany_groupid = "C4ee96dad094278d3f2b530a8e0aef6ed"    #鏟屎官line id
 mytest_groupid = "Cd627ff8b5c500044e9fc51609cfd4887"    #羊綺機器人測試line id
 
+# # --- 🎯 新增 Gemini API 設定 ---
+# GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+
+# if GEMINI_API_KEY:
+#     try:
+#         genai.configure(api_key=GEMINI_API_KEY)
+#         gemini_model = genai.GenerativeModel('gemini-1.5-flash') # 預先設定模型
+#         print("✅ Gemini API 載入成功")
+#     except Exception as e:
+#         print(f"❌ Gemini 設定錯誤: {e}")
+#         gemini_model = None # 確保錯誤時不影響其他功能
+# else:
+#     print("⚠️ 警告：環境變數中找不到 GEMINI_API_KEY，Gemini 功能將無法使用。")
+#     gemini_model = None
+# # -------------------------------
 
 # 計算出前一個10分倍數的時間以及前前一個10分倍數的時間以及前前前一個10分倍數的時間
 def get_prev10_4():

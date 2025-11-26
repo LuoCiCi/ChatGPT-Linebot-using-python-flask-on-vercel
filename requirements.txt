@@ -4,3 +4,4 @@ line-bot-sdk
 openai
 requests
 pytz
+google-generativeai
