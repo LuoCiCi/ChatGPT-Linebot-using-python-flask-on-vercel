@@ -29,9 +29,8 @@ mytest_groupid = "Cd627ff8b5c500044e9fc51609cfd4887"    #羊綺機器人測試li
 
 # # --- 🎯 新增 Gemini API 設定 ---
 
-genai.configure(api_key="AIzaSyBgPsobNSREznMHlhV1k-z-DthaAyq2Nyg") 
-#(建議使用 Flash 模型，速度較快，適合 Chatbot)
-model = genai.GenerativeModel('gemini-pro')
+genai.configure(api_key=GEMINI_API_KEY)
+model = genai.GenerativeModel('gemini-1.5-flash') # 使用輕量快速的模型
 
 # GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
@@ -2576,35 +2575,23 @@ def handle_message(event):
 
     if event.message.text.startswith("G-"):
         
-        my_key = os.getenv("GEMINI_API_KEY")
-        if not my_key:
+        try:
+            # 1. 呼叫 Gemini API
+            user_question = event.message.text[2:] 
+            response = model.generate_content(user_question)
+            reply_text = response.text
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text="❌ 嚴重錯誤：找不到 API Key！請檢查 Vercel 環境變數。")
+                TextSendMessage(text=reply_text)
             )
             return
-        else:
-            #print(f"✅ API Key 已讀取 (前五碼): {my_key[:5]}...")
-            genai.configure(api_key=my_key)
-            
-            try:
-                #print("🔍 正在查詢可用模型...")
-                # 列出所有可用模型
-                for m in genai.list_models():
-                    if 'generateContent' in m.supported_generation_methods:
-                        line_bot_api.reply_message(
-                            event.reply_token,
-                            TextSendMessage(text=f"🌟 可用模型: {m.name}")
-                        )
-                        return
-                        #print(f"🌟 可用模型: {m.name}")
-            except Exception as e:
-                #print(f"❌ 連線測試失敗: {e}")
-                line_bot_api.reply_message(
-                    event.reply_token,
-                    TextSendMessage(text=f"❌ 連線測試失敗: {e}")
-                )
-                return
+        except Exception as e:
+            reply_text = "抱歉，我目前無法思考，請稍後再試。"
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=reply_text)
+            )
+            return
         # # 2. 提取問題 (去掉前面的 "G-")
         # user_question = event.message.text[2:] 
         
