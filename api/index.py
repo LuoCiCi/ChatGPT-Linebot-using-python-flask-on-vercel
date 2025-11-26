@@ -29,7 +29,8 @@ mytest_groupid = "Cd627ff8b5c500044e9fc51609cfd4887"    #羊綺機器人測試li
 # Gemini 設定（需 google-generativeai >= 0.7.0）
 # ---------------------------------------------------
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-model = GenerativeModel("gemini-1.5-flash-001")
+model = genai.GenerativeModel("gemini-1.5-flash")
+
 
 # --- 設定 Logging (讓 Vercel Logs 看得到錯誤) ---
 logging.basicConfig(level=logging.INFO)
