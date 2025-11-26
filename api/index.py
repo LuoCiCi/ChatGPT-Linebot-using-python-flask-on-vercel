@@ -12,7 +12,7 @@ import re
 import time
 import csv
 import io
-import google.generativeai as genai
+#import google.generativeai as genai
 
 #Function
 #from instruction import handle_instruction_message
