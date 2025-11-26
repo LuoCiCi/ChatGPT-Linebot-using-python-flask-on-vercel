@@ -31,7 +31,7 @@ mytest_groupid = "Cd627ff8b5c500044e9fc51609cfd4887"    #羊綺機器人測試li
 
 genai.configure(api_key="AIzaSyBgPsobNSREznMHlhV1k-z-DthaAyq2Nyg") 
 #(建議使用 Flash 模型，速度較快，適合 Chatbot)
-model = genai.GenerativeModel('gemini-1.5-pro')
+model = genai.GenerativeModel('gemini-pro')
 
 # GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
