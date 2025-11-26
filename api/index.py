@@ -21,7 +21,6 @@ import logging  # <--- 關鍵！一定要加上這行
 line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
 line_handler = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
 working_status = os.getenv("DEFAULT_TALKING", default = "true").lower() == "true"
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 app = Flask(__name__)
 # chatgpt = ChatGPT()
@@ -31,7 +30,7 @@ mytest_groupid = "Cd627ff8b5c500044e9fc51609cfd4887"    #羊綺機器人測試li
 
 # # --- 🎯 新增 Gemini API 設定 ---
 # 設定 Gemini
-genai.configure(api_key="GEMINI_API_KEY") 
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 # model = genai.GenerativeModel('gemini-1.5-flash')
 model = genai.GenerativeModel('gemini-pro')          # <-- 改用這個舊版模型試試
 
