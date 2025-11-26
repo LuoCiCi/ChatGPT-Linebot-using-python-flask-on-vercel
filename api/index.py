@@ -17,7 +17,7 @@ import google.generativeai as genai
 from google.generativeai import GenerativeModel
 from openai import OpenAI
 
-# 初始化 client，請確保已設定 OPENAI_API_KEY 環境變數
+# 初始化 client，請確保已設定 OPENAI_API_KEY 環境變數 
 client = OpenAI()
 
 line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
