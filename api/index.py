@@ -20,7 +20,7 @@ import google.generativeai as genai
 line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
 line_handler = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
 working_status = os.getenv("DEFAULT_TALKING", default = "true").lower() == "true"
-GEMINI_API_KEY = 'AIzaSyBwnE6GRfKYIJrsaq-OVvV_Eu_y3QI-4g8'
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 app = Flask(__name__)
 # chatgpt = ChatGPT()
