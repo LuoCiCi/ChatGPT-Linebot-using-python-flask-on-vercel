@@ -2575,10 +2575,6 @@ def handle_message(event):
 
 
     if event.message.text.startswith("G-"):
-        line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text="測試收到訊息G")
-            ) 
         # 2. 提取問題 (去掉前面的 "G-")
         user_question = event.message.text[2:] 
         
