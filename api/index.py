@@ -12,9 +12,9 @@ import re
 import time
 import csv
 import io
+import logging
 import google.generativeai as genai
-import logging  # <--- 關鍵！一定要加上這行
-from google.generativeai import GenerativeModel, configure
+from google.generativeai import GenerativeModel
 
 #Function
 #from instruction import handle_instruction_message
@@ -29,13 +29,11 @@ app = Flask(__name__)
 moneymany_groupid = "C4ee96dad094278d3f2b530a8e0aef6ed"    #鏟屎官line id
 mytest_groupid = "Cd627ff8b5c500044e9fc51609cfd4887"    #羊綺機器人測試line id
 
-# # --- 🎯 新增 Gemini API 設定 ---
-# 設定 Gemini
-configure(api_key=os.getenv("GEMINI_API_KEY"))
+# ---------------------------------------------------
+# Gemini 設定（需 google-generativeai >= 0.7.0）
+# ---------------------------------------------------
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-# model = genai.GenerativeModel('gemini-1.5-flash')
-# model = genai.GenerativeModel('gemini-pro')          # <-- 改用這個舊版模型試試
-model = GenerativeModel("gemini-1.5-flash-001")    # gpt提供 增加版號
+model = GenerativeModel("gemini-1.5-flash-001")
 
 # --- 設定 Logging (讓 Vercel Logs 看得到錯誤) ---
 logging.basicConfig(level=logging.INFO)
@@ -2585,26 +2583,20 @@ def handle_message(event):
 
 
     if event.message.text.startswith("G-"):
-        
-        try:
-            # 1. 呼叫 Gemini API
-            user_question = event.message.text[2:]
-            # 呼叫 Gemini
-            response = model.generate_content(user_question)
-            
-            # --- 修改重點：檢查是否被安全過濾 ---
-            try:
-                reply_text = response.text
-            except ValueError:
-                # 如果 response.text 報錯，通常是因為被安全設定擋下來了
-                reply_text = "抱歉，Gemini 認為這個話題可能違反安全規範，拒絕回答。"
-                logging.error(f"Gemini Safety Filter Triggered: {response.prompt_feedback}")
-            # ----------------------------------
+        user_question = msg[2:]
 
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text=reply_text)
-            )
+        try:
+            response = model.generate_content(user_question)
+            reply_text = response.text
+
+        except Exception as e:
+            logging.error(f"Gemini Error: {e}")
+            reply_text = "抱歉，Gemini 發生錯誤，請稍後再試"
+
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=reply_text)
+        )
         except Exception as e:
             # 將錯誤印出來，這樣您去 Vercel 的 Logs 頁面才看得到原因
             logging.error(f"Error calling Gemini: {e}") 
