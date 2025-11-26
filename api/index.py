@@ -2,7 +2,6 @@ from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage, ImageSendMessage, VideoSendMessage
-# from api.chatgpt import ChatGPT
 import os
 from datetime import datetime, timedelta
 import requests, json
@@ -14,12 +13,6 @@ import time
 import csv
 import io
 import google.generativeai as genai
-
-
-genai.configure(api_key="AIzaSyBgPsobNSREznMHlhV1k-z-DthaAyq2Nyg") 
-# 設定模型 (建議使用 Flash 模型，速度較快，適合 Chatbot)
-model = genai.GenerativeModel('gemini-1.5-flash')
-
 
 #Function
 #from instruction import handle_instruction_message
