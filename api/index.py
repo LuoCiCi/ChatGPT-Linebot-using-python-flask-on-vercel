@@ -14,8 +14,8 @@ import csv
 import io
 import logging
 import google.generativeai as genai
-from google.generativeai import GenerativeModel
-from openai import OpenAI
+#from google.generativeai import GenerativeModel
+#from openai import OpenAI
 
 # 初始化 client，請確保已設定 OPENAI_API_KEY 環境變數
 client = OpenAI()
@@ -29,57 +29,15 @@ app = Flask(__name__)
 moneymany_groupid = "C4ee96dad094278d3f2b530a8e0aef6ed"    #鏟屎官line id
 mytest_groupid = "Cd627ff8b5c500044e9fc51609cfd4887"    #羊綺機器人測試line id
 
-# ---------------------------------------------------
-# Gemini 設定（需 google-generativeai >= 0.7.0）
-# ---------------------------------------------------
-# # 1️⃣ 列出可用模型
-# print("==== 可用模型列表 ====")
-# models = client.models.list()
-# available_models = []
-# for m in models.data:
-#     print(f"- {m.id}")
-#     available_models.append(m.id)
 
-# # 2️⃣ 選擇一個可用模型
-# # 這裡假設我們使用 gemini-1.5-turbo，如果有的話
-# selected_model = "gemini-1.5-turbo"
-# if selected_model not in available_models:
-#     # 若沒有，就使用列表第一個模型
-#     selected_model = available_models[0]
-
-# print(f"\n選擇使用模型: {selected_model}\n")
-
-# # 3️⃣ 使用該模型生成文字
-# response = client.chat.completions.create(
-#     model=selected_model,
-#     messages=[
-#         {"role": "user", "content": "請幫我用中文寫一句鼓勵的話"}
-#     ]
-# )
-
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-model = genai.GenerativeModel("gemini-1.5-flash")
+#Gemini設定
+api_key = os.getenv("GEMINI_API_KEY")
+genai.configure(api_key=api_key)
+model = genai.GenerativeModel('gemini-2.0-flash')
 
 # --- 設定 Logging (讓 Vercel Logs 看得到錯誤) ---
 logging.basicConfig(level=logging.INFO)
 
-# genai.configure(api_key="AIzaSyBwnE6GRfKYIJrsaq-OVvV_Eu_y3QI-4g8")
-# model = genai.GenerativeModel('gemini-1.5-flash') # 使用輕量快速的模型
-
-# GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-
-# if GEMINI_API_KEY:
-#     try:
-#         genai.configure(api_key=GEMINI_API_KEY)
-#         gemini_model = genai.GenerativeModel('gemini-1.5-flash') # 預先設定模型
-#         print("✅ Gemini API 載入成功")
-#     except Exception as e:
-#         print(f"❌ Gemini 設定錯誤: {e}")
-#         gemini_model = None # 確保錯誤時不影響其他功能
-# else:
-#     print("⚠️ 警告：環境變數中找不到 GEMINI_API_KEY，Gemini 功能將無法使用。")
-#     gemini_model = None
-# # -------------------------------
 
 # 計算出前一個10分倍數的時間以及前前一個10分倍數的時間以及前前前一個10分倍數的時間
 def get_prev10_4():
@@ -2552,22 +2510,44 @@ def handle_message(event):
 
 
     if event.message.text.startswith("G-"):
-        msg = event.message.text
-        user_question = msg[2:]
+        
+        user_question = event.message.text[2:]
+    
+        if model is None:
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="❌ 系統錯誤：API Key 未設定，無法使用 AI 功能。")
+            )
+            return
 
         try:
+            # 呼叫 AI
             response = model.generate_content(user_question)
-            reply_text = response.text
-
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=response.text)
+            )
         except Exception as e:
-            logging.error(f"Gemini Error: {e}")
-            reply_text = "抱歉，Gemini 發生錯誤，請稍後再試"
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=f"❌ AI 回應失敗：{str(e)}")
+            )
+        # msg = event.message.text
+        # user_question = msg[2:]
 
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=reply_text)
-        )
-        return
+        # try:
+        #     response = model.generate_content(user_question)
+        #     reply_text = response.text
+
+        # except Exception as e:
+        #     logging.error(f"Gemini Error: {e}")
+        #     reply_text = "抱歉，Gemini 發生錯誤，請稍後再試"
+
+        # line_bot_api.reply_message(
+        #     event.reply_token,
+        #     TextSendMessage(text=reply_text)
+        # )
+        # return
         # # 2. 提取問題 (去掉前面的 "G-")
         # user_question = event.message.text[2:] 
         
