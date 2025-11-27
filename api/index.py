@@ -2574,7 +2574,13 @@ def handle_message(event):
 
 
     if event.message.text.startswith("G-"):
-        
+        # 限制鏟屎官可用GEMINI
+        if limit == "false":
+             line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=f"❌ 你不能使用 AI ")
+            )
+            
         user_question = event.message.text[2:]
     
         if model is None:
