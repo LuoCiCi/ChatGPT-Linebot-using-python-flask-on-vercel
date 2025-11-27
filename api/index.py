@@ -2611,37 +2611,37 @@ def handle_message(event):
             )
             return
 
-        # 1️⃣ 先回覆「查詢中」
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text="🔍 請稍候…")
-        )
+        # # 1️⃣ 先回覆「查詢中」
+        # line_bot_api.reply_message(
+        #     event.reply_token,
+        #     TextSendMessage(text="🔍 請稍候…")
+        # )
 
         # 2️⃣ 再查資料（用 push 回傳結果）
         try:
             # 呼叫 AI
             response = model.generate_content(user_question)
-            # line_bot_api.reply_message(
-            #     event.reply_token,
-            #     TextSendMessage(text=response.text)
-            # )
-
-            # 使用 push_message (主動推播，會扣費/扣額度)
-            line_bot_api.push_message(
-                to_id,  # <-- 這裡是關鍵，傳入 Group ID 或 User ID
+            line_bot_api.reply_message(
+                event.reply_token,
                 TextSendMessage(text=response.text)
             )
-        except Exception as e:
-            # line_bot_api.reply_message(
-            #     event.reply_token,
-            #     TextSendMessage(text=f"❌ AI 回應失敗：{str(e)}")
-            # )
 
-            # 使用 push_message (主動推播，會扣費/扣額度)
-            line_bot_api.push_message(
-                to_id,  # <-- 這裡是關鍵，傳入 Group ID 或 User ID
+            # # 使用 push_message (主動推播，會扣費/扣額度)
+            # line_bot_api.push_message(
+            #     to_id,  # <-- 這裡是關鍵，傳入 Group ID 或 User ID
+            #     TextSendMessage(text=response.text)
+            # )
+        except Exception as e:
+            line_bot_api.reply_message(
+                event.reply_token,
                 TextSendMessage(text=f"❌ AI 回應失敗：{str(e)}")
             )
+
+            # # 使用 push_message (主動推播，會扣費/扣額度)
+            # line_bot_api.push_message(
+            #     to_id,  # <-- 這裡是關鍵，傳入 Group ID 或 User ID
+            #     TextSendMessage(text=f"❌ AI 回應失敗：{str(e)}")
+            # )
         # # 2. 提取問題 (去掉前面的 "G-")
         # user_question = event.message.text[2:] 
         
