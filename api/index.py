@@ -2574,6 +2574,20 @@ def handle_message(event):
 
 
     if event.message.text.startswith("G-"):
+        # --- 1. 智慧判斷推播目標 ID ---
+        to_id = None
+        source_type = event.source.type
+
+        if source_type == 'user':
+            to_id = event.source.user_id
+        elif source_type == 'group':
+            to_id = event.source.group_id
+        elif source_type == 'room':
+            to_id = event.source.room_id
+        else:
+            # 預防萬一，如果都抓不到就不處理
+            return
+            
         # 限制鏟屎官可用GEMINI
         # if limit == "false":
         #      line_bot_api.reply_message(
@@ -2608,7 +2622,7 @@ def handle_message(event):
 
             # 使用 push_message (主動推播，會扣費/扣額度)
             line_bot_api.push_message(
-                user_id,
+                to_id,  # <-- 這裡是關鍵，傳入 Group ID 或 User ID
                 TextSendMessage(text=response.text)
             )
         except Exception as e:
@@ -2619,7 +2633,7 @@ def handle_message(event):
 
             # 使用 push_message (主動推播，會扣費/扣額度)
             line_bot_api.push_message(
-                user_id,
+                to_id,  # <-- 這裡是關鍵，傳入 Group ID 或 User ID
                 TextSendMessage(text=f"❌ AI 回應失敗：{str(e)}")
             )
         # # 2. 提取問題 (去掉前面的 "G-")
