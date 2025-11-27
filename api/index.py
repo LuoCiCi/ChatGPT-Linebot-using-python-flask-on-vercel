@@ -2601,13 +2601,25 @@ def handle_message(event):
         try:
             # 呼叫 AI
             response = model.generate_content(user_question)
-            line_bot_api.reply_message(
-                event.reply_token,
+            # line_bot_api.reply_message(
+            #     event.reply_token,
+            #     TextSendMessage(text=response.text)
+            # )
+
+            # 使用 push_message (主動推播，會扣費/扣額度)
+            line_bot_api.push_message(
+                user_id,
                 TextSendMessage(text=response.text)
             )
         except Exception as e:
-            line_bot_api.reply_message(
-                event.reply_token,
+            # line_bot_api.reply_message(
+            #     event.reply_token,
+            #     TextSendMessage(text=f"❌ AI 回應失敗：{str(e)}")
+            # )
+
+            # 使用 push_message (主動推播，會扣費/扣額度)
+            line_bot_api.push_message(
+                user_id,
                 TextSendMessage(text=f"❌ AI 回應失敗：{str(e)}")
             )
         # # 2. 提取問題 (去掉前面的 "G-")
