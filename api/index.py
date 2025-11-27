@@ -2574,12 +2574,13 @@ def handle_message(event):
 
 
     if event.message.text.startswith("G-"):
-        # # 限制鏟屎官可用GEMINI
-        # if limit == "false":
-        #      line_bot_api.reply_message(
-        #         event.reply_token,
-        #         TextSendMessage(text=f"❌ 你不能使用 AI ")
-        #     )
+        # 限制鏟屎官可用GEMINI
+        if limit == "false":
+             line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=f"❌ 你不能使用 AI ")
+            )
+            return
             
         user_question = event.message.text[2:]
     
@@ -2590,6 +2591,13 @@ def handle_message(event):
             )
             return
 
+        # 1️⃣ 先回覆「查詢中」
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="🔍 正在查詢中，請稍候…")
+        )
+
+        # 2️⃣ 再查資料（用 push 回傳結果）
         try:
             # 呼叫 AI
             response = model.generate_content(user_question)
