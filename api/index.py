@@ -2597,7 +2597,7 @@ def handle_message(event):
         #     return
             
         user_question = event.message.text[2:]
-        if user_question is None:
+        if user_question == "":
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(text="❌ 請輸入想詢問的")
