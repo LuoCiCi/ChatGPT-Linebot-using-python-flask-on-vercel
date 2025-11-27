@@ -13,6 +13,7 @@ import time
 import csv
 import io
 import google.generativeai as genai
+from google.api_core.exceptions import DeadlineExceeded # 記得引入這個錯誤類型
 
 #Function
 #from instruction import handle_instruction_message
@@ -2620,7 +2621,13 @@ def handle_message(event):
         # 2️⃣ 再查資料（用 push 回傳結果）
         try:
             # 呼叫 AI
-            response = model.generate_content(user_question)
+            # response = model.generate_content(user_question)
+            # --- 關鍵修改 ---
+            # 設定 timeout=8 秒 (比 Vercel 的 10 秒極限短，預留時間回報錯誤)
+            response = model.generate_content(
+                user_question,
+                request_options={'timeout': 8} 
+            )
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(text=response.text)
@@ -2631,7 +2638,23 @@ def handle_message(event):
             #     to_id,  # <-- 這裡是關鍵，傳入 Group ID 或 User ID
             #     TextSendMessage(text=response.text)
             # )
+        # 專門捕捉「超時」的錯誤
+        except DeadlineExceeded:
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="⚠️ 思考逾時：問題太難或系統繁忙，請換個問法再試試！")
+            )
+        # 捕捉其他一般錯誤 (例如 API Key 錯誤、內容被擋)
         except Exception as e:
+            error_msg = str(e)
+            # 優化錯誤訊息顯示
+            if "400" in error_msg:
+                friendly_msg = "❌ 請求無效"
+            elif "429" in error_msg:
+                friendly_msg = "❌ 使用量已達上限，請稍後再試"
+            else:
+                friendly_msg = f"❌ AI 發生錯誤：{error_msg}"
+                
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(text=f"❌ AI 回應失敗：{str(e)}")
