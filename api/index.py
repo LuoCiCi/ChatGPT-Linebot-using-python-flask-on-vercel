@@ -12,59 +12,25 @@ import re
 import time
 import csv
 import io
-import logging
 import google.generativeai as genai
-from google.generativeai import GenerativeModel
-from openai import OpenAI
 
-# 初始化 client，請確保已設定 OPENAI_API_KEY 環境變數
-client = OpenAI()
+#Function
+#from instruction import handle_instruction_message
 
 line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
 line_handler = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
 working_status = os.getenv("DEFAULT_TALKING", default = "true").lower() == "true"
 
 app = Flask(__name__)
+# chatgpt = ChatGPT()
 
 moneymany_groupid = "C4ee96dad094278d3f2b530a8e0aef6ed"    #鏟屎官line id
 mytest_groupid = "Cd627ff8b5c500044e9fc51609cfd4887"    #羊綺機器人測試line id
 
-# ---------------------------------------------------
-# Gemini 設定（需 google-generativeai >= 0.7.0）
-# ---------------------------------------------------
-# 1️⃣ 列出可用模型
-print("==== 可用模型列表 ====")
-models = client.models.list()
-available_models = []
-for m in models.data:
-    print(f"- {m.id}")
-    available_models.append(m.id)
-
-# 2️⃣ 選擇一個可用模型
-# 這裡假設我們使用 gemini-1.5-turbo，如果有的話
-selected_model = "gemini-1.5-turbo"
-if selected_model not in available_models:
-    # 若沒有，就使用列表第一個模型
-    selected_model = available_models[0]
-
-print(f"\n選擇使用模型: {selected_model}\n")
-
-# 3️⃣ 使用該模型生成文字
-response = client.chat.completions.create(
-    model=selected_model,
-    messages=[
-        {"role": "user", "content": "請幫我用中文寫一句鼓勵的話"}
-    ]
-)
-
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-model = genai.GenerativeModel("gemini-1.5-flash")
-
-# --- 設定 Logging (讓 Vercel Logs 看得到錯誤) ---
-logging.basicConfig(level=logging.INFO)
-
-# genai.configure(api_key="AIzaSyBwnE6GRfKYIJrsaq-OVvV_Eu_y3QI-4g8")
-# model = genai.GenerativeModel('gemini-1.5-flash') # 使用輕量快速的模型
+# # --- 🎯 新增 Gemini API 設定 ---
+api_key = os.getenv("GEMINI_API_KEY")
+genai.configure(api_key=api_key)
+model = genai.GenerativeModel('gemini-2.0-flash')
 
 # GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
@@ -238,15 +204,15 @@ def callback():
         abort(400)
     return 'OK'
 
-# @line_handler.add(MessageEvent, message=TextMessage)
-# def handle_message(event):
-#     # 回應訊息，自動已讀
-#     reply_message = "test OK~"
+@line_handler.add(MessageEvent, message=TextMessage)
+def handle_message(event):
+    # 回應訊息，自動已讀
+    reply_message = "test OK~"
     
-#     line_bot_api.reply_message(
-#         event.reply_token,
-#         TextSendMessage(text=f"{reply_message}")
-#     )
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=f"{reply_message}")
+    )
     
 # 確認 URL 是否有效
 def check_image_url_exists(url):
@@ -518,8 +484,64 @@ def get_stock_info(stock_id):
             continue
 
     return f"❗ 無法取得 {stock_id} 的股價資訊"
+    
+# # 台股代號取得目前股價資訊
+# def get_stock_info(stock_id):
+#     text_message = "無資料"
+#     price = yclose = 0
 
+#     # TWSE 官方即時 API
+#     urls = [
+#         f"https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_{stock_id}.tw",
+#         f"https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=otc_{stock_id}.tw"
+#     ]
 
+#     for url in urls:
+#         try:
+#             resp = requests.get(url, timeout=5)
+#             data = resp.json()
+#             if "msgArray" in data and len(data["msgArray"]) > 0:
+#                 info = data["msgArray"][0]
+#                 name = info.get("n", "未知名稱")
+#                 try: price = float(info.get("z","0"))
+#                 except: price = 0
+#                 try: yclose = float(info.get("y","0"))
+#                 except: yclose = 0
+#                 try: high = float(info.get("h","0"))
+#                 except: high = 0
+#                 try: low = float(info.get("l","0"))
+#                 except: low = 0
+#                 try: volume = int(info.get("v","0").replace(",",""))
+#                 except: volume = 0
+
+#                 change_price = round(price - yclose,2) if price and yclose else "－"
+#                 change_percent = round((price-yclose)/yclose*100,2) if price and yclose else "－"
+
+#                 text_message = (
+#                     f"{name}（{stock_id}）今日資訊：\n"
+#                     f"💰 目前現價：{price if price else '尚無成交'}\n"
+#                     f"⬆ 昨收：{yclose if yclose else '－'}\n"
+#                     f"📈 漲跌：{change_price}  {change_percent}%\n"
+#                     f"🔺 最高：{high if high else '－'}\n"
+#                     f"🔻 最低：{low if low else '－'}\n"
+#                     f"📊 成交量：{volume:,}"
+#                 )
+#                 return text_message
+#         except:
+#             continue
+
+#     # 如果 TWSE API 沒資料，可改抓 FinMind 或 Yahoo Finance
+#     return text_message
+
+    # # 如果兩個網址都沒有有效資料，回傳錯誤訊息
+    # if not data:
+    #     line_bot_api.reply_message(
+    #         event.reply_token,
+    #         TextSendMessage(text=f"查無股票代號 {stock_id} 或 是你呆呆記錯號碼")
+    #     )
+    #     return
+    # return 
+        
 @line_handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     global working_status
@@ -2552,22 +2574,28 @@ def handle_message(event):
 
 
     if event.message.text.startswith("G-"):
-        msg = event.message.text
-        user_question = msg[2:]
+        
+        user_question = event.message.text[2:]
+    
+        if model is None:
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="❌ 系統錯誤：API Key 未設定，無法使用 AI 功能。")
+            )
+            return
 
         try:
+            # 呼叫 AI
             response = model.generate_content(user_question)
-            reply_text = response.text
-
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=response.text)
+            )
         except Exception as e:
-            logging.error(f"Gemini Error: {e}")
-            reply_text = "抱歉，Gemini 發生錯誤，請稍後再試"
-
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=reply_text)
-        )
-        return
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=f"❌ AI 回應失敗：{str(e)}")
+            )
         # # 2. 提取問題 (去掉前面的 "G-")
         # user_question = event.message.text[2:] 
         
