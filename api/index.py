@@ -2624,7 +2624,7 @@ def handle_message(event):
             # response = model.generate_content(user_question)
             # --- 關鍵修改 ---
             # 設定 timeout=8 秒 (比 Vercel 的 10 秒極限短，預留時間回報錯誤)
-            user_question += " 請用繁體在五秒內回覆。"
+            user_question += " 請用繁體在七秒內回覆。"
             response = model.generate_content(
                 user_question,
                 request_options={'timeout': 8} 
