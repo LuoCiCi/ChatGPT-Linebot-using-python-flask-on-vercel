@@ -2070,7 +2070,10 @@ def handle_message(event):
             TextSendMessage(text="健豪語錄 : 這麼帥怎麼可能單身"),
             TextSendMessage(text="健豪語錄 : 我只是臉胖而已"),
             TextSendMessage(text="健豪語錄 : 台股有種嘎到3萬啊"),
-            TextSendMessage(text="健豪語錄 : 要在迪士尼辦婚禮")
+            TextSendMessage(text="健豪語錄 : 要在迪士尼辦婚禮"),
+            TextSendMessage(text="又被妹子已讀了"),
+            TextSendMessage(text="這女的一定很難搞"),
+            TextSendMessage(text="我敢說上禮拜聯誼我最帥")
         ]
         # 回傳訊息
         line_bot_api.reply_message(
