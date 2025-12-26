@@ -31,8 +31,8 @@ mytest_groupid = "Cd627ff8b5c500044e9fc51609cfd4887"    #羊綺機器人測試li
 # # --- 🎯 新增 Gemini API 設定 ---
 api_key = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=api_key)
-model = genai.GenerativeModel('gemini-2.5-flash')
-
+#model = genai.GenerativeModel('gemini-2.5-flash')
+model = genai.GenerativeModel('gemini-3-flash-preview')
 # GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 # if GEMINI_API_KEY:
