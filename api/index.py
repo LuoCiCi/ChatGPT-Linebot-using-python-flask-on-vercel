@@ -2047,7 +2047,7 @@ def handle_message(event):
                 TextSendMessage(text="無法找到對應的圖片，請稍後再試。")
             )
         return
-   
+    
     if "珮綺" in event.message.text or "綺綺" in event.message.text:
         working_status = False
         messages = [
