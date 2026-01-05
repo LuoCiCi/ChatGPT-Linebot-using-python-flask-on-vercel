@@ -1984,7 +1984,70 @@ def handle_message(event):
             )
         return
         
-    
+     if "金吶三連抽" in event.message.text or "金啊三連抽" in event.message.text or "金金三連抽" in event.message.text or "金金抽抽抽" in event.message.text or "金碰" in event.message.text or "碰金" in event.message.text:       
+        working_status = False
+        max_attempts = 5  # 設定最多嘗試的次數
+        attempts = 0
+        
+        # 進行圖片URL檢查
+        while attempts < max_attempts:
+            random_numbers = random.sample(range(1, 150), 3)
+            random_number1, random_number2, random_number3 = random_numbers
+            
+            image_url1 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Gold/gold({random_number1}).jpg"
+            image_url2 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Gold/gold({random_number2}).jpg"
+            image_url3 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Gold/gold({random_number3}).jpg"
+            
+            # 檢查圖片是否存在
+            if check_image_url_exists(image_url1) and check_image_url_exists(image_url2) and check_image_url_exists(image_url3):
+                # 如果圖片存在，回傳訊息
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    [
+                        ImageSendMessage(original_content_url=image_url1, preview_image_url=image_url1),
+                        ImageSendMessage(original_content_url=image_url2, preview_image_url=image_url2),
+                        ImageSendMessage(original_content_url=image_url3, preview_image_url=image_url3)
+                    ]
+                )
+                break  # 找到圖片後退出迴圈
+            attempts += 1
+        else:
+            # 如果在max_attempts次內未找到有效圖片
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="無法找到對應的圖片，請稍後再試。")
+            )
+        return
+
+    if "金吶" in event.message.text or "金啊" in event.message.text or "金金" in event.message.text:       
+        working_status = False
+        max_attempts = 5  # 設定最多嘗試的次數
+        attempts = 0
+        
+        # 進行圖片URL檢查
+        while attempts < max_attempts:
+            random_number = random.randint(1, 150)
+            image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Gold/gold({random_number}).jpg"
+            
+            # 檢查圖片是否存在
+            if check_image_url_exists(image_url):
+                # 如果圖片存在，回傳訊息
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    [
+                        ImageSendMessage(original_content_url=image_url, preview_image_url=image_url)
+                    ]
+                )
+                break  # 找到圖片後退出迴圈
+            attempts += 1
+        else:
+            # 如果在max_attempts次內未找到有效圖片
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="無法找到對應的圖片，請稍後再試。")
+            )
+        return
+   
     if "珮綺" in event.message.text or "綺綺" in event.message.text:
         working_status = False
         messages = [
