@@ -1997,7 +1997,10 @@ def handle_message(event):
             image_url1 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Gold/gold({random_number1}).jpg"
             image_url2 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Gold/gold({random_number2}).jpg"
             image_url3 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Gold/gold({random_number3}).jpg"
-            
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="{image_url1}")
+            )
             # 檢查圖片是否存在
             if check_image_url_exists(image_url1) and check_image_url_exists(image_url2) and check_image_url_exists(image_url3):
                 # 如果圖片存在，回傳訊息
