@@ -2019,7 +2019,7 @@ def handle_message(event):
             )
         return
         
-    if "金吶" in event.message.text or "金啊" in event.message.text or "金金" in event.message.text:       
+    if "金吶" in event.message.text or "金啊" in event.message.text or "金阿" in event.message.text or "金金" in event.message.text:       
         working_status = False
         max_attempts = 5  # 設定最多嘗試的次數
         attempts = 0
