@@ -1984,7 +1984,7 @@ def handle_message(event):
             )
         return
         
-     if "金吶三連抽" in event.message.text or "金啊三連抽" in event.message.text or "金金三連抽" in event.message.text or "金金抽抽抽" in event.message.text or "金碰" in event.message.text or "碰金" in event.message.text:       
+    if "金吶三連抽" in event.message.text or "金啊三連抽" in event.message.text or "金金三連抽" in event.message.text or "金金抽抽抽" in event.message.text or "金碰" in event.message.text or "碰金" in event.message.text:       
         working_status = False
         max_attempts = 5  # 設定最多嘗試的次數
         attempts = 0
@@ -1997,10 +1997,7 @@ def handle_message(event):
             image_url1 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Gold/gold({random_number1}).jpg"
             image_url2 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Gold/gold({random_number2}).jpg"
             image_url3 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Gold/gold({random_number3}).jpg"
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text="{image_url1}")
-            )
+
             # 檢查圖片是否存在
             if check_image_url_exists(image_url1) and check_image_url_exists(image_url2) and check_image_url_exists(image_url3):
                 # 如果圖片存在，回傳訊息
@@ -2021,7 +2018,7 @@ def handle_message(event):
                 TextSendMessage(text="無法找到對應的圖片，請稍後再試。")
             )
         return
-
+        
     if "金吶" in event.message.text or "金啊" in event.message.text or "金金" in event.message.text:       
         working_status = False
         max_attempts = 5  # 設定最多嘗試的次數
