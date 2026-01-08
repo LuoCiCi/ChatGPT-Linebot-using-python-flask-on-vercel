@@ -1991,7 +1991,7 @@ def handle_message(event):
         
         # 進行圖片URL檢查
         while attempts < max_attempts:
-            random_numbers = random.sample(range(1, 150), 3)
+            random_numbers = random.sample(range(1, 120), 3)
             random_number1, random_number2, random_number3 = random_numbers
             
             image_url1 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Gold/gold({random_number1}).jpg"
@@ -2026,7 +2026,7 @@ def handle_message(event):
         
         # 進行圖片URL檢查
         while attempts < max_attempts:
-            random_number = random.randint(1, 150)
+            random_number = random.randint(1, 120)
             image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Gold/gold({random_number}).jpg"
             
             # 檢查圖片是否存在
