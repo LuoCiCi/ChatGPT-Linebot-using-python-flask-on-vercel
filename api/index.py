@@ -959,13 +959,13 @@ def handle_message(event):
         if (check_image_url_exists(reply[1])):
             line_bot_api.reply_message(event.reply_token,
                     [
-                        TextSendMessage(f"地震監視畫面\nhttps://www.youtube.com/live/Owke6Quk7T0?si=CQYm0rJ3Mq_UnQEv"),
+                        TextSendMessage(f"地震監視畫面\nhttps://www.youtube.com/live/KyT4qSK8lJo?si=9fIU1vrFlUzuxWoW"),
                         ImageSendMessage(original_content_url=reply[1], preview_image_url=reply[1])
                     ]) # 傳送文字
         else:
             line_bot_api.reply_message(event.reply_token,
                     [
-                        TextSendMessage(f"地震監視畫面\nhttps://www.youtube.com/live/Owke6Quk7T0?si=CQYm0rJ3Mq_UnQEv"),
+                        TextSendMessage(f"地震監視畫面\nhttps://www.youtube.com/live/KyT4qSK8lJo?si=9fIU1vrFlUzuxWoW"),
                         TextSendMessage(f"抓不到地震資訊")  # 傳送解碼後的文字
                     ]) # 傳送文字
         return
