@@ -12,8 +12,10 @@ import re
 import time
 import csv
 import io
-import google.generativeai as genai
-from google.api_core.exceptions import DeadlineExceeded # 記得引入這個錯誤類型
+# 🔴 1. 刪除舊的 import google.generativeai as genai
+# 🟢 改用新版官方 SDK 的引入方式
+from google import genai
+from google.genai.errors import APIError # 新版 SDK 的錯誤處理套件
 
 #Function
 #from instruction import handle_instruction_message
@@ -30,9 +32,10 @@ mytest_groupid = "Cd627ff8b5c500044e9fc51609cfd4887"    #羊綺機器人測試li
 
 # # --- 🎯 新增 Gemini API 設定 ---
 api_key = os.getenv("GEMINI_API_KEY")
-genai.configure(api_key=api_key)
+client = genai.Client(api_key=api_key)
 #model = genai.GenerativeModel('gemini-2.5-flash')
-model = genai.GenerativeModel('gemini-3-flash-preview')
+#model = genai.GenerativeModel('gemini-3-flash-preview')
+GEMINI_MODEL = 'gemini-3.5-flash'
 # GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 # if GEMINI_API_KEY:
@@ -2394,91 +2397,98 @@ def handle_message(event):
 
 
     if event.message.text.startswith("G-"):
-        # --- 1. 智慧判斷推播目標 ID ---
-        to_id = None
-        source_type = event.source.type
+            # --- 1. 智慧判斷推播目標 ID （保留你原本的邏輯） ---
+            to_id = None
+            source_type = event.source.type
 
-        if source_type == 'user':
-            to_id = event.source.user_id
-        elif source_type == 'group':
-            to_id = event.source.group_id
-        elif source_type == 'room':
-            to_id = event.source.room_id
-        else:
-            # 預防萬一，如果都抓不到就不處理
-            return
-            
-        # 限制鏟屎官可用GEMINI
-        # if limit == "false":
-        #      line_bot_api.reply_message(
-        #         event.reply_token,
-        #         TextSendMessage(text=f"❌ 你不能使用 AI ")
-        #     )
-        #     return
-            
-        user_question = event.message.text[2:]
-        if user_question == "":
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text="❌ 請輸入想詢問的")
-            )
-            return
-    
-        if model is None:
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text="❌ 系統錯誤：API Key 未設定，無法使用 AI 功能。")
-            )
-            return
-
-        # # 1️⃣ 先回覆「查詢中」
-        # line_bot_api.reply_message(
-        #     event.reply_token,
-        #     TextSendMessage(text="🔍 請稍候…")
-        # )
-
-        # 2️⃣ 再查資料（用 push 回傳結果）
-        try:
-            # 呼叫 AI
-            # response = model.generate_content(user_question)
-            # --- 關鍵修改 ---
-            # 設定 timeout=8 秒 (比 Vercel 的 10 秒極限短，預留時間回報錯誤)
-            user_question += " 請用繁體在七秒內回覆。"
-            response = model.generate_content(
-                user_question,
-                request_options={'timeout': 8} 
-            )
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text=response.text)
-            )
-
-            # # 使用 push_message (主動推播，會扣費/扣額度)
-            # line_bot_api.push_message(
-            #     to_id,  # <-- 這裡是關鍵，傳入 Group ID 或 User ID
-            #     TextSendMessage(text=response.text)
-            # )
-        # 專門捕捉「超時」的錯誤
-        except DeadlineExceeded:
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text="⚠️ 思考逾時：問題太難或系統繁忙，請換個問法再試試！")
-            )
-        # 捕捉其他一般錯誤 (例如 API Key 錯誤、內容被擋)
-        except Exception as e:
-            error_msg = str(e)
-            # 優化錯誤訊息顯示
-            if "400" in error_msg:
-                friendly_msg = "❌ 請求無效"
-            elif "429" in error_msg:
-                friendly_msg = "❌ 使用量已達上限，請稍後再試"
+            if source_type == 'user':
+                to_id = event.source.user_id
+            elif source_type == 'group':
+                to_id = event.source.group_id
+            elif source_type == 'room':
+                to_id = event.source.room_id
             else:
-                friendly_msg = f"❌ AI 發生錯誤：{error_msg}"
+                # 預防萬一，如果都抓不到就不處理
+                return
                 
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text=f"❌ AI 回應失敗：{str(e)}")
-            )
+            # 限制可用權限（可依需求自行取消註解）
+            # if limit == "false":
+            #     line_bot_api.reply_message(
+            #         event.reply_token,
+            #         TextSendMessage(text="❌ 你不能使用 AI ")
+            #     )
+            #     return
+                
+            # 擷取使用者問題並去前後空白
+            user_question = event.message.text[2:].strip()
+            if user_question == "":
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text="❌ 請輸入想詢問的內容")
+                )
+                return
+        
+            # 🔴 關鍵修改：檢查新版 client 是否有成功初始化
+            if client is None:
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text="❌ 系統錯誤：API Key 未設定，無法使用 AI 功能。")
+                )
+                return
+
+            # --- 2️⃣ 呼叫新版 Gemini API 並回傳結果 ---
+            try:
+                # 💡 提示：新版 gemini-3.5-flash 速度極快（通常 1~2 秒內好），
+                # 建議直接將限制寫在 system_instruction 內，AI 遵循度會最高！
+                response = client.models.generate_content(
+                    model=GEMINI_MODEL,
+                    contents=user_question,
+                    config={
+                        "system_instruction": "你是一位貼心的 LINE 聊天機器人，請用簡潔、友善的繁體中文在 7 秒內快速回覆。",
+                        "temperature": 0.7,
+                        "max_output_tokens": 800  # 限制字數，避免過長導致 LINE 傳送失敗或超時
+                    }
+                )
+                
+                # 直接回覆結果
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text=response.text)
+                )
+
+                # 如果你想改回主動推播 (push_message)，可以取消下方註解：
+                # line_bot_api.push_message(
+                #     to_id,
+                #     TextSendMessage(text=response.text)
+                # )
+
+            # 🔴 關鍵修改：統一捕捉新版 SDK 的 APIError
+            except APIError as e:
+                print(f"Gemini API 錯誤: {e}")
+                error_msg = str(e)
+                
+                # 智慧判斷錯誤類型並給予友好的 LINE 回覆
+                if "429" in error_msg:
+                    friendly_msg = "❌ 使用量已達上限，請稍後再試"
+                elif "400" in error_msg:
+                    friendly_msg = "❌ 請求無效，請檢查輸入內容"
+                elif "deadline" in error_msg.lower() or "timeout" in error_msg.lower():
+                    friendly_msg = "⚠️ 思考逾時：問題太難或系統繁忙，請換個問法再試試！"
+                else:
+                    friendly_msg = "⚠️ 機器人思緒打結了，請再試一次！"
+                    
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text=friendly_msg)
+                )
+                
+            # 捕捉其他非 API 的一般 Python 程式錯誤
+            except Exception as e:
+                print(f"系統錯誤: {e}")
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    TextSendMessage(text=f"❌ 系統發生錯誤：{str(e)}")
+                )
 
     if event.message.text.startswith("/"):
         text = event.message.text
