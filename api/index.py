@@ -2475,7 +2475,7 @@ def handle_message(event):
             # 直接回覆結果                
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text=response.text)
+                TextSendMessage(text=reply_text)
             )
 
         # 🔴 關鍵修改：統一捕捉新版 SDK 的 APIError
@@ -2483,19 +2483,19 @@ def handle_message(event):
             print(f"Gemini API 錯誤: {e}")
             error_msg = str(e)
             
-            # 智慧判斷錯誤類型並給予友好的 LINE 回覆
             if "429" in error_msg:
-                friendly_msg = "❌ 使用量已達上限，請稍後再試"
+                # 💡 精準提示使用者：這通常是每分鐘額度滿了，請他們等一分鐘
+                reply_text = "❌ 目前 AI 呼叫過於頻繁（已達每分鐘上限）！\n⏱️ 請等待約 1 分鐘後再試一次，感謝配合。"
             elif "400" in error_msg:
-                friendly_msg = "❌ 請求無效，請檢查輸入內容"
+                reply_text = "❌ 請求無效，請換個問法試試。"
             elif "deadline" in error_msg.lower() or "timeout" in error_msg.lower():
-                friendly_msg = "⚠️ 思考逾時：問題太難或系統繁忙，請換個問法再試試！"
+                reply_text = "⚠️ 思考逾時：問題太難或系統繁忙，請再試一次！"
             else:
-                friendly_msg = "⚠️ 機器人思緒打結了，請再試一次！"
+                reply_text = "⚠️ 機器人思緒稍微打結，請再試一次。"
                 
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text=friendly_msg)
+                TextSendMessage(text=reply_text)
             )
             
         # 捕捉其他非 API 的一般 Python 程式錯誤
