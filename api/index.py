@@ -2395,7 +2395,17 @@ def handle_message(event):
         )
         return
 
-
+    if event.message.text == "G版本" or event.message.text == "g版本":
+            
+            # 組合要回傳的文字訊息
+            version_message = f"🤖 目前機器人使用的 Gemini 模型代號為：\n\n👉 {GEMINI_MODEL}"
+            
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=version_message)
+            )
+            return
+        
     if event.message.text.startswith("G-"):
             # --- 1. 智慧判斷推播目標 ID （保留你原本的邏輯） ---
             to_id = None
