@@ -2449,14 +2449,21 @@ def handle_message(event):
             # --- 2️⃣ 呼叫新版 Gemini API 並回傳結果 ---
             try:
                 # 💡 提示：新版 gemini-3.5-flash 速度極快（通常 1~2 秒內好），
-                # 建議直接將限制寫在 system_instruction 內，AI 遵循度會最高！
                 response = client.models.generate_content(
                     model=GEMINI_MODEL,
                     contents=user_question,
                     config={
-                        "system_instruction": "你是一位貼心的 LINE 聊天機器人，請用簡潔、友善的繁體中文在 7 秒內快速回覆。",
-                        "temperature": 0.7,
-                        "max_output_tokens": 800  # 限制字數，避免過長導致 LINE 傳送失敗或超時
+                        # 1. 調整系統指令：強制精簡、直奔主題、不說廢話
+                        "system_instruction": (
+                            "你是一位專業精煉的 LINE 聊天助手。請一律用繁體中文(台灣)回應。\n"
+                            "【核心原則】回答請開門見山、直接講重點，拒絕客套話、前言與贅字。\n"
+                            "若使用者沒有要求長文，請將內容嚴格控制在 100-150 字以內。"
+                        ),
+                        # 2. 降低溫度：大幅提升精確度與反應速度
+                        "temperature": 0.5, 
+                        
+                        # 3. 縮小最大 Token 限制：避免 AI 囉唆，降低生成耗時
+                        "max_output_tokens": 400
                     }
                 )
                 
