@@ -2448,21 +2448,19 @@ def handle_message(event):
 
         # --- 2️⃣ 呼叫新版 Gemini API 並直接用 reply_message 回傳結果 ---
         try:
-            # 🟢 直線上傳：呼叫新版 SDK (加入聯網功能)
+            # 🟢 選擇 A：拿掉 tools 聯網，換取極致速度
             response = client.models.generate_content(
                 model=GEMINI_MODEL,
                 contents=user_question,
                 config={
-                    # 🌐 讓 AI 自動查 Google 搜尋，完美應對最新時事（如樂高事件）
-                    "tools": [{"google_search": {}}], 
-                    # 📝 強制精簡語氣，拿掉字數計算，避免 AI 產生奇怪回應
+                    "tools": [], # 👈 改成這樣，AI 就不會耗時去查 Google 了
                     "system_instruction": (
                         "你是一位專業精煉的 LINE 聊天助手。請一律用繁體中文(台灣)回應。\n"
                         "【核心原則】回答請開門見山、直接講重點，拒絕客套話、前言與贅字。\n"
                         "【長度限制】請用簡短的兩三句話回答即可，絕對不要長篇大論。"
                     ),
-                    "temperature": 0.5,       # 黃金平衡溫度
-                    "max_output_tokens": 400  # 嚴格控管最大字數，降低生成耗時
+                    "temperature": 0.5, 
+                    "max_output_tokens": 400
                 }
             )
             
