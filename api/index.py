@@ -2407,7 +2407,7 @@ def handle_message(event):
             return
         
     if event.message.text.startswith("G-"):
-        # --- 1. 智慧判斷推播目標 ID （保留你原本的邏輯） ---
+        # --- 1. 智慧判斷推播目標 ID （完全保留你原本的邏輯） ---
         to_id = None
         source_type = event.source.type
 
@@ -2438,7 +2438,7 @@ def handle_message(event):
             )
             return
     
-        # 🔴 關鍵修改：檢查新版 client 是否有成功初始化
+        # 檢查新版 client 是否有成功初始化
         if client is None:
             line_bot_api.reply_message(
                 event.reply_token,
@@ -2446,23 +2446,23 @@ def handle_message(event):
             )
             return
 
-        # --- 2️⃣ 呼叫新版 Gemini API 並回傳結果 ---
+        # --- 2️⃣ 呼叫新版 Gemini API 並直接用 reply_message 回傳結果 ---
         try:
-            # 💡 提示：新版 gemini-3.5-flash 速度極快（通常 1~2 秒內好），
+            # 🟢 直線上傳：呼叫新版 SDK (加入聯網功能)
             response = client.models.generate_content(
                 model=GEMINI_MODEL,
                 contents=user_question,
                 config={
-                    # 🎯 關鍵核心：開啟 Google 搜尋聯網功能！
+                    # 🌐 讓 AI 自動查 Google 搜尋，完美應對最新時事（如樂高事件）
                     "tools": [{"google_search": {}}], 
-                    
+                    # 📝 強制精簡語氣，拿掉字數計算，避免 AI 產生奇怪回應
                     "system_instruction": (
                         "你是一位專業精煉的 LINE 聊天助手。請一律用繁體中文(台灣)回應。\n"
                         "【核心原則】回答請開門見山、直接講重點，拒絕客套話、前言與贅字。\n"
                         "【長度限制】請用簡短的兩三句話回答即可，絕對不要長篇大論。"
                     ),
-                    "temperature": 0.5, 
-                    "max_output_tokens": 400
+                    "temperature": 0.5,       # 黃金平衡溫度
+                    "max_output_tokens": 400  # 嚴格控管最大字數，降低生成耗時
                 }
             )
             
@@ -2472,19 +2472,18 @@ def handle_message(event):
             else:
                 reply_text = "⚠️ 抱歉，此話題可能觸發安全過濾，AI 為了安全暫不回應。"
                 
-            # 直接回覆結果                
+            # 🟢 直接回覆結果給使用者
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(text=reply_text)
             )
 
-        # 🔴 關鍵修改：統一捕捉新版 SDK 的 APIError
+        # 🔴 統一捕捉新版 SDK 的 APIError
         except APIError as e:
             print(f"Gemini API 錯誤: {e}")
             error_msg = str(e)
             
             if "429" in error_msg:
-                # 💡 精準提示使用者：這通常是每分鐘額度滿了，請他們等一分鐘
                 reply_text = "❌ 目前 AI 呼叫過於頻繁（已達每分鐘上限）！\n⏱️ 請等待約 1 分鐘後再試一次，感謝配合。"
             elif "400" in error_msg:
                 reply_text = "❌ 請求無效，請換個問法試試。"
