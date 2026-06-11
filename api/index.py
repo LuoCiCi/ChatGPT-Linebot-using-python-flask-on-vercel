@@ -36,59 +36,6 @@ client = genai.Client(api_key=api_key)
 #model = genai.GenerativeModel('gemini-2.5-flash')
 #model = genai.GenerativeModel('gemini-3-flash-preview')
 GEMINI_MODEL = 'gemini-3.5-flash'
-# GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-
-# if GEMINI_API_KEY:
-#     try:
-#         genai.configure(api_key=GEMINI_API_KEY)
-#         gemini_model = genai.GenerativeModel('gemini-1.5-flash') # 預先設定模型
-#         print("✅ Gemini API 載入成功")
-#     except Exception as e:
-#         print(f"❌ Gemini 設定錯誤: {e}")
-#         gemini_model = None # 確保錯誤時不影響其他功能
-# else:
-#     print("⚠️ 警告：環境變數中找不到 GEMINI_API_KEY，Gemini 功能將無法使用。")
-#     gemini_model = None
-# # -------------------------------
-# 🟢 放在整個檔案的最外層（獨立的功能函數，不影響你底下的 if 邏輯）
-def ask_gemini_bg_thread(target_id, question):
-    try:
-        response = client.models.generate_content(
-            model=GEMINI_MODEL,
-            contents=question,
-            config={
-                "tools": [{"google_search": {}}], 
-                "system_instruction": (
-                    "你是一位專業精煉的 LINE 聊天助手。請一律用繁體中文(台灣)回應。\n"
-                    "【核心原則】回答請開門見山、直接講重點，拒絕客套話、前言與贅字。\n"
-                    "【長度限制】請用簡短的兩三句話回答即可，絕對不要長篇大論。\n"
-                    "【重要】請務必確保語意完整，一定要把句子好好結尾，絕對不要話說到一半突然中斷。"
-                ),
-                "temperature": 0.5, 
-                "max_output_tokens": 400
-            }
-        )
-        if response.text and response.text.strip():
-            reply_text = response.text
-        else:
-            reply_text = "⚠️ 抱歉，此話題可能觸發安全過濾，AI 為了安全暫不回應。"
-
-    except APIError as e:
-        error_msg = str(e)
-        if "429" in error_msg:
-            reply_text = "❌ 目前 AI 呼叫過於頻繁（已達每分鐘上限）！\n⏱️ 請等待約 1 分鐘後再試一次。"
-        elif "400" in error_msg:
-            reply_text = "❌ 請求無效，請檢查輸入內容。"
-        else:
-            reply_text = "⚠️ 機器人思緒稍微打結，請再試一次。"
-    except Exception as e:
-        reply_text = f"❌ 系統發生錯誤：{str(e)}"
-
-    # 🔴 核心安全：算好後，一律用 push_message 主動推播，就算花了 5 秒也絕對不會失敗！
-    try:
-        line_bot_api.push_message(target_id, TextSendMessage(text=reply_text))
-    except Exception as e:
-        print(f"Push 失敗: {e}")
         
 # 計算出前一個10分倍數的時間以及前前一個10分倍數的時間以及前前前一個10分倍數的時間
 def get_prev10_4():
@@ -2446,33 +2393,70 @@ def handle_message(event):
             return
         
     if event.message.text.startswith("G-"):
-            # --- 1. 智慧判斷推播目標 ID（完全保留你原本的邏輯） ---
-            to_id = None
-            source_type = event.source.type
-            if source_type == 'user': to_id = event.source.user_id
-            elif source_type == 'group': to_id = event.source.group_id
-            elif source_type == 'room': to_id = event.source.room_id
-            else: return
-                
-            # 擷取使用者問題
-            user_question = event.message.text[2:].strip()
-            if user_question == "":
-                line_bot_api.reply_message(event.reply_token, TextSendMessage(text="❌ 請輸入想詢問的內容"))
-                return
-        
-            if client is None:
-                line_bot_api.reply_message(event.reply_token, TextSendMessage(text="❌ 系統錯誤：API Key 未設定"))
-                return
+        # --- 1. 智慧判斷推播目標 ID（完全保留你原本的邏輯） ---
+        to_id = None
+        source_type = event.source.type
+        if source_type == 'user': to_id = event.source.user_id
+        elif source_type == 'group': to_id = event.source.group_id
+        elif source_type == 'room': to_id = event.source.room_id
+        else: return
+            
+        # 擷取使用者問題
+        user_question = event.message.text[2:].strip()
+        if user_question == "":
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text="❌ 請輸入想詢問的內容"))
+            return
+    
+        if client is None:
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text="❌ 系統錯誤：API Key 未設定"))
+            return
 
-            # 🟢 步驟一：搶在 1 秒內秒回使用者，消耗掉 reply_token，讓 LINE 伺服器開心收工
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text="🔍 收到！AI 正在聯網快速思考中，請稍候...")
+        # --- 2. 呼叫高速版 Gemini API 并直接回覆（移除 tools 聯網，換取 0.5 秒秒殺速度） ---
+        try:
+            response = client.models.generate_content(
+                model=GEMINI_MODEL,
+                contents=user_question,
+                config={
+                    "tools": [], # 🟢 徹底拔掉聯網功能！不讓 AI 浪費時間查網頁，回話速度變超級快
+                    "system_instruction": (
+                        "你是一位專業精煉的 LINE 聊天助手。請一律用繁體中文(台灣)回應。\n"
+                        "【核心原則】回答請開門見山、直接講重點，拒絕客套話、前言與贅字。\n"
+                        "【長度限制】請用簡短的兩三句話回答即可，絕對不要長篇大論。\n"
+                        "【重要】請務必確保語意完整，一定要把句子好好結尾，絕對不要話說到一半突然中斷。"
+                    ),
+                    "temperature": 0.2, 
+                    "max_output_tokens": 400
+                }
             )
             
-            import threading
-            threading.Thread(target=ask_gemini_bg_thread, args=(to_id, user_question)).start()
-            return
+            # 安全檢查
+            if response.text and response.text.strip():
+                reply_text = response.text
+            else:
+                reply_text = "⚠️ 抱歉，此話題可能觸發安全過濾，AI 為了安全暫不回應。"
+                
+            # 🟢 速度極快，直接在 3 秒內安全回覆！
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=reply_text)
+            )
+
+        # 統一捕捉新版 SDK 的 APIError
+        except APIError as e:
+            print(f"Gemini API 錯誤: {e}")
+            error_msg = str(e)
+            if "429" in error_msg:
+                reply_text = "❌ 目前 AI 呼叫過於頻繁！\n⏱️ 請等待約 1 分鐘後再試一次。"
+            elif "400" in error_msg:
+                reply_text = "❌ 請求無效，請換個問法試試。"
+            else:
+                reply_text = "⚠️ 機器人思緒稍微打結，請再試一次。"
+                
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply_text))
+            
+        except Exception as e:
+            print(f"系統錯誤: {e}")
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=f"❌ 系統發生錯誤：{str(e)}"))
 
     if event.message.text.startswith("/"):
         text = event.message.text
