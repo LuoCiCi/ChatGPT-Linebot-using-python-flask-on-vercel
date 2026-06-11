@@ -2485,6 +2485,9 @@ def handle_message(event):
                 reply_text = "❌ 目前 AI 呼叫過於頻繁（已達每分鐘上限）！\n⏱️ 請等待約 1 分鐘後再試一次，感謝配合。"
             elif "400" in error_msg:
                 reply_text = "❌ 請求無效，請換個問法試試。"
+            # 🟢 新增：精準攔截你在後台看到的 504 GatewayTimeout 或 500/503 錯誤
+            elif any(code in error_msg for code in ["500", "503", "504"]) or "gateway" in error_msg.lower():
+                reply_text = "⚠️ Google 聯網搜尋引擎暫時忙碌或逾時（504），請稍等 30 秒後再問一次！"
             elif "deadline" in error_msg.lower() or "timeout" in error_msg.lower():
                 reply_text = "⚠️ 思考逾時：問題太難或系統繁忙，請再試一次！"
             else:
