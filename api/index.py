@@ -2450,7 +2450,8 @@ def handle_message(event):
             elif "400" in error_msg:
                 reply_text = "❌ 請求無效，請換個問法試試。"
             else:
-                reply_text = "⚠️ 機器人思緒稍微打結，請再試一次。"
+                # 🟢 這裡改成這樣：直接抓取錯誤訊息的前 50 個字吐在 LINE 上，一眼抓出病因！
+                reply_text = f"⚠️ 機器人思緒稍微打結（Google回應：{error_msg[:50]}...），請再試一次。"
                 
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply_text))
             
