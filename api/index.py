@@ -2411,18 +2411,20 @@ def handle_message(event):
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text="❌ 系統錯誤：API Key 未設定"))
             return
 
-        # --- 2. 呼叫高速版 Gemini API 并直接回覆（移除 tools 聯網，換取 0.5 秒秒殺速度） ---
+        # --- 2. 呼叫高速版 Gemini API 并直接回覆（針對 Vercel 與防碎碎念優化） ---
         try:
             response = client.models.generate_content(
                 model=GEMINI_MODEL,
                 contents=user_question,
                 config={
-                    "tools": [], # 🟢 徹底拔掉聯網功能！不讓 AI 浪費時間查網頁，回話速度變超級快
+                    "tools": [], # 徹底拔掉聯網，確保 Vercel 運作在 1 秒內極速完成
+                    
+                    # 🟢 調整後的防短路系統指令
                     "system_instruction": (
-                        "你是一位專業精煉的 LINE 聊天助手。請一律用繁體中文(台灣)回應。\n"
-                        "【核心原則】回答請開門見山、直接講重點，拒絕客套話、前言與贅字。\n"
-                        "【長度限制】請用簡短的兩三句話回答即可，絕對不要長篇大論。\n"
-                        "【重要】請務必確保語意完整，一定要把句子好好結尾，絕對不要話說到一半突然中斷。"
+                        "你是專業精煉的 LINE 聊天助手。請完全使用繁體中文(台灣)回答。\n"
+                        "不要說任何客套話、前言或贅字，開門見山直接回答核心重點。\n"
+                        "請將回答長度控制在 50 到 120 個中文字以內，並確保語意完整、正常結尾。\n"
+                        "嚴禁在回答中包含任何關於字數、句數的內部碎碎念或英文說明（絕對不可出現 sentences 等字眼）。"
                     ),
                     "temperature": 0.2, 
                     "max_output_tokens": 400
@@ -2435,7 +2437,7 @@ def handle_message(event):
             else:
                 reply_text = "⚠️ 抱歉，此話題可能觸發安全過濾，AI 為了安全暫不回應。"
                 
-            # 🟢 速度極快，直接在 3 秒內安全回覆！
+            # 直接回覆（直線流，最適合 Vercel）
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(text=reply_text)
