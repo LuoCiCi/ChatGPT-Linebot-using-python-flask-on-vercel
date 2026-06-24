@@ -2450,7 +2450,7 @@ def handle_message(event):
             elif "400" in error_msg:
                 reply_text = "❌ 請求無效，請換個問法試試。"
             else:
-                reply_text = "⚠️ 機器人思緒稍微打結，請再試一次。"
+                reply_text = f"⚠️ 發生未預期的錯誤: Error {e}"
                 
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply_text))
             
