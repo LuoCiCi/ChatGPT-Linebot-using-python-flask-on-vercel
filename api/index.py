@@ -1822,7 +1822,7 @@ def handle_message(event):
         
         # 進行圖片URL檢查
         while attempts < max_attempts:
-            random_numbers = random.sample(range(1, 501), 3)
+            random_numbers = random.sample(range(1, 521), 3)
             random_number1, random_number2, random_number3 = random_numbers
             
             image_url1 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/MoneyMoney/LINE_ALBUM_money_%20({random_number1}).jpg"
@@ -1857,7 +1857,7 @@ def handle_message(event):
         
         # 進行圖片URL檢查
         while attempts < max_attempts:
-            random_number = random.randint(1, 500)
+            random_number = random.randint(1, 521)
             image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/MoneyMoney/LINE_ALBUM_money_%20({random_number}).jpg"
             
             # 檢查圖片是否存在
@@ -1980,7 +1980,7 @@ def handle_message(event):
         
         # 進行圖片URL檢查
         while attempts < max_attempts:
-            random_numbers = random.sample(range(1, 180), 3)
+            random_numbers = random.sample(range(1, 230), 3)
             random_number1, random_number2, random_number3 = random_numbers
             
             image_url1 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Gold/gold({random_number1}).jpg"
@@ -2015,7 +2015,7 @@ def handle_message(event):
         
         # 進行圖片URL檢查
         while attempts < max_attempts:
-            random_number = random.randint(1, 180)
+            random_number = random.randint(1, 230)
             image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Gold/gold({random_number}).jpg"
             
             # 檢查圖片是否存在
