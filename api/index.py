@@ -1,4 +1,4 @@
-from flask import Flask, request, abort
+from flask import Flask, flash, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage, ImageSendMessage, VideoSendMessage
@@ -35,7 +35,9 @@ api_key = os.getenv("GEMINI_API_KEY")
 client = genai.Client(api_key=api_key)
 #model = genai.GenerativeModel('gemini-2.5-flash')
 #model = genai.GenerativeModel('gemini-3-flash-preview')
-GEMINI_MODEL = 'gemini-3.5-flash'
+#GEMINI_MODEL = 'gemini-3.5-flash'
+#GEMINI_MODEL = 'gemini-3.5-flash-lite'
+GEMINI_MODEL = 'gemini-3.7-flash'
         
 # 計算出前一個10分倍數的時間以及前前一個10分倍數的時間以及前前前一個10分倍數的時間
 def get_prev10_4():
@@ -2419,11 +2421,21 @@ def handle_message(event):
                 config={
                     "tools": [], # 拔掉聯網，確保 Vercel 極速過關
                     
+                    # 🟢 關閉思考預算（thinking_budget=0），讓 3.7 Flash 不做多餘推理直接輸出
+                    "thinking_config": {
+                        "thinking_budget": 0
+                    },
+                    
                     "system_instruction": (
-                        "你是台灣的 LINE 聊天助手，請完全使用繁體中文(台灣)回答。\n"
-                        "請像正常人一樣自然、流暢地回答問題，直接講重點即可。\n"
-                        "【防呆機制】如果你不知道答案、或沒有相關資訊，請直接回答「不好意思，我目前不太清楚這個資訊喔！」，絕對不要勉強瞎掰或話說一半。"
+                        "你是台灣的 LINE 智慧聊天助手，請完全使用繁體中文(台灣)回答。\n"
+                        "【溝通風格】親切自然、口語化、直接切入重點，避免冗長鋪陳或官腔官調。\n"
+                        "【用詞規範】嚴格使用台灣慣用語（例如：影片、軟體、預設、貼圖），避免出現中國大陸用語（如：視頻、軟件、默認）。\n"
+                        "【排版規範】針對手機螢幕閱讀最佳化：\n"
+                        "1. 善用換行與精簡列點（- 或 •），段落簡短。\n"
+                        "2. 避免使用 Markdown 大標題（#、##）或複雜 Markdown 表格（LINE 無法良好渲染），請改用【粗體】或一般換行排版。\n"
+                        "【防呆與邊界】你目前未連上即時網路，若遇到今日新聞、即時天氣/股價等即時時事，或不確定的問題，請直接回答：「不好意思，我目前沒有連網/不太清楚這個即時資訊喔！」，切勿憑空捏造。"
                     ),
+                    
                     "temperature": 0.6,       # 🟢 記得數字要確實改成 0.6！
                     "max_output_tokens": 800  # 🟢 空間給夠，讓它放心把話講完
                 }
