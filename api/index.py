@@ -36,8 +36,8 @@ client = genai.Client(api_key=api_key)
 #model = genai.GenerativeModel('gemini-2.5-flash')
 #model = genai.GenerativeModel('gemini-3-flash-preview')
 #GEMINI_MODEL = 'gemini-3.5-flash'
-#GEMINI_MODEL = 'gemini-3.5-flash-lite'
-GEMINI_MODEL = 'gemini-3.7-flash'
+GEMINI_MODEL = 'gemini-3.5-flash-lite'
+#GEMINI_MODEL = 'gemini-3.7-flash'
         
 # 計算出前一個10分倍數的時間以及前前一個10分倍數的時間以及前前前一個10分倍數的時間
 def get_prev10_4():
