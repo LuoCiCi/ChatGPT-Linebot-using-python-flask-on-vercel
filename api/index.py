@@ -2039,7 +2039,7 @@ def handle_message(event):
             )
         return
     
-    if "吉吶三連抽" in event.message.text or "馬吉三連抽" in event.message.text or "吉啊三連抽" in event.message.text or "馬吉三連抽" in event.message.text or "吉吉抽抽抽" in event.message.text or "馬吉碰" in event.message.text or "碰馬吉" in event.message.text:       
+    if "吉吶三連抽" in event.message.text or "馬吉三連抽" in event.message.text or "吉啊三連抽" in event.message.text or "吉阿三連抽" or "吉吉三連抽" in event.message.text in event.message.text or "吉吉抽抽抽" in event.message.text or "馬吉碰" in event.message.text or "碰馬吉" in event.message.text:       
         working_status = False
         max_attempts = 5  # 設定最多嘗試的次數
         attempts = 0
