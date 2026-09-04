@@ -1849,8 +1849,9 @@ def handle_message(event):
 
         # 進行圖片URL檢查
         while attempts < max_attempts:
-            random_numbers = random.sample(range(1, maxnum), 1)
-            random_number = random_numbers
+            #random_numbers = random.sample(range(1, maxnum), 1)
+            #random_number = random_numbers
+            random_number = random.randint(1, maxnum)
 
             # 錢圖片路徑 f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/MoneyMoney/LINE_ALBUM_money_%20({random_number}).jpg"
             # 多圖片路徑 f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/ManyMany/LINE_ALBUM_many_%20({random_number}).jpg"
