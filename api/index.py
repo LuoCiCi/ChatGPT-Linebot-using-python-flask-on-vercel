@@ -1831,23 +1831,33 @@ def handle_message(event):
 
         # 先決定抽哪隻貓
         random_cat = random.sample(range(1,5),1)
-        if random_cat == 1:
+        if random_cat == 1:        #錢
             maxnum = money_maxnum
-        elif random_cat == 2:
+            name_file = f"MoneyMoney/LINE_ALBUM_money_%20"
+        elif random_cat == 2:        #多
             maxnum = many_maxnum
-        elif random_cat == 3:
+            name_file = f"ManyMany/LINE_ALBUM_many_%20"
+        elif random_cat == 3:        #錢多
             maxnum = moneymany_maxnum
-        elif random_cat == 4:
+            name_file = f"MoneyMany/LINE_ALBUM_moneymany_%20"
+        elif random_cat == 4:        #金
             maxnum = gold_maxnum
-        elif random_cat == 5:
+            name_file = f"Gold/gold"
+        elif random_cat == 5:        #吉
             maxnum = mochi_maxnum
+            name_file = f"Mochi/mochi"
 
         # 進行圖片URL檢查
         while attempts < max_attempts:
             random_numbers = random.sample(range(1, maxnum), 1)
             random_number = random_numbers
-            
-            image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/MoneyMoney/LINE_ALBUM_money_%20({random_number}).jpg"
+
+            # 錢圖片路徑 f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/MoneyMoney/LINE_ALBUM_money_%20({random_number}).jpg"
+            # 多圖片路徑 f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/ManyMany/LINE_ALBUM_many_%20({random_number}).jpg"
+            # 錢多圖片路徑 f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/MoneyMany/LINE_ALBUM_moneymany_%20({random_number}).jpg"
+            # 金圖片路徑 f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Gold/gold({random_number}).jpg"
+            # 吉圖片路徑 f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Mochi/mochi({random_number}).jpg"
+            image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/{name_file}({random_number}).jpg"
     
             # 檢查圖片是否存在
             if check_image_url_exists(image_url):
