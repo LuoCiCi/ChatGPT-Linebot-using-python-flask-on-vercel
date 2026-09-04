@@ -1201,7 +1201,8 @@ def handle_message(event):
             "你沒有!!",
             "你作夢!",
             "離你太遙遠了，別想了",
-            "總是想太多~"
+            "總是想太多~",
+            "~"
         ]
         # 隨機選擇一個文字
         random_ts_url = random.choice(ts)
@@ -1817,6 +1818,57 @@ def handle_message(event):
         )
         return
 
+    if "毛" in event.message.text or "抽貓" in event.message.text or "喵" in event.message.text:
+        working_status = False
+        max_attempts = 5  # 設定最多嘗試的次數
+        attempts = 0
+        money_maxnum = 551        #亂數1
+        many_maxnum = 501        #亂數2
+        moneymany_maxnum = 500        #亂數3
+        gold_maxnum = 230        #亂數4
+        mochi_maxnum = 80        #亂數5
+        maxnum = 0
+
+        # 先決定抽哪隻貓
+        random_cat = random.sample(range(1,5),1)
+        while random_cat > 0:
+            if random_cat == 1:
+                maxnum = money_maxnum
+            elif random_cat == 2:
+                maxnum = many_maxnum
+            elif random_cat == 3:
+                maxnum = moneymany_maxnum
+            elif random_cat == 4:
+                maxnum = gold_maxnum
+            elif random_cat == 5:
+                maxnum = mochi_maxnum
+
+        # 進行圖片URL檢查
+        while attempts < max_attempts:
+            random_numbers = random.sample(range(1, maxnum), 1)
+            random_number = random_numbers
+            
+            image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/MoneyMoney/LINE_ALBUM_money_%20({random_number}).jpg"
+    
+            # 檢查圖片是否存在
+            if check_image_url_exists(image_url):
+                # 如果圖片存在，回傳訊息
+                line_bot_api.reply_message(
+                    event.reply_token,
+                    [
+                        ImageSendMessage(original_content_url=image_url1, preview_image_url=image_url)
+                    ]
+                )
+                break  # 找到圖片後退出迴圈
+            attempts += 1
+        else:
+            # 如果在max_attempts次內未找到有效圖片
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="無法找到對應的圖片，請稍後再試。")
+            )
+        return
+            
     if "錢吶三連抽" in event.message.text or "錢啊三連抽" in event.message.text or "錢錢三連抽" in event.message.text or "錢錢抽抽抽" in event.message.text or "錢碰" in event.message.text or "碰錢" in event.message.text:       
         working_status = False
         max_attempts = 5  # 設定最多嘗試的次數
@@ -2081,7 +2133,7 @@ def handle_message(event):
         
         # 進行圖片URL檢查
         while attempts < max_attempts:
-            random_number = random.randint(1, 70)
+            random_number = random.randint(1, 80)
             image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Mochi/mochi({random_number}).jpg"
             
             # 檢查圖片是否存在
