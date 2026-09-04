@@ -1831,17 +1831,16 @@ def handle_message(event):
 
         # 先決定抽哪隻貓
         random_cat = random.sample(range(1,5),1)
-        while random_cat > 0:
-            if random_cat == 1:
-                maxnum = money_maxnum
-            elif random_cat == 2:
-                maxnum = many_maxnum
-            elif random_cat == 3:
-                maxnum = moneymany_maxnum
-            elif random_cat == 4:
-                maxnum = gold_maxnum
-            elif random_cat == 5:
-                maxnum = mochi_maxnum
+        if random_cat == 1:
+            maxnum = money_maxnum
+        elif random_cat == 2:
+            maxnum = many_maxnum
+        elif random_cat == 3:
+            maxnum = moneymany_maxnum
+        elif random_cat == 4:
+            maxnum = gold_maxnum
+        elif random_cat == 5:
+            maxnum = mochi_maxnum
 
         # 進行圖片URL檢查
         while attempts < max_attempts:
