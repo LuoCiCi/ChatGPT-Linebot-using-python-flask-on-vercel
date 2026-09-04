@@ -1822,30 +1822,20 @@ def handle_message(event):
         working_status = False
         max_attempts = 5  # 設定最多嘗試的次數
         attempts = 0
-        money_maxnum = 551        #亂數1
-        many_maxnum = 501        #亂數2
-        moneymany_maxnum = 500        #亂數3
-        gold_maxnum = 230        #亂數4
-        mochi_maxnum = 80        #亂數5
-        maxnum = 0
+            
+        # 1. 將貓咪資訊結構化（名稱、最大編號、路徑前綴）
+        cats = [
+            {"name": "錢", "max": 551, "path": "MoneyMoney/LINE_ALBUM_money_%20"},
+            {"name": "多", "max": 501, "path": "ManyMany/LINE_ALBUM_many_%20"},
+            {"name": "錢多", "max": 500, "path": "MoneyMany/LINE_ALBUM_moneymany_%20"},
+            {"name": "金", "max": 230, "path": "Gold/gold"},
+            {"name": "吉", "max": 80, "path": "Mochi/mochi"},
+        ]
 
-        # 先決定抽哪隻貓
-        random_cat = random.sample(range(1,5),1)
-        if random_cat == 1:        #錢
-            maxnum = money_maxnum
-            name_file = f"MoneyMoney/LINE_ALBUM_money_%20"
-        elif random_cat == 2:        #多
-            maxnum = many_maxnum
-            name_file = f"ManyMany/LINE_ALBUM_many_%20"
-        elif random_cat == 3:        #錢多
-            maxnum = moneymany_maxnum
-            name_file = f"MoneyMany/LINE_ALBUM_moneymany_%20"
-        elif random_cat == 4:        #金
-            maxnum = gold_maxnum
-            name_file = f"Gold/gold"
-        elif random_cat == 5:        #吉
-            maxnum = mochi_maxnum
-            name_file = f"Mochi/mochi"
+        # 2. 直接隨機挑選一隻貓
+        chosen_cat = random.choice(cats)
+        maxnum = chosen_cat["max"]
+        name_file = chosen_cat["path"]
 
         # 進行圖片URL檢查
         while attempts < max_attempts:
