@@ -1818,6 +1818,59 @@ def handle_message(event):
         )
         return
 
+    if "毛三連抽" in event.message.text:
+        working_status = False
+        
+        cats = [
+            {"name": "錢", "max": 551, "path": "MoneyMoney/LINE_ALBUM_money_%20"},
+            {"name": "多", "max": 501, "path": "ManyMany/LINE_ALBUM_many_%20"},
+            {"name": "錢多", "max": 500, "path": "MoneyMany/LINE_ALBUM_moneymany_%20"},
+            {"name": "金", "max": 270, "path": "Gold/gold"},
+            {"name": "吉", "max": 90, "path": "Mochi/mochi"},
+        ]
+
+        target_count = 3       # 目標抽取張數
+        max_total_attempts = 15 # 總共最多嘗試次數，避免網路卡住或死循環
+        total_attempts = 0
+        
+        valid_images = []      # 存放驗證有效的圖片 URL
+        used_records = set()   # 避免同一輪抽到完全相同的照片 (cat_name, number)
+
+        while len(valid_images) < target_count and total_attempts < max_total_attempts:
+            total_attempts += 1
+            
+            # 1. 每次隨機挑選一隻貓（可重複抽同一種類的貓，若要 3 隻貓品種完全不重複可改用 random.sample）
+            chosen_cat = random.choice(cats)
+            random_number = random.randint(1, chosen_cat["max"])
+            
+            # 查重：避免同一張照片重複抽出
+            photo_key = (chosen_cat["name"], random_number)
+            if photo_key in used_records:
+                continue
+            used_records.add(photo_key)
+
+            # 2. 組合圖片 URL
+            image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/{chosen_cat['path']}({random_number}).jpg"
+
+            # 3. 驗證圖片是否存在
+            if check_image_url_exists(image_url):
+                valid_images.append(image_url)
+
+        # 4. 回傳訊息處理
+        if valid_images:
+            # 轉為 LINE ImageSendMessage 陣列
+            messages = [
+                ImageSendMessage(original_content_url=url, preview_image_url=url)
+                for url in valid_images
+            ]
+            line_bot_api.reply_message(event.reply_token, messages)
+        else:
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="無法找到對應的圖片，請稍後再試。")
+            )
+        return
+        
     if "毛" in event.message.text or "抽貓" in event.message.text or "喵" in event.message.text:
         working_status = False
         max_attempts = 5  # 設定最多嘗試的次數
