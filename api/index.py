@@ -1818,7 +1818,7 @@ def handle_message(event):
         )
         return
 
-    if "毛三連抽" in event.message.text:
+    if "毛三連抽" in event.message.text or "喵三連抽" in event.message.text or "貓三連抽" in event.message.text:
         working_status = False
         
         cats = [
