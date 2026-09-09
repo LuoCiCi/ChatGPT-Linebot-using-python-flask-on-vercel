@@ -1869,7 +1869,7 @@ def handle_message(event):
             )
         return
             
-    if "錢吶三連抽" in event.message.text or "錢啊三連抽" in event.message.text or "錢錢三連抽" in event.message.text or "錢錢抽抽抽" in event.message.text or "錢碰" in event.message.text or "碰錢" in event.message.text:       
+    if "錢吶三連抽" in event.message.text or "錢啊三連抽" in event.message.text or "錢阿三連抽" in event.message.text or "錢錢三連抽" in event.message.text or "錢錢抽抽抽" in event.message.text or "錢碰" in event.message.text or "碰錢" in event.message.text:       
         working_status = False
         max_attempts = 5  # 設定最多嘗試的次數
         attempts = 0
@@ -1904,7 +1904,7 @@ def handle_message(event):
             )
         return
 
-    if "錢吶" in event.message.text or "錢啊" in event.message.text or "錢錢" in event.message.text:       
+    if "錢吶" in event.message.text or "錢啊" in event.message.text or "錢阿" in event.message.text or "錢錢" in event.message.text:       
         working_status = False
         max_attempts = 5  # 設定最多嘗試的次數
         attempts = 0
@@ -1933,7 +1933,7 @@ def handle_message(event):
             )
         return
 
-    if "多吶三連抽" in event.message.text or "多啊三連抽" in event.message.text or "多多三連抽" in event.message.text or "多多抽抽抽" in event.message.text or "多碰" in event.message.text or "碰多" in event.message.text:       
+    if "多吶三連抽" in event.message.text or "多啊三連抽" in event.message.text or "多阿三連抽" in event.message.text or "多多三連抽" in event.message.text or "多多抽抽抽" in event.message.text or "多碰" in event.message.text or "碰多" in event.message.text:       
         working_status = False
         max_attempts = 5  # 設定最多嘗試的次數
         attempts = 0
@@ -1969,7 +1969,7 @@ def handle_message(event):
         return
 
 
-    if "多吶" in event.message.text or "多啊" in event.message.text or "多多" in event.message.text:       
+    if "多吶" in event.message.text or "多啊" in event.message.text or "多阿" in event.message.text or "多多" in event.message.text:       
         working_status = False
         max_attempts = 5  # 設定最多嘗試的次數
         attempts = 0
@@ -2027,7 +2027,7 @@ def handle_message(event):
             )
         return
         
-    if "金吶三連抽" in event.message.text or "金啊三連抽" in event.message.text or "金金三連抽" in event.message.text or "金金抽抽抽" in event.message.text or "金碰" in event.message.text or "碰金" in event.message.text:       
+    if "金吶三連抽" in event.message.text or "金啊三連抽" in event.message.text or "金阿三連抽" in event.message.text or "金金三連抽" in event.message.text or "金金抽抽抽" in event.message.text or "金碰" in event.message.text or "碰金" in event.message.text:       
         working_status = False
         max_attempts = 5  # 設定最多嘗試的次數
         attempts = 0
@@ -2062,7 +2062,7 @@ def handle_message(event):
             )
         return
         
-    if "金吶" in event.message.text or "金啊" in event.message.text or "金阿" in event.message.text or "金金" in event.message.text:       
+    if "金吶" in event.message.text or "金啊" in event.message.text or "金啊" in event.message.text or "金金啊" in event.message.text or "金阿" in event.message.text or "金金" in event.message.text:       
         working_status = False
         max_attempts = 5  # 設定最多嘗試的次數
         attempts = 0
