@@ -1826,7 +1826,7 @@ def handle_message(event):
             {"name": "多", "max": 501, "path": "ManyMany/LINE_ALBUM_many_%20"},
             {"name": "錢多", "max": 500, "path": "MoneyMany/LINE_ALBUM_moneymany_%20"},
             {"name": "金", "max": 270, "path": "Gold/gold"},
-            {"name": "吉", "max": 90, "path": "Mochi/mochi"},
+            {"name": "吉", "max": 180, "path": "Mochi/mochi"},
         ]
 
         target_count = 3       # 目標抽取張數
@@ -1882,7 +1882,7 @@ def handle_message(event):
             {"name": "多", "max": 501, "path": "ManyMany/LINE_ALBUM_many_%20"},
             {"name": "錢多", "max": 500, "path": "MoneyMany/LINE_ALBUM_moneymany_%20"},
             {"name": "金", "max": 270, "path": "Gold/gold"},
-            {"name": "吉", "max": 90, "path": "Mochi/mochi"},
+            {"name": "吉", "max": 180, "path": "Mochi/mochi"},
         ]
 
         # 2. 直接隨機挑選一隻貓
@@ -2151,7 +2151,7 @@ def handle_message(event):
         
         # 進行圖片URL檢查
         while attempts < max_attempts:
-            random_numbers = random.sample(range(1, 90), 3)
+            random_numbers = random.sample(range(1, 180), 3)
             random_number1, random_number2, random_number3 = random_numbers
             
             image_url1 = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Mochi/mochi({random_number1}).jpg"
@@ -2186,7 +2186,7 @@ def handle_message(event):
         
         # 進行圖片URL檢查
         while attempts < max_attempts:
-            random_number = random.randint(1, 90)
+            random_number = random.randint(1, 180)
             image_url = f"https://raw.githubusercontent.com/hal-chena/Line-Image/refs/heads/main/Mochi/mochi({random_number}).jpg"
             
             # 檢查圖片是否存在
