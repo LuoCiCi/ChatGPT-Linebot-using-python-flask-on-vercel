@@ -820,7 +820,14 @@ def handle_message(event):
                 if check_image_url_exists(url):
                     typhoon_pic = url
                     break
-
+        # 今天抓不到圖，抓昨天
+        if (typhoon_pic):
+            for t in time_ary:
+                for h in hour_ary:
+                    url = f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{ysdate}{t}00-{h}_zhtw.png"
+                    if check_image_url_exists(url):
+                        typhoon_pic = url
+                        break
         # if (check_image_url_exists(f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{nowdate}0600-120_zhtw.png")):
         #     typhoon_pic = f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{nowdate}0600-120_zhtw.png"
         # elif (check_image_url_exists(f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{ysdate}0600-120_zhtw.png")):
