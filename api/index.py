@@ -821,7 +821,7 @@ def handle_message(event):
                     typhoon_pic = url
                     break
         # 今天抓不到圖，抓昨天
-        if (typhoon_pic):
+        if not (typhoon_pic):
             for ty in time_ary:
                 for hy in hour_ary:
                     url = f"https://www.cwa.gov.tw/Data/typhoon/TY_NEWS/PTA_{ysdate}{ty}00-{hy}_zhtw.png"
